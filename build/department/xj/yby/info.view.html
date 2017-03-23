@@ -1,0 +1,65 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>1. 维护</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="panel">
+    <div class="panel-body">
+        <div class="row">
+            <input placeholder="请输入天数，例如：180" ng-model="day"/>
+            <button class="btn btn-primary" ng-click="ybyInfoCtrl.itialize(day)">初始化</button>
+            <br/>
+        </div>
+        <div class="row">
+            <table class="table table-bordered">
+                <tr>
+                    <th>配置字段</th>
+                    <th>修改状态</th>
+                    <th>备注</th>
+                </tr>
+                <tr ng-repeat="x in ybyInfoCtrl.info">
+                    <th ng-bind="x.field"></th>
+                    <th>
+                        <div class="col-sm-12">
+                            <label class="radio-inline">
+                                <input type="radio"
+                                       ng-model="x.modifyType"
+                                       ng-click="ybyInfoCtrl.flag[$index] = true"
+                                       value="不可修改">
+                                不可修改
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" ng-model="x.modifyType"
+                                       ng-click="ybyInfoCtrl.flag[$index] = true"
+                                       value="可修改">
+                                可修改
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" ng-model="x.modifyType"
+                                       ng-click="ybyInfoCtrl.flag[$index] = true"
+                                       value="需审批">
+                                需审批
+                            </label>
+                        </div>
+                    </th>
+                    <th>
+                        <div>
+                            <input  ng-click="ybyInfoCtrl.flag[$index] = true" style="width: 100%" ng-model="x.notes">
+                        </div>
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <div class="row">
+            <button class="btn btn-primary" ng-click="ybyInfoCtrl.submit()">提交</button>
+        </div>
+    </div>
+</div>

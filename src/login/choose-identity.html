@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link href="../lib/style/font-awesome/css/font-awesome.min.css"
+            rel="stylesheet" type="text/css">
+        <link href="../lib/style/simple-line-icons/simple-line-icons.min.css"
+            rel="stylesheet" type="text/css">
+
+        <!-- bower:css -->
+
+        <!-- endbower -->
+
+        <!--import our custom style-->
+        <link rel="stylesheet" type="text/css" href="../common/style/widget.css"/>
+        <link href="../common/style/layout.css" rel="stylesheet" type="text/css">
+
+    </head>
+    <body data-ng-app="LoginHome">
+        <div class="container-fluid page-content" ng-cloak ng-controller="ChooseIdentityCtrl as chooseIdentityCtrl">
+            <div class="row privilege-manage-top">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="panel privilege-manage">
+                        <div class="panel-heading panel-heading-position">请选择权限并进入研究生院管理系统</div>
+                        <div class="panel-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>权限</th>
+                                        <th>角色</th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="page in chooseIdentityCtrl.pages">
+                                    <td>
+                                        <button class="btn btn-lg btn-primary"
+                                            ng-click="chooseIdentityCtrl.choosePageType(page.page)" ng-cloak>
+                                            {{page.page}}
+                                        </button>
+                                    </td>
+                                    <td><label ng-repeat="role in page.roles">{{role}}
+                                        <span ng-if="!$last">,</span>
+                                    </label></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <!-- bower:js -->
+
+    <!-- endbower -->
+
+    <!-- inject:js -->
+
+    <!-- endinject -->
+
+    <!-- build:js ./choose-identity.app.min.js -->
+    <script src="./login.app.js"></script>
+    <script src="./choose-identity.app.js"></script>
+    <!-- endbuild -->
+</html>

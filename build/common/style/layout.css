@@ -1,0 +1,37 @@
+body {
+  font-family: 微软雅黑;
+}
+
+h2 {
+  margin-left: 240px;
+  padding-bottom: 30px;
+  font-family: 微软雅黑;
+}
+
+/*TODO: 以下两个样式不知道在哪里使用?*/
+#label {
+  margin: 100px auto 10px auto;
+  text-align: center;
+  width: 150px;
+}
+
+#box {
+  font-family: Consolas;
+  margin: 20px auto;
+  width: 100px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/*TODO: echarts使用的?*/
+.themes {
+  padding: 0px;
+  border: dashed 1px darkblue;
+}
+
+ .navbar {
+   border-radius: 0px;
+ }

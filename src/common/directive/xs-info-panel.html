@@ -1,0 +1,2030 @@
+<style>
+  .vBorder {
+    margin: 0 2%;
+  }
+
+  .addr_line {
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom-width: 2px;
+    border-bottom: 2px solid #518ACF;
+    padding-bottom: 5px;
+  }
+
+  li {
+    color: #555;
+    font-weight: 700;
+    align-content: center;
+    cursor: pointer;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .breadcrumb {
+    margin-bottom: 0px;
+  }
+
+  .nav-inline {
+    display: inline;
+  }
+
+  .nav-inline:before {
+    display: inline;
+  }
+
+  .nav-inline:after {
+    display: inline;
+  }
+
+  .nav-inline li {
+    display: inline;
+  }
+
+  .nav-inline li a {
+    display: inline;
+  }
+
+  .float-bar {
+    margin: 5px 1.6% 4px;
+  }
+
+</style>
+<div style="box-shadow: 0 8px 8px -8px #888; position:relative; z-index: 9999; padding-bottom: 1px">
+  <div class="float-bar">
+    <ul class="nav nav-inline">
+      <li><a ng-click="addXsCtl.gotoAnchor('jbxx')">基本信息</a></li>
+      <li><a ng-click="addXsCtl.gotoAnchor('xjxx')">学籍信息</a></li>
+      <li><a ng-click="addXsCtl.gotoAnchor('lyxx')">来源信息</a></li>
+    </ul>
+
+    <button class="btn btn-primary" ng-click="addXsCtl.saveStudent(addXsCtl.student)" style="margin-left: 49%">保存修改
+    </button>
+    <button class="btn btn-default" ng-click="addXsCtl.formReset()" style="margin-left: 1%">取消</button>
+  </div>
+</div>
+
+<div style="width:100%;height: 677px; overflow-y:scroll;">
+  <form class="form form-horizontal" role="form" name="form1" id="frm1" novalidate>
+
+    <div class="col-sm-12 col-md-4" style="float:right" ng-if="addXsCtl.sno!=undefined&&addXsCtl.sno!=''">
+      <div ngf-drop="" class="drop-box" ng-model="addXsCtl.file" ngf-max-size="100KB"
+          ngf-drag-over-class="'dragover'" ngf-multiple="false"
+          ngf-pattern="'image/*'" style="width:3.5cm;" ng-show="false">将图片拖至此处
+      </div>
+      <div ngf-no-file-drop>当前浏览器不支持图片拖入上传功能</div>
+
+      <img ngf-src="addXsCtl.file" class="img-responsive" ngf-select="" ngf-pattern="'image/*'"
+          ngf-multiple="false" ngf-max-size="500KB" ng-model="addXsCtl.file"
+          style="width:3.5cm; height: 5.3cm;"/>
+    </div>
+
+    <div>
+      <a name="jbxx"></a>
+      <div class="vBorder addr_line" style="padding-top: 10px">基本信息&nbsp;&nbsp;&nbsp;<span
+          style="color: #fb0000;">*为必填选项</span></div>
+      <br>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">姓名<span style="color: #fb0000;">&nbsp;*</span></label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.name" placeholder="姓名"
+              name="name" required ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablename">
+        </div>
+        <span ng-show="addXsCtl.reqiredFieldMask['name']&&form1.name.$error.required"
+            class="col-sm-1 control-label"
+            style="position:relative;left: -30px;color:#fb0000; text-align: left">必填
+                        </span>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">姓名英文&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.nameEn" placeholder="姓名英文"
+              name="nameEn" required ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablenameEn">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">考生编号&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" value="" ng-model="addXsCtl.student.examineeNo"
+              placeholder="考生编号" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableexamineeNo">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">报名点代码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" value="" ng-model="addXsCtl.student.examineeSignPlace"
+              placeholder="报名点代码" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableexamineeSignPlace">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">证件类型码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control"
+              ng-model="addXsCtl.student.ssnType.id"
+              ng-options="ssnType.id as ssnType.name for ssnType in addXsCtl.ssnTypes"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablessnType">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">证件号码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" value="" ng-model="addXsCtl.student.ssn"
+              placeholder="证件号码" name="ssn" required ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablessn">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">出生日期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <p class="input-group" style="margin-bottom:0px">
+            <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                uib-datepicker-popup="{{addXsCtl.format}}"
+                ng-init="addXsCtl.student.birthdate = addXsCtl.birthdate;addXsCtl.birthdatePopup=false"
+                ng-model="addXsCtl.show_birthDate"
+                is-open="addXsCtl.birthdatePopup"
+                datepicker-options="addXsCtl.dateOptions"
+                ng-required="true" alt-input-formats="altInputFormats"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablebirthdate"/>
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="addXsCtl.birthdatePopup = true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">国籍码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" id="gj" type="text" ng-model="addXsCtl.show_nation"
+              ng-click="addXsCtl.nationInput()" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablenation"/>
+          <select class="form-control" id="gjs" size="5"
+              style="display:none;z-index: 3;position: absolute"
+              ng-click="addXsCtl.nationSelect()"
+              ng-model="addXsCtl.student.nation" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablenation">
+            <option value="">请选择</option>
+            <option ng-repeat="nation in addXsCtl.nations | filter:addXsCtl.show_nation"
+                value="{{nation}}" id="gjm" ng-click="addXsCtl.nationClicked(nation.name)">{{nation.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">民族码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" id="mz" type="text" ng-model="addXsCtl.show_ethnic"
+              ng-click="addXsCtl.ethnicInput()" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableethnic"/>
+          <select class="form-control" id="mzs" size="5"
+              style="display:none;z-index: 3;position: absolute"
+              ng-click="addXsCtl.ethnicSelect()"
+              ng-model="addXsCtl.student.ethnic.id" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableethnic">
+            <option value="">请选择</option>
+            <option ng-repeat="ethnic in addXsCtl.ethnics|filter:addXsCtl.show_ethnic"
+                value="{{ethnic.id}}" id="mzm" ng-click="addXsCtl.ethnicClicked(ethnic.name)">{{ethnic.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">性别码&nbsp;&nbsp;</label>
+        <div class="col-sm-9">
+          <label class="radio-inline">
+            <input type="radio" name="gender" ng-model="addXsCtl.student.gender.id"
+                value="1" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablegender">
+            男
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="gender" ng-model="addXsCtl.student.gender.id"
+                value="2" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablegender">
+            女
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">婚姻状况码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control"
+              ng-model="addXsCtl.student.marriage.id"
+              ng-options="marriage.id as marriage.name for marriage in addXsCtl.marriages">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">现役军人码&nbsp;&nbsp;</label>
+        <div class="col-sm-9">
+          <label class="radio-inline">
+            <input type="radio" name="military" ng-model="addXsCtl.student.military.id"
+                value="1" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemilitary">
+            非军人
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="military" ng-model="addXsCtl.student.military.id"
+                value="2" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemilitary">
+            军队在职干部
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="military" ng-model="addXsCtl.student.military.id"
+                value="3" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemilitary">
+            军校应届本科毕业生
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="military" ng-model="addXsCtl.student.military.id"
+                value="4" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemilitary">
+            国防生
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">入伍批准书编号&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" value="" ng-model="addXsCtl.student.militaryJoinNo"
+              placeholder="入伍批准书编号" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemilitaryJoinNo">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">退出现役证编号&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" value="" ng-model="addXsCtl.student.militaryQuitNo"
+              placeholder="退出现役证编号" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemilitaryQuitNo">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">政治面貌&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="addXsCtl.student.religion.id"
+              ng-options="religion.id as religion.name for religion in addXsCtl.religions"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablereligion">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">籍贯所在地码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <div class="input-group" style="width:30%">
+            <span class="input-group-addon">省</span>
+            <select class="form-control" ng-model="addXsCtl.student.hometown.stateCode"
+                ng-options="state[1] as state[0] for state in addXsCtl.states"
+                ng-change="addXsCtl.findRegionCity(addXsCtl.student.hometown.stateCode,addXsCtl.hometown)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablehometown">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:32.8%">
+            <span class="input-group-addon">市</span>
+            <select class="form-control" ng-model="addXsCtl.student.hometown.cityCode"
+                ng-options="city[1] as city[0] for city in addXsCtl.hometown.cities"
+                ng-change="addXsCtl.findRegionCounty(addXsCtl.student.hometown.cityCode,addXsCtl.hometown)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablehometown">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:36%">
+            <span class="input-group-addon">县（区）</span>
+            <select class="form-control" ng-model="addXsCtl.student.hometown.countyCode"
+                ng-options="county[2] as county[1] for county in addXsCtl.hometown.counties"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablehometown">
+              <option value="">请选择</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">出生地码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <div class="input-group" style="width:30%">
+            <span class="input-group-addon">省</span>
+            <select class="form-control" ng-model="addXsCtl.student.birthplace.stateCode"
+                ng-options="state[1] as state[0] for state in addXsCtl.states"
+                ng-change="addXsCtl.findRegionCity(addXsCtl.student.birthplace.stateCode,addXsCtl.birthplace)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablebirthplace">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:32.8%">
+            <span class="input-group-addon">市</span>
+            <select class="form-control" ng-model="addXsCtl.student.birthplace.cityCode"
+                ng-options="city[1] as city[0] for city in addXsCtl.birthplace.cities"
+                ng-change="addXsCtl.findRegionCounty(addXsCtl.student.birthplace.cityCode,addXsCtl.birthplace)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablebirthplace">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:36%">
+            <span class="input-group-addon">县（区）</span>
+            <select class="form-control" ng-model="addXsCtl.student.birthplace.countyCode"
+                ng-options="county[2] as county[1] for county in addXsCtl.birthplace.counties"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablebirthplace">
+              <option value="">请选择</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">户口所在地码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <div class="input-group" style="width:30%">
+            <span class="input-group-addon">省</span>
+            <select class="form-control" ng-model="addXsCtl.student.residence.stateCode"
+                ng-options="state[1] as state[0] for state in addXsCtl.states"
+                ng-change="addXsCtl.findRegionCity(addXsCtl.student.residence.stateCode,addXsCtl.residence)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableresidence">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:32.8%">
+            <span class="input-group-addon">市</span>
+            <select class="form-control" ng-model="addXsCtl.student.residence.cityCode"
+                ng-options="city[1] as city[0] for city in addXsCtl.residence.cities"
+                ng-change="addXsCtl.findRegionCounty(addXsCtl.student.residence.cityCode,addXsCtl.residence)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableresidence">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:36%">
+            <span class="input-group-addon">县（区）</span>
+            <select class="form-control" ng-model="addXsCtl.student.residence.countyCode"
+                ng-options="county[2] as county[1] for county in addXsCtl.residence.counties"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableresidence">
+              <option value="">请选择</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">户口所在地详细地址&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.residenceAddress"
+              placeholder="户口所在地详细住址"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableresidenceAddress">
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">家庭所在地码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <div class="input-group" style="width:30%">
+            <span class="input-group-addon">省</span>
+            <select class="form-control" ng-model="addXsCtl.student.family.stateCode"
+                ng-options="state[1] as state[0] for state in addXsCtl.states"
+                ng-change="addXsCtl.findRegionCity(addXsCtl.student.family.stateCode,addXsCtl.familyRegion)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefamily">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:32.8%">
+            <span class="input-group-addon">市</span>
+            <select class="form-control" ng-model="addXsCtl.student.family.cityCode"
+                ng-options="city[1] as city[0] for city in addXsCtl.familyRegion.cities"
+                ng-change="addXsCtl.findRegionCounty(addXsCtl.student.family.cityCode,addXsCtl.familyRegion)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefamily">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:36%">
+            <span class="input-group-addon">县（区）</span>
+            <select class="form-control" ng-model="addXsCtl.student.family.countyCode"
+                ng-options="county[2] as county[1] for county in addXsCtl.familyRegion.counties"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefamily">
+              <option value="">请选择</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">家庭所在地详细地址&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.familyAddress"
+              placeholder="家庭所在地详细地址" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefamilyAddress">
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">火车到站码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <div class="input-group" style="width:40%">
+            <span class="input-group-addon">省市</span>
+            <select class="form-control" ng-model="addXsCtl.student.railway.state"
+                ng-options="state as state for state in addXsCtl.railwayStates"
+                ng-change="addXsCtl.findRailwayStation(addXsCtl.student.railway.state)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablerailway">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:59.4%">
+            <span class="input-group-addon">车站</span>
+            <select class="form-control" ng-model="addXsCtl.student.railway.id"
+                ng-options="name[0] as name[1] for name in addXsCtl.names"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablerailway">
+              <option value="">请选择</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">考生档案所在地码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <div class="input-group" style="width:30%">
+            <span class="input-group-addon">省</span>
+            <select class="form-control" ng-model="addXsCtl.student.examineeArchive.stateCode"
+                ng-options="state[1] as state[0] for state in addXsCtl.states"
+                ng-change="addXsCtl.findRegionCity(addXsCtl.student.examineeArchive.stateCode,addXsCtl.examineeArchive)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableexamineeArchive">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:32.8%">
+            <span class="input-group-addon">市</span>
+            <select class="form-control" ng-model="addXsCtl.student.examineeArchive.cityCode"
+                ng-options="city[1] as city[0] for city in addXsCtl.examineeArchive.cities"
+                ng-change="addXsCtl.findRegionCounty(addXsCtl.student.examineeArchive.cityCode,addXsCtl.examineeArchive)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableexamineeArchive">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:36%">
+            <span class="input-group-addon">县（区）</span>
+            <select class="form-control" ng-model="addXsCtl.student.examineeArchive.countyCode"
+                ng-options="county[2] as county[1] for county in addXsCtl.examineeArchive.counties"
+                ng-change="addXsCtl.getExamineeArchiveUnitZipcode(addXsCtl.student.examineeArchive.countyCode)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableexamineeArchive">
+              <option value="">请选择</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">考生档案所在单位&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.examineeArchiveUnit"
+              placeholder="考生档案所在单位"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableexamineeArchiveUnit">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">考生档案所在单位地址&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.examineeArchiveUnitAddress"
+              placeholder="考生档案所在单位地址"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableexamineeArchiveUnitAddress">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">考生档案所在单位邮政编码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.examineeArchiveUnitZipcode"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableexamineeArchiveUnitZipcode">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">入学前学习或工作单位性质&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="addXsCtl.student.preStudyUnitNature.id"
+              ng-options="preStudyUnitNature.id as preStudyUnitNature.name for preStudyUnitNature in addXsCtl.preStudyUnitNatures"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablepreStudyUnitNature">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">入学前学习或工作单位所在地码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <div class="input-group" style="width:30%">
+            <span class="input-group-addon">省</span>
+            <select class="form-control" ng-model="addXsCtl.student.preStudy.stateCode"
+                ng-options="state[1] as state[0] for state in addXsCtl.states"
+                ng-change="addXsCtl.findRegionCity(addXsCtl.student.preStudy.stateCode,addXsCtl.preStudy)">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:32.8%">
+            <span class="input-group-addon">市</span>
+            <select class="form-control" ng-model="addXsCtl.student.preStudy.cityCode"
+                ng-options="city[1] as city[0] for city in addXsCtl.preStudy.cities"
+                ng-change="addXsCtl.findRegionCounty(addXsCtl.student.preStudy.cityCode,addXsCtl.preStudy)">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:36%">
+            <span class="input-group-addon">县（区）</span>
+            <select class="form-control" ng-model="addXsCtl.student.preStudy.countyCode"
+                ng-options="county[2] as county[1] for county in addXsCtl.preStudy.counties">
+              <option value="">请选择</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">入学前学习或工作单位&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.preStudyUnit"
+              placeholder="入学前学习或工作单位"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablepreStudyUnit">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">学习与工作经历&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.experience"
+              placeholder="学习与工作经历"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableexperience">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">家庭主要成员&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.familyMember"
+              placeholder="家庭主要成员"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefamilyMember">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">紧急联系人&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.emergencyContact"
+              placeholder="紧急联系人" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableemergencyContact">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">微信&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.weichat"
+              placeholder="微信" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableweichat">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">固定电话&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.phone"
+              placeholder="固定电话" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablephone">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">移动电话</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.mobile"
+              placeholder="电话号码" name="phone"
+              ng-blur="addXsCtl.isphoneValid(addXsCtl.student.mobile)" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemobile">
+        </div>
+        <div class="col-sm-1 control-label" style="color:#fb0000">
+          <span ng-show="addXsCtl.phoneFlag">位数应为11位</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">邮箱</label>
+        <div class="col-sm-8">
+          <input type="email" class="form-control" ng-model="addXsCtl.student.email"
+              placeholder="示例：1624931734@qq.com" name="email" required ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableemail">
+        </div>
+        <div class="col-sm-1 control-label" style="position:relative;left: -30px;color:#fb0000">
+          <span ng-show="form1.email.$error.email">非法的邮箱</span>
+        </div>
+      </div>
+      <a name="xjxx"></a>
+      <div class="vBorder addr_line" style="padding-top: 10px">学籍信息&nbsp;&nbsp;&nbsp;<span
+          style="color: #fb0000;">*为必填选项</span></div>
+      <br>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">学号<span style="color: #fb0000;">&nbsp;*</span></label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.sno" placeholder="学号"
+              name="sno" required ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablesno">
+        </div>
+        <div ng-show="addXsCtl.reqiredFieldMask['sno']&&form1.sno.$error.required"
+            class="col-sm-1 control-label"
+            style="position:relative;left: -30px;color:#fb0000; text-align: left">必填
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">照片&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.photo"
+              placeholder="照片">
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">是否新生&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <label class="radio-inline">
+            <input type="radio" name="newStudent" ng-model="addXsCtl.student.new"
+                ng-value="true" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablenew">
+            是
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="newStudent" ng-model="addXsCtl.student.new"
+                ng-value="false" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablenew">
+            否
+          </label>
+        </div>
+      </div>
+
+      <!--<div class="form-group">-->
+      <!--<label class="col-sm-3 control-label"-->
+      <!--style="position:relative;left: -2px;">报到码&nbsp;&nbsp;</label>-->
+      <!--<div class="col-sm-8">-->
+      <!--<input type="text" class="form-control" ng-model="addXsCtl.student.checkinNo"-->
+      <!--placeholder="报到码"  ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editable">-->
+      <!--</div>-->
+      <!--</div>-->
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">层次&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <label class="radio-inline">
+            <input type="radio" name="degreeLevel" ng-model="addXsCtl.student.degreeLevel.id"
+                value="1" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editabledegreeLevel">
+            硕士
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="degreeLevel" ng-model="addXsCtl.student.degreeLevel.id"
+                value="2" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editabledegreeLeveldegreeLevel">
+            博士
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">学位类型&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <label class="radio-inline">
+            <input type="radio" name="degreeType" ng-model="addXsCtl.student.degreeType.id"
+                value="1" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editabledegreeType">
+            学术学位
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="degreeType" ng-model="addXsCtl.student.degreeType.id"
+                value="2" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editabledegreeType">
+            专业学位
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">是否统招&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <label class="radio-inline">
+            <input type="radio" name="admissionUnified" ng-model="addXsCtl.student.admissionUnified"
+                ng-value="true" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.admissionUnified">
+            是
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="admissionUnified" ng-model="addXsCtl.student.admissionUnified"
+                ng-value="false" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableadmissionUnified">
+            否
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">学习形式&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <label class="radio-inline">
+            <input type="radio" name="educationMode" ng-model="addXsCtl.student.educationMode.id"
+                value="1" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableeducationMode">
+            学历教育
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="educationMode" ng-model="addXsCtl.student.educationMode.id"
+                value="2" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableeducationMode">
+            非学历教育
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">入学日期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <p class="input-group" style="margin-bottom:0px">
+            <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                uib-datepicker-popup="{{addXsCtl.format}}"
+                ng-init="addXsCtl.student.admissionDate = addXsCtl.admissionDate;addXsCtl.admissionPopup=false"
+                ng-model="addXsCtl.show_admissionDate"
+                is-open="addXsCtl.admissionPopup"
+                datepicker-options="addXsCtl.dateOptions"
+                ng-required="true" alt-input-formats="altInputFormats"
+                ng-change="addXsCtl.getAdmissionYear(addXsCtl.student.admissionDate)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableadmissionDate"/>
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="addXsCtl.admissionPopup=true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">年级&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.grade"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablegrade">
+        </div>
+      </div>
+
+      <!-- 记录总共在校学期数，系统自动更新 -->
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">学期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.term"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableterm">
+        </div>
+      </div>
+
+      <!--<div class="form-group form-inline">-->
+      <!--<label class="col-sm-3 control-label"-->
+      <!--style="position:relative;left: -2px;">报到&nbsp;&nbsp;</label>-->
+      <!--<div class="col-sm-8">-->
+      <!--<label class="radio-inline">-->
+      <!--<input type="radio" ng-model="addXsCtl.student.checkin"-->
+      <!--ng-value="true" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editable">-->
+      <!--是-->
+      <!--</label>-->
+      <!--<label class="radio-inline">-->
+      <!--<input type="radio" ng-model="addXsCtl.student.checkin"-->
+      <!--ng-value="false" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editable">-->
+      <!--否-->
+      <!--</label>-->
+      <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="form-group form-inline">-->
+      <!--<label class="col-sm-3 control-label"-->
+      <!--style="position:relative;left: -2px;">注册&nbsp;&nbsp;</label>-->
+      <!--<div class="col-sm-8">-->
+      <!--<label class="radio-inline">-->
+      <!--<input type="radio" ng-model="addXsCtl.student.register"-->
+      <!--ng-value="true" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editable">-->
+      <!--是-->
+      <!--</label>-->
+      <!--<label class="radio-inline">-->
+      <!--<input type="radio" ng-model="addXsCtl.student.register"-->
+      <!--ng-value="false" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editable">-->
+      <!--否-->
+      <!--</label>-->
+      <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="form-group form-inline">-->
+      <!--<label class="col-sm-3 control-label"-->
+      <!--style="position:relative;left: -2px;">缴费&nbsp;&nbsp;</label>-->
+      <!--<div class="col-sm-8">-->
+      <!--<label class="radio-inline">-->
+      <!--<input type="radio" ng-model="addXsCtl.student.fee"-->
+      <!--ng-value="true" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editable">-->
+      <!--是-->
+      <!--</label>-->
+      <!--<label class="radio-inline">-->
+      <!--<input type="radio" ng-model="addXsCtl.student.fee"-->
+      <!--ng-value="false" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editable">-->
+      <!--否-->
+      <!--</label>-->
+      <!--</div>-->
+      <!--</div>-->
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">当前学年应缴学费&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.feeShallPay"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefeeShallPay">
+        </div>
+      </div>
+
+      <!-- 根据缴费流水表计算得出，用于通知财务处进行核对 -->
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">学费总额&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.feeTotal"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefeeTotal">
+        </div>
+      </div>
+
+      <!-- 来源于招生数据 -->
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">缴费标准&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.feeStandard"
+              placeholder="缴费标准" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefeeStandard">
+        </div>
+      </div>
+
+      <!-- 根据缴费流水表计算得出 -->
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">已缴费次数&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.feeTimes"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefeeTimes">
+        </div>
+      </div>
+
+      <!-- 每学年基于财务处数据导入更新 -->
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">已缴费总额&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.feeTotal2"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefeeTotal2">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">学费一&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.fee1"
+              placeholder="学费一" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefee1">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">学费二&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.fee2"
+              placeholder="学费二" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefee2">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">学费三&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.fee3"
+              placeholder="学费三" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefee3">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">学费四&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.fee4"
+              placeholder="学费四" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefee4">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">学费五&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.fee5"
+              placeholder="学费五" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefee5">
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">校区&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <label class="radio-inline">
+            <input type="radio" name="campus" ng-model="addXsCtl.student.campus.id"
+                value="1" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablecampus">
+            中北
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="campus" ng-model="addXsCtl.student.campus.id"
+                value="2" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablecampus">
+            闵行
+          </label>
+        </div>
+      </div>
+
+      <!-- 批量导入 -->
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">宿舍&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.domitory"
+              placeholder="宿舍" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editabledomitory">
+        </div>
+      </div>
+
+      <!--todo 空的数据项-->
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">导师&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" id="ds" type="text" ng-model="addXsCtl.show_supervisor"
+              ng-change="addXsCtl.supervisorChange()" autocomplete="off"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablesupervisor"/>
+          <select class="form-control" id="dss" size="5"
+              style="display:none;z-index: 3;position: absolute"
+              ng-click="addXsCtl.supervisorSelect()"
+              ng-model="addXsCtl.student.supervisor" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablesupervisor">
+            <!--<option value="">请选择</option>-->
+            <option ng-repeat="supervisor in addXsCtl.staffs"
+                value="{{supervisor}}" id="dsm" ng-click="addXsCtl.supervisorClicked(supervisor.name)">
+              {{supervisor.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">专业<span style="color: #fb0000;">&nbsp;*</span></label>
+        <div class="col-sm-8">
+          <div class="input-group" style="width:27%">
+            <span class="input-group-addon">门类</span>
+            <select class="form-control" ng-model="addXsCtl.student.discipline.categoryCode"
+                ng-options="discipline[1] as discipline[0] for discipline in addXsCtl.disciplines"
+                ng-change="addXsCtl.findDisciplineMajor(addXsCtl.student.discipline.categoryCode,addXsCtl.discipline)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablediscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:35.8%">
+            <span class="input-group-addon">一级学科</span>
+            <select class="form-control" ng-model="addXsCtl.student.discipline.majorCode"
+                ng-options="major[1] as major[0] for major in addXsCtl.discipline.majors"
+                ng-change="addXsCtl.findDisciplineMinor(addXsCtl.student.discipline.majorCode,addXsCtl.discipline)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablediscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:35.8%">
+            <span class="input-group-addon">二级学科</span>
+            <select class="form-control" ng-model="addXsCtl.student.discipline.minorCode"
+                ng-options="minor[1] as minor[0] for minor in addXsCtl.discipline.minors" name="discipline" required
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablediscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <span ng-show="addXsCtl.reqiredFieldMask['discipline']&&form1.discipline.$error.required"
+              style="color:#fb0000; text-align: left">必选
+                            </span>
+        </div>
+      </div>
+
+      <!-- 需确认 -->
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">研究方向&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.research"
+              placeholder="研究方向" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableresearch">
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">院系<span style="color: #fb0000;">&nbsp;*</span></label>
+        <div class="col-sm-8">
+          <div class="input-group" style="width:45%">
+            <span class="input-group-addon">部院</span>
+            <select class="form-control" ng-model="addXsCtl.student.unit.schoolCode"
+                ng-options="school[1] as school[0] for school in addXsCtl.schools"
+                ng-change="addXsCtl.findUnitDepartment(addXsCtl.student.unit.schoolCode)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableunit">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:54.4%">
+            <span class="input-group-addon">院系</span>
+            <select class="form-control" ng-model="addXsCtl.student.unit.departmentCode"
+                ng-options="department[1] as department[0] for department in addXsCtl.departments" name="unit" required
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableunit">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <span ng-show="addXsCtl.reqiredFieldMask['unit']&&form1.unit.$error.required"
+              style="color:#fb0000; text-align: left">必选
+                            </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">学制<span style="color: #fb0000;">&nbsp;*</span></label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="addXsCtl.student.los"
+              ng-options="los as los for los in addXsCtl.los" name="los" required
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablelos">
+            <option value="">请选择</option>
+          </select>
+        </div>
+        <span ng-show="addXsCtl.reqiredFieldMask['los']&&form1.los.$error.required"
+            style="color:#fb0000; text-align: left">必选
+                        </span>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">专业排名&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.rank"
+              placeholder="专业排名" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablerank">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">硕博连读硕士阶段的入学年级&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.masterGrade"
+              placeholder="硕博连读硕士阶段的入学年级" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemasterGrade">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">奖惩&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="addXsCtl.student.awardAndPunishment"
+              placeholder="奖惩" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableawardAndPunishment">
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">医疗类型&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <label class="radio-inline">
+            <input type="radio" name="medical" ng-model="addXsCtl.student.medical.id"
+                value="1" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemedical">
+            公费
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="medical" ng-model="addXsCtl.student.medical.id"
+                value="2" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemedical">
+            自费
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">考试方式码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="addXsCtl.student.examination.id"
+              ng-options="examination.id as examination.name for examination in addXsCtl.examinations"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableexamination">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">专项计划码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="addXsCtl.student.specialPlan.id"
+              ng-options="specialPlan.id as specialPlan.name for specialPlan in addXsCtl.specialPlans"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablespecialPlan">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">专项计划说明&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.specialPlanMemo" placeholder="专项计划说明"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablespecialPlanMemo">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">录取类别码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="addXsCtl.student.enrollment.id"
+              ng-options="enrollment.id as enrollment.name for enrollment in addXsCtl.enrollments"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableenrollment">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">定向就业单位所在地码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <div class="input-group" style="width:30%">
+            <span class="input-group-addon">省</span>
+            <select class="form-control" ng-model="addXsCtl.student.directedRegion.stateCode"
+                ng-options="state[1] as state[0] for state in addXsCtl.states"
+                ng-change="addXsCtl.findRegionCity(addXsCtl.student.directedRegion.stateCode,addXsCtl.directedRegion)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editabledirectedRegion">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:32.8%">
+            <span class="input-group-addon">市</span>
+            <select class="form-control" ng-model="addXsCtl.student.directedRegion.cityCode"
+                ng-options="city[1] as city[0] for city in addXsCtl.directedRegion.cities"
+                ng-change="addXsCtl.findRegionCounty(addXsCtl.student.directedRegion.cityCode,addXsCtl.directedRegion)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editabledirectedRegion">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:36%">
+            <span class="input-group-addon">县（区）</span>
+            <select class="form-control" ng-model="addXsCtl.student.directedRegion.countyCode"
+                ng-options="county[2] as county[1] for county in addXsCtl.directedRegion.counties"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editabledirectedRegion">
+              <option value="">请选择</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">定向就业单位&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.directedWork" placeholder="定向就业单位"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editabledirectedWork">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">联合培养单位代码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.jointTraining" placeholder="联合培养单位代码"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablejointTraining">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">联合培养单位名称&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.jointTrainingWork" placeholder="联合培养单位名称"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablejointTraining">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">跨专业信息&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.crossDiscipline" placeholder="跨专业信息"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablecrossDiscipline">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">毕业类型&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="addXsCtl.student.graduation.id"
+              ng-options="graduation.id as graduation.name for graduation in addXsCtl.graduations"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablegraduation">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">预计毕业日期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <p class="input-group" style="margin-bottom:0px">
+            <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                uib-datepicker-popup="{{addXsCtl.format}}"
+                ng-init="addXsCtl.student.expectedGraduationDate = addXsCtl.expectedGraduationDate;addXsCtl.expectedGraduationPopup=false"
+                ng-model="addXsCtl.show_expectedGraduationDate"
+                is-open="addXsCtl.expectedGraduationPopup"
+                datepicker-options="addXsCtl.dateOptions"
+                ng-required="true" alt-input-formats="altInputFormats"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableexpectedGraduationDate"/>
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                    ng-click="addXsCtl.expectedGraduationPopup = true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">实际毕业日期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <p class="input-group" style="margin-bottom:0px">
+            <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                uib-datepicker-popup="{{addXsCtl.format}}"
+                ng-init="addXsCtl.student.actualGraduationDate = addXsCtl.actualGraduationDate;addXsCtl.actualGraduationPopup=false"
+                ng-model="addXsCtl.show_actualGraduationDate"
+                is-open="addXsCtl.actualGraduationPopup"
+                datepicker-options="addXsCtl.dateOptions"
+                ng-required="true" alt-input-formats="altInputFormats"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableactualGraduationDate"/>
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                    ng-click="addXsCtl.actualGraduationPopup = true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">休学学期数&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.absenceTerms"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableabsenceTerms">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">正常毕业年限&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.duration" placeholder="正常毕业年限"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableduration">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">最长延期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.delay" placeholder="最长延期"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editabledelay">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">预毕业审核日期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <p class="input-group" style="margin-bottom:0px">
+            <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                uib-datepicker-popup="{{addXsCtl.format}}"
+                ng-init="addXsCtl.student.pregraduationDate = addXsCtl.pregraduationDate;addXsCtl.pregraduationPopup=false"
+                ng-model="addXsCtl.show_pregraduationDate"
+                is-open="addXsCtl.pregraduationPopup"
+                datepicker-options="addXsCtl.dateOptions"
+                ng-required="true" alt-input-formats="altInputFormats"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablepregraduationDate"/>
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                    ng-click="addXsCtl.pregraduationPopup = true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">授予学位名称&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.grantedDegree" placeholder="授予学位名称"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablegrantedDegree">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">授予学位日期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <p class="input-group" style="margin-bottom:0px">
+            <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                uib-datepicker-popup="{{addXsCtl.format}}"
+                ng-init="addXsCtl.student.grantedDegreeDate = addXsCtl.grantedDegreeDate;addXsCtl.grantedDegreePopup=false"
+                ng-model="addXsCtl.show_grantedDegreeDate"
+                is-open="addXsCtl.grantedDegreePopup"
+                datepicker-options="addXsCtl.dateOptions"
+                ng-required="true" alt-input-formats="altInputFormats"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablegrantedDegreeDate"/>
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                    ng-click="addXsCtl.grantedDegreePopup = true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">毕业证领取状态&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <label class="radio-inline">
+            <input type="radio" name="diplomaStatus" ng-model="addXsCtl.student.diplomaStatus"
+                ng-value="true" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablediplomaStatus">
+            已领取
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="diplomaStatus" ng-model="addXsCtl.student.diplomaStatus"
+                ng-value="false" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablediplomaStatus">
+            未领取
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">毕业证编号&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.diplomaNo" placeholder="毕业证编号"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablediplomaNo">
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">离校状态&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <label class="radio-inline">
+            <input type="radio" name="leave" ng-model="addXsCtl.student.leave"
+                ng-value="true" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableleave">
+            已离校
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="leave" ng-model="addXsCtl.student.leave"
+                ng-value="false" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableleave">
+            未离校
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">离校去向&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.leaveTo" placeholder="离校去向"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableleaveTo">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">离校日期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <p class="input-group" style="margin-bottom:0px">
+            <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                uib-datepicker-popup="{{addXsCtl.format}}"
+                ng-init="addXsCtl.student.leaveDate = addXsCtl.leaveDate;addXsCtl.leavePopup=false"
+                ng-model="addXsCtl.show_leaveDate"
+                is-open="addXsCtl.leavePopup"
+                datepicker-options="addXsCtl.dateOptions"
+                ng-required="true" alt-input-formats="altInputFormats"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableleaveDate"/>
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="addXsCtl.leavePopup = true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">归档状态&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <label class="radio-inline">
+            <input type="radio" name="archiveSatus" ng-model="addXsCtl.student.archiveSatus"
+                ng-value="true" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablearchiveSatus">
+            已归档
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="archiveSatus" ng-model="addXsCtl.student.archiveSatus"
+                ng-value="false" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablearchiveSatus">
+            未归档
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">归档日期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <p class="input-group" style="margin-bottom:0px">
+            <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                uib-datepicker-popup="{{addXsCtl.format}}"
+                ng-init="addXsCtl.student.archiveDate = addXsCtl.archiveDate;addXsCtl.archiveDate=false"
+                ng-model="addXsCtl.show_archiveDate"
+                is-open="addXsCtl.archivePopup"
+                datepicker-options="addXsCtl.dateOptions"
+                ng-required="true" alt-input-formats="altInputFormats"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablearchiveDate"/>
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="addXsCtl.archivePopup = true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+          </p>
+        </div>
+      </div>
+
+      <a name="lyxx"></a>
+      <div class="vBorder addr_line" style="padding-top: 10px">来源信息&nbsp;&nbsp;&nbsp;<span
+          style="color: #fb0000;">*为必填选项</span></div>
+      <br>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">考生来源码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="addXsCtl.student.examineeOrigin.id"
+              ng-options="examineeOrigin.id as examineeOrigin.name for examineeOrigin in addXsCtl.examineeOrigins"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableexamineeOrigin">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">获学士学位的单位名称&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" type="text" ng-model="addXsCtl.student.bachelorUnit.name"
+              ng-change="addXsCtl.bachelorUnitChange()" autocomplete="off"
+              placeholder="获学士学位的单位名称" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablebachelorUnit"/>
+          <select class="form-control" id="xsxwdwds" size="5"
+              style="display:none;z-index: 3;position: absolute"
+              ng-click="addXsCtl.bachelorUnitSelect()"
+              ng-model="addXsCtl.show_bachelorUnit" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablebachelorUnit"
+              ng-options="bachelorUnit.name for bachelorUnit in addXsCtl.universitys">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">获学士学位的单位代码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.bachelorUnit.code" placeholder="获学士学位的单位代码"
+              ng-disabled="true">
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">获学士学位专业代码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <div class="input-group" style="width:27%">
+            <span class="input-group-addon">门类</span>
+            <select class="form-control" ng-model="addXsCtl.student.bachelorDiscipline.categoryCode"
+                ng-options="bachelorDiscipline[1] as bachelorDiscipline[0] for bachelorDiscipline in addXsCtl.bachelorDisciplines"
+                ng-change="addXsCtl.findBachelorDisciplineMajor(addXsCtl.student.bachelorDiscipline.categoryCode,addXsCtl.bachelorDiscipline)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablebachelorDiscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:35.8%">
+            <span class="input-group-addon">一级学科</span>
+            <select class="form-control" ng-model="addXsCtl.student.bachelorDiscipline.majorCode"
+                ng-options="major[1] as major[0] for major in addXsCtl.bachelorDiscipline.majors"
+                ng-change="addXsCtl.findBachelorDisciplineMinor(addXsCtl.student.bachelorDiscipline.majorCode,addXsCtl.bachelorDiscipline)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablebachelorDiscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:35.8%">
+            <span class="input-group-addon">二级学科</span>
+            <select class="form-control" ng-model="addXsCtl.student.bachelorDiscipline.minorCode"
+                ng-options="minor[2] as minor[1] for minor in addXsCtl.bachelorDiscipline.minors"
+                ng-change="addXsCtl.getBachelorDisciplineName(addXsCtl.student.bachelorDiscipline.minorCode)" required
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablebachelorDiscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">获学士学位专业名称&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.bachelorDisciplineName"
+              ng-disabled="true">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">获学士学位日期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <p class="input-group" style="margin-bottom:0px">
+            <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                uib-datepicker-popup="{{addXsCtl.format}}"
+                ng-init="addXsCtl.student.bachelorDate = addXsCtl.bachelorDate;addXsCtl.bachelorPopup=false"
+                ng-model="addXsCtl.show_bachelorDate"
+                is-open="addXsCtl.bachelorPopup"
+                datepicker-options="addXsCtl.dateOptions"
+                ng-required="true" alt-input-formats="altInputFormats"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablebachelorDate"/>
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="addXsCtl.bachelorPopup=true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">学士学位证书编号&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.bachelorNo" placeholder="学士学位证书编号"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablebachelorNo">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">本科毕业单位名称&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" type="text" ng-model="addXsCtl.student.undergraduateUnit.name"
+              ng-change="addXsCtl.undergraduateUnitChange()" autocomplete="off" placeholder="本科毕业单位名称"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableundergraduateUnit"/>
+          <select class="form-control" id="bkbydwds" size="5"
+              style="display:none;z-index: 3;position: absolute"
+              ng-click="addXsCtl.undergraduateUnitSelect()"
+              ng-model="addXsCtl.show_undergraduateUnit" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableundergraduateUnit"
+              ng-options="undergraduateUnit.name for undergraduateUnit in addXsCtl.universitys">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">本科毕业单位代码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.undergraduateUnit.code"
+              ng-disabled="true">
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">本科毕业专业代码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <div class="input-group" style="width:27%">
+            <span class="input-group-addon">门类</span>
+            <select class="form-control" ng-model="addXsCtl.student.undergraduateDiscipline.categoryCode"
+                ng-options="undergraduateDiscipline[1] as undergraduateDiscipline[0] for undergraduateDiscipline in addXsCtl.bachelorDisciplines"
+                ng-change="addXsCtl.findBachelorDisciplineMajor(addXsCtl.student.undergraduateDiscipline.categoryCode,addXsCtl.undergraduateDiscipline)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableundergraduateDiscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:35.8%">
+            <span class="input-group-addon">一级学科</span>
+            <select class="form-control" ng-model="addXsCtl.student.undergraduateDiscipline.majorCode"
+                ng-options="major[1] as major[0] for major in addXsCtl.undergraduateDiscipline.majors"
+                ng-change="addXsCtl.findBachelorDisciplineMinor(addXsCtl.student.undergraduateDiscipline.majorCode,addXsCtl.undergraduateDiscipline)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableundergraduateDiscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:35.8%">
+            <span class="input-group-addon">二级学科</span>
+            <select class="form-control" ng-model="addXsCtl.student.undergraduateDiscipline.minorCode"
+                ng-options="minor[2] as minor[1] for minor in addXsCtl.undergraduateDiscipline.minors"
+                ng-change="addXsCtl.getUndergraduateDisciplineName(addXsCtl.student.undergraduateDiscipline.minorCode)"
+                required ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableundergraduateDiscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">本科毕业专业名称&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.undergraduateDisciplineName"
+              ng-disabled="true">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">本科毕业日期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <p class="input-group" style="margin-bottom:0px">
+            <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                uib-datepicker-popup="{{addXsCtl.format}}"
+                ng-init="addXsCtl.student.undergraduateDate = addXsCtl.undergraduateDate;addXsCtl.undergraduatePopup=false"
+                ng-model="addXsCtl.show_undergraduateDate"
+                is-open="addXsCtl.undergraduatePopup"
+                datepicker-options="addXsCtl.dateOptions"
+                ng-required="true" alt-input-formats="altInputFormats"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableundergraduateDate"/>
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                    ng-click="addXsCtl.undergraduatePopup=true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">本科毕业证书编号&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.undergraduateNo" placeholder="本科毕业证书编号"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableundergraduateNo">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">取得本科学历的学习形式&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="addXsCtl.student.undergraduateMode.id"
+              ng-options="undergraduateMode.id as undergraduateMode.name for undergraduateMode in addXsCtl.educationModes"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editableundergraduateMode">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">获硕士学位的单位名称&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" type="text" ng-model="addXsCtl.student.masterUnit.name"
+              ng-change="addXsCtl.masterUnitChange()" autocomplete="off" placeholder="获硕士学位的单位名称"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemasterUnit"/>
+          <select class="form-control" id="ssxwdwds" size="5"
+              style="display:none;z-index: 3;position: absolute"
+              ng-click="addXsCtl.masterUnitSelect()"
+              ng-model="addXsCtl.show_masterUnit" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemasterUnit"
+              ng-options="masterUnit.name for masterUnit in addXsCtl.universitys">>
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">获硕士学位的单位代码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.masterUnit.code"
+              ng-disabled="true">
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">获硕士学位专业代码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <div class="input-group" style="width:27%">
+            <span class="input-group-addon">门类</span>
+            <select class="form-control" ng-model="addXsCtl.student.masterDiscipline.categoryCode"
+                ng-options="discipline[1] as discipline[0] for discipline in addXsCtl.disciplines"
+                ng-change="addXsCtl.findDisciplineMajor(addXsCtl.student.masterDiscipline.categoryCode,addXsCtl.masterDiscipline)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemasterDiscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:35.8%">
+            <span class="input-group-addon">一级学科</span>
+            <select class="form-control" ng-model="addXsCtl.student.masterDiscipline.majorCode"
+                ng-options="major[1] as major[0] for major in addXsCtl.masterDiscipline.majors"
+                ng-change="addXsCtl.findDisciplineMinor(addXsCtl.student.masterDiscipline.majorCode,addXsCtl.masterDiscipline)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemasterDiscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:35.8%">
+            <span class="input-group-addon">二级学科</span>
+            <select class="form-control" ng-model="addXsCtl.student.masterDiscipline.minorCode"
+                ng-options="minor[2] as minor[1] for minor in addXsCtl.masterDiscipline.minors"
+                ng-click="addXsCtl.getMasterDisciplineName(addXsCtl.student.masterDiscipline.minorCode)" required
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemasterDiscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">获硕士学位专业名称&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.masterDisciplineName"
+              ng-disabled="true">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">获硕士学位日期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <p class="input-group" style="margin-bottom:0px">
+            <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                uib-datepicker-popup="{{addXsCtl.format}}"
+                ng-init="addXsCtl.student.masterDate = addXsCtl.masterDate;addXsCtl.masterPopup=false"
+                ng-model="addXsCtl.show_masterDate"
+                is-open="addXsCtl.masterPopup"
+                datepicker-options="addXsCtl.dateOptions"
+                ng-required="true" alt-input-formats="altInputFormats"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemasterDate"/>
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="addXsCtl.masterPopup=true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">硕士学位证书编号&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.masterNo" placeholder="硕士学位证书编号"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemasterNo">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">获硕士学位方式&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="addXsCtl.student.masterMode.id"
+              ng-options="masterMode.id as masterMode.name for masterMode in addXsCtl.educationModes"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablemasterMode">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">硕士毕业单位名称&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" type="text" ng-model="addXsCtl.student.postgraduateUnit.name"
+              ng-change="addXsCtl.postgraduateUnitChange()" autocomplete="off" placeholder="获硕士学位的单位名称"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablepostgraduateUnit"/>
+          <select class="form-control" id="ssbydwds" size="5"
+              style="display:none;z-index: 3;position: absolute"
+              ng-click="addXsCtl.postgraduateUnitSelect()"
+              ng-model="addXsCtl.show_postgraduateUnit" ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablepostgraduateUnit"
+              ng-options="postgraduateUnit.name for postgraduateUnit in addXsCtl.universitys">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">硕士毕业单位代码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.postgraduateUnit.code"
+              ng-disabled="true">
+        </div>
+      </div>
+
+      <div class="form-group form-inline">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">硕士毕业专业代码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <div class="input-group" style="width:27%">
+            <span class="input-group-addon">门类</span>
+            <select class="form-control" ng-model="addXsCtl.student.postgraduateDiscipline.categoryCode"
+                ng-options="discipline[1] as discipline[0] for discipline in addXsCtl.disciplines"
+                ng-change="addXsCtl.findDisciplineMajor(addXsCtl.student.postgraduateDiscipline.categoryCode,addXsCtl.postgraduateDiscipline)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablepostgraduateDiscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:35.8%">
+            <span class="input-group-addon">一级学科</span>
+            <select class="form-control" ng-model="addXsCtl.student.postgraduateDiscipline.majorCode"
+                ng-options="major[1] as major[0] for major in addXsCtl.postgraduateDiscipline.majors"
+                ng-change="addXsCtl.findDisciplineMinor(addXsCtl.student.postgraduateDiscipline.majorCode,addXsCtl.postgraduateDiscipline)"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablepostgraduateDiscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="input-group" style="width:35.8%">
+            <span class="input-group-addon">二级学科</span>
+            <select class="form-control" ng-model="addXsCtl.student.postgraduateDiscipline.minorCode"
+                ng-options="minor[2] as minor[1] for minor in addXsCtl.postgraduateDiscipline.minors"
+                ng-click="addXsCtl.getPostgraduateDisciplineName(addXsCtl.student.postgraduateDiscipline.minorCode)"
+                required ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablepostgraduateDiscipline">
+              <option value="">请选择</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">硕士毕业专业名称&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.postgraduateDisciplineName"
+              ng-disabled="true">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">硕士毕业日期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <p class="input-group" style="margin-bottom:0px">
+            <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                uib-datepicker-popup="{{addXsCtl.format}}"
+                ng-init="addXsCtl.student.postgraduateDate = addXsCtl.postgraduateDate;addXsCtl.postgraduatePopup=false"
+                ng-model="addXsCtl.show_postgraduateDate"
+                is-open="addXsCtl.postgraduatePopup"
+                datepicker-options="addXsCtl.dateOptions"
+                ng-required="true" alt-input-formats="altInputFormats"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablepostgraduateDate"/>
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                    ng-click="addXsCtl.postgraduatePopup=true;">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">硕士毕业证书编号&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.postgraduateNo" placeholder="硕士毕业证书编号"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablepostgraduateNo">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">取得硕士学历的学习形式&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="addXsCtl.student.postgraduateMode.id"
+              ng-options="postgraduateMode.id as postgraduateMode.name for postgraduateMode in addXsCtl.educationModes"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablepostgraduateMode">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">最后学位码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="addXsCtl.student.finalDegree.id"
+              ng-options="finalDegree.id as finalDegree.name for finalDegree in addXsCtl.degrees"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefinalDegree">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">最后学历码&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="addXsCtl.student.finalEducation.id"
+              ng-options="finalEducation.id as finalEducation.name for finalEducation in addXsCtl.educations"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefinalEducation">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">在校生注册学号&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <input class="form-control" ng-model="addXsCtl.student.finalSno" placeholder="在校生注册学号"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefinalSno">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">获得最后学历毕业日期&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <p class="input-group" style="margin-bottom:0px">
+            <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                uib-datepicker-popup="{{addXsCtl.format}}"
+                ng-init="addXsCtl.show_finalEducationDate = addXsCtl.finalEducationDate;addXsCtl.finalEducationPopup=false"
+                ng-model="addXsCtl.show_finalEducationDate"
+                is-open="addXsCtl.finalEducationPopup"
+                datepicker-options="addXsCtl.dateOptions"
+                ng-required="true" alt-input-formats="altInputFormats"
+                ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefinalEducationDate"/>
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                    ng-click="addXsCtl.finalEducationPopup=true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label"
+            style="position:relative;left: -2px;">取得最后学历的学习形式&nbsp;&nbsp;</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="addXsCtl.student.finalEducationMode.id"
+              ng-options="finalEducationMode.id as finalEducationMode.name for finalEducationMode in addXsCtl.educationModes"
+              ng-disabled="!addXsCtl.addXs&#38;&#38;!addXsCtl.authority.editablefinalEducationMode">
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

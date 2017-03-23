@@ -1,0 +1,118 @@
+/*异动类似页面的样式*/
+.status-change-type {
+
+}
+
+.status-change-type table {
+    margin-top: 0px;
+}
+
+.status-change-type table tbody {
+    border-top: none !important;
+}
+
+.status-change-type .panel-body {
+    text-align: center;
+    padding-left: 300px;
+    padding-right: 300px;
+}
+
+.major {
+    width: 200px
+}
+
+.minor {
+    width: 600px
+}
+
+.input-move {
+    width: 82px;
+    border: 0px;
+    position: absolute;
+    top: -62px;
+    left: 23px;
+    outline: none;
+}
+
+.div-type-add {
+    margin-top: 15px;
+}
+
+/*异动流程样式*/
+
+.status-change-flow {
+
+}
+
+.status-change-flow .panel-body {
+    padding-left: 25%;
+    padding-right: 25%;
+}
+
+.sequence {
+    margin-bottom: 15px;
+}
+
+.status-change-flow li {
+    list-style-type: none;
+    cursor: move;
+}
+
+.status-change-flow li i {
+    -webkit-transition: opacity .2s;
+    transition: opacity .2s;
+    cursor: pointer;
+    color: #c00;
+    margin-left: 30px;
+    opacity: 0;
+}
+
+.status-change-flow li:hover i {
+    opacity: 1;
+}
+
+/*异动审批样式*/
+
+.status-change-audit {
+
+}
+
+.status-change-audit .panel-body {
+    padding-left: 35px;
+    padding-right: 50px;
+}
+
+.status-change-audit .modal-body {
+    padding-left: 55px;
+    padding-right: 0px;
+}
+
+.to {
+    position: absolute;
+    left: 176px;
+    top: 7px;
+}
+
+.icon {
+    font-size: 22px;
+}
+
+/*异动申请*/
+.status-change-apply {
+
+}
+
+.status-change-apply .panel-body {
+    padding-left: 35px;
+    padding-right: 50px;
+}
+
+.status-change-apply .modal-body {
+    padding-left: 150px;
+    padding-right: 100px;
+}
+
+.status-change-apply .btn-left {
+    margin-right: 15px;
+}
+

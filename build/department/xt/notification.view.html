@@ -1,0 +1,307 @@
+<style>
+    .membertab {
+        border: 1px solid #ddd;
+        border-top: hidden;
+        height: 556px;
+        overflow-x: auto;
+        width: 235px;
+    }
+
+    .membertab_addpanel {
+        overflow-x: auto;
+        height: 296px;
+    }
+
+    .nonborder {
+        border: hidden;
+    }
+
+    .member-item {
+        padding: 4px 15px;
+        cursor: pointer;
+    }
+
+    .nav {
+        margin-left: 0px;
+    }
+
+    .alert {
+        padding: 7px;
+        margin-bottom: 0px;
+    }
+
+    .alert-dismissible {
+        padding-right: 35px;
+    }
+
+    .right {
+        float: right;
+    }
+
+    .border-bottom {
+        border-bottom: 2px solid #ddd;
+    }
+
+    .border {
+        border: 1px solid #ddd;
+    }
+
+    .link {
+        font-size: 12px;
+        color: #005E95;
+        cursor: pointer;
+        font-weight: normal;
+        font-family: "lucida Grande", Verdana, "Microsoft YaHei";
+        padding-top: 5px;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+</style>
+<div class="container-fluid" ng-controller="NotificationCtrl as notificationCtrl">
+    <div name="editNotification" class="col-sm-8">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="control-label col-sm-2" style="height: 37px;">接收人</label>
+                <div class="col-sm-10">
+                    <div uib-alert class="alert-success col-sm-3" style="margin-left: 3px;"
+                          ng-repeat="receiver in notificationCtrl.receivers track by $index"
+                          close="notificationCtrl.closeAlert($index,1)">{{receiver}}</div>
+                    <div uib-alert class="alert-success col-sm-3" style="margin-left: 3px;"
+                          ng-repeat="group in notificationCtrl.groups track by $index"
+                          close="notificationCtrl.closeAlert($index,2)">{{group}}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">主题</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="请输入通知主题"
+                           ng-model="notificationCtrl.message.title">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">时间</label>
+                <div class="col-sm-10">
+                    <span class="col-sm-5 row">
+                        <p class="input-group" style="max-width: 250px">
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    readonly
+                                    uib-datepicker-popup="yyyy/MM/dd"
+                                    ng-model="notificationCtrl.message.startsAt"
+                                    is-open="notificationCtrl.start_isopen"
+                                    close-text="关闭"
+                                    current-text="今天"
+                                    clear-text="清空"/>
+                            <span class="input-group-btn">
+                            <button
+                                    type="button"
+                                    class="btn btn-default"
+                                    ng-click="notificationCtrl.start_isopen = !notificationCtrl.start_isopen">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                          </button>
+                        </span>
+                        </p>
+                        <div
+                                uib-timepicker
+                                ng-model="notificationCtrl.message.startsAt"
+                                hour-step="1"
+                                minute-step="15"
+                                show-meridian="false">
+                        </div>
+                    </span>
+                    <span class="col-sm-2 text-center">至</span>
+                    <span class="col-sm-5" style="float: right">
+                        <p class="input-group" style="max-width: 250px">
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    readonly
+                                    uib-datepicker-popup="yyyy/MM/dd"
+                                    ng-model="notificationCtrl.message.endsAt"
+                                    is-open="notificationCtrl.end_isopen"
+                                    close-text="关闭"
+                                    current-text="今天"
+                                    clear-text="清空"/>
+                            <span class="input-group-btn">
+                            <button
+                                    type="button"
+                                    class="btn btn-default"
+                                    ng-click="notificationCtrl.end_isopen = !notificationCtrl.end_isopen">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                          </button>
+                        </span>
+                        </p>
+                        <div
+                                uib-timepicker
+                                ng-model="notificationCtrl.message.endsAt"
+                                hour-step="1"
+                                minute-step="15"
+                                show-meridian="false">
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">快速链接</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="可给出快速链接"
+                           ng-model="notificationCtrl.message.link"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">内容</label>
+                <div class="col-sm-10">
+                    <trix-editor ng-model-options="{ updateOn: 'blur' }" spellcheck="false" class="trix-content"
+                                 ng-model="notificationCtrl.message.content" angular-trix trix-initialize="trixInitialize(e, editor);"
+                                 trix-change="trixChange(e, editor);" trix-selection-change="trixSelectionChange(e, editor);"
+                                 trix-focus="trixFocus(e, editor);" trix-blur="trixBlur(e, editor);" placeholder="请输入通知内容"></trix-editor>
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary col-sm-offset-7" ng-click="notificationCtrl.saveMessage()">提交</button>
+            </div>
+        </form>
+    </div>
+    <div name="manageMember" class="col-sm-4" style="float: right">
+        <div class="col-sm-offset-3 col-sm-7 border-bottom" style="margin-bottom: 4px;">
+            <h4 class="bold">通讯录
+                <a class="right link" ng-click="notificationCtrl.showAddGroupPanel()">新建群</a>
+            </h4>
+        </div>
+        <uib-tabset class="col-sm-offset-3 col-sm-7" active="activeForm" width="235px">
+            <uib-tab index="0" heading="老师" select="notificationCtrl.choseStaff()">
+                <div class="membertab list-group">
+                    <a class="list-group-item nonborder"><input class="form-control" width="165px" type="text"
+                                                                placeholder="请输入老师姓名"
+                                                                ng-model="notificationCtrl.nameFilter"/></a>
+                    <a class="list-group-item nonborder"
+                       ng-repeat="item in notificationCtrl.unselectedStaffItems  | filter:notificationCtrl.nameFilter | selectedMemberFilter:notificationCtrl.receiversId"
+                       ng-click="notificationCtrl.clickMember(item)" style="cursor: pointer"
+                    >
+                        {{item.sno+" "+item.name}}
+                    </a>
+                </div>
+            </uib-tab>
+            <uib-tab index="1" heading="学生" select="notificationCtrl.choseStudent()">
+                <div class="membertab list-group">
+                    <a class="list-group-item nonborder"><input class="form-control" width="165px" type="text"
+                                                                placeholder="请输入学生姓名"
+                                                                ng-model="notificationCtrl.nameFilter"/></a>
+                    <a class="list-group-item nonborder"
+                       ng-repeat="item in notificationCtrl.unselectedStudentItems | filter:notificationCtrl.nameFilter | selectedMemberFilter:notificationCtrl.receiversId"
+                       ng-click="notificationCtrl.clickMember(item)" style="cursor: pointer"
+                    >
+                        {{item.sno+" "+item.name}}
+                    </a>
+                </div>
+            </uib-tab>
+            <uib-tab index="2" heading="群组" select="notificationCtrl.choseGroup()">
+                <div class="membertab list-group">
+                    <a class="list-group-item nonborder"><input class="form-control" width="165px" type="text"
+                                                                placeholder="请输入群名称"
+                                                                ng-model="notificationCtrl.nameFilter"/></a>
+                    <div class="list-group-item nonborder"
+                         ng-repeat="item in notificationCtrl.unselectedGroupItems | filter:notificationCtrl.nameFilter | selectedMemberFilter:notificationCtrl.groupsId"
+                    >
+                        <div>{{item.name}}</div>
+                        <div class="text-right">
+                            <button class="btn btn-sm btn-success" style="margin-right: 2px;"
+                                    ng-click="notificationCtrl.clickGroup(item)"><span
+                                    class="glyphicon glyphicon-ok"></span></button>
+                            <button class="btn btn-sm btn-primary" style="margin-right: 2px;"
+                                    ng-click="notificationCtrl.showModifyGroupPanel(item)"><span
+                                    class="glyphicon glyphicon-pencil"></span></button>
+                            <button class="btn btn-sm btn-danger" style="margin-right: 2px;"
+                                    ng-click="notificationCtrl.deleteGroup($index)"><span
+                                    class="glyphicon glyphicon-remove"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>
+
+<script type="text/ng-template" id="addGroupPanel.html">
+    <div class="modal-header">
+        <h3 class="modal-title">新建群</h3>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <form class="form-horizontal">
+                <div class="form-group col-sm-12">
+                    <label class="control-label col-sm-2">群名称</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" ng-model="addGroupPanelCtrl.group.name"/>
+                    </div>
+                </div>
+            </form>
+            <form>
+                <div class="form-group col-sm-5" style="padding-left: 27px;">
+                    <label>未添加</label>
+                    <div class="border" style="height: 340px;">
+                        <uib-tabset active="activeForm">
+                            <uib-tab index="0" heading="老师" select="addGroupPanelCtrl.choseStaff()">
+                                <div class="membertab_addpanel list-group">
+                                    <a class="list-group-item nonborder">
+                                        <input class="form-control" width="165px"
+                                               type="text"
+                                               placeholder="请输入老师姓名"
+                                               ng-model="addGroupPanelCtrl.nameFilter"/>
+                                    </a>
+                                    <a class="list-group-item nonborder member-item"
+                                       ng-repeat="item in addGroupPanelCtrl.unselectedStaffMembers  | filter:addGroupPanelCtrl.nameFilter | selectedMemberFilter:addGroupPanelCtrl.group.selectedMembersId"
+                                       ng-click="addGroupPanelCtrl.select(item)">
+                                        {{item.name}}
+                                    </a>
+                                </div>
+                            </uib-tab>
+                            <uib-tab index="1" heading="学生" select="addGroupPanelCtrl.choseStudent()">
+                                <div class="membertab_addpanel list-group">
+                                    <a class="list-group-item nonborder"><input class="form-control" width="165px"
+                                                                                type="text"
+                                                                                placeholder="请输入学生姓名"
+                                                                                ng-model="addGroupPanelCtrl.unselectedNameFilter"/></a>
+                                    <a class="list-group-item nonborder member-item"
+                                       ng-repeat="item in addGroupPanelCtrl.unselectedStudentMembers | filter:addGroupPanelCtrl.unselectedNameFilter | selectedMemberFilter:addGroupPanelCtrl.group.selectedMembersId"
+                                       ng-click="addGroupPanelCtrl.select(item)">
+                                        {{item.name}}
+                                    </a>
+                                </div>
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>
+                </div>
+                <div class="col-sm-2 text-center" style="height: 340px;padding-top: 170px;">
+                    <span>>></span>
+                </div>
+                <div class="form-group col-sm-5">
+                    <label>已添加</label>
+                    <div class="border" style="height: 340px;">
+                        <div class="membertab_addpanel list-group">
+                            <a class="list-group-item nonborder">
+                                <input class="form-control" width="165px"
+                                       type="text"
+                                       placeholder="请输入老师姓名"
+                                       ng-model="addGroupPanelCtrl.selectedNameFilter"/>
+                            </a>
+                            <a class="list-group-item nonborder member-item"
+                               ng-repeat="item in addGroupPanelCtrl.selectedMembers  | filter:addGroupPanelCtrl.selectedNameFilter"
+                               ng-click="addGroupPanelCtrl.unselect($index)">
+                                {{item.name}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="addGroupPanelCtrl.save()">保存</button>
+        <button class="btn btn-warning" type="button" ng-click="addGroupPanelCtrl.close()">取消</button>
+    </div>
+</script>

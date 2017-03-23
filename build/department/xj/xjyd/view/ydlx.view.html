@@ -1,0 +1,141 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>1. 异动类型</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="status-change-type panel panel-default" ng-controller="YdlxController as ydlxController">
+
+    <div class="panel-heading">
+        <span class="panel-title">异动类型</span>
+    </div>
+
+    <div ng-init="ydlxController.typecombine()">
+
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>异动大类</th>
+                <th>异动类型</th>
+                <th>限制</th>
+                <th>审核流程</th>
+                <th>学生是否可见</th>
+                <th>是否需要上传文件</th>
+                <th>异动后相关信息修改</th>
+                <th>学籍状态</th>
+                <th>是否离校</th>
+                <th>是否归入终结生</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="item in ydlxController.res">
+            <tr ng-repeat="subItem in item.statusChangeTypes">
+                <td rowspan="{{item.count}}" ng-show="$first">{{item.name}}</td>
+                <td>{{subItem.minor}}</td>
+                <td>{{subItem.restrict}}</td>
+                <td>{{item.auditWorkflow[$index]}}</td>
+                <td>{{subItem.visible}}</td>
+                <td>{{subItem.attachment}}</td>
+                <td>{{subItem.modification}}</td>
+                <td>{{subItem.status}}</td>
+                <td>{{subItem.quit}}</td>
+                <td>{{subItem.terminated}}</td>
+                <td>{{subItem.memo}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+       <!-- <div class="text-right">
+            <span class="success-status" ng-bind="ydlxController.successStatus"></span>
+            <button type="button" class="btn btn-primary"
+                    ng-click="ydlxController.isCollapsed = !ydlxController.isCollapsed; ydlxController.successStatus = null;">
+                添加
+            </button>
+        </div>
+
+        <div class="div-type-add" uib-collapse="ydlxController.isCollapsed">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <td>大类</td>
+                    <td>小类</td>
+                    <td>限制</td>
+                    <td>备注</td>
+                    <td>学生是否可见</td>
+                    <td>是否需要上传文件</td>
+                    <td>是否需要签报号</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <select class="form-control " id="major" ng-model="ydlxController.statusChangeType.major">
+                            <option ng-repeat="item in ydlxController.majors" value="{{item}}">{{item}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" ng-model="ydlxController.statusChangeType.minor"/>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control"
+                               ng-model="ydlxController.statusChangeType.myConstraint"/>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" ng-model="ydlxController.statusChangeType.memo"/>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="radio" value="true" ng-model="ydlxController.statusChangeType.isVisible">
+                            是
+                        </label>
+                        <label>
+                            <input type="radio" value="false" ng-model="ydlxController.statusChangeType.isVisible">
+                            否
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="radio" value="true" ng-model="ydlxController.statusChangeType.isUploadFile">
+                            是
+                        </label>
+                        <label>
+                            <input type="radio" value="false" ng-model="ydlxController.statusChangeType.isUploadFile">
+                            否
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="radio" value="true" ng-model="ydlxController.statusChangeType.isNeedSign">
+                            是
+                        </label>
+                        <label>
+                            <input type="radio" value="false" ng-model="ydlxController.statusChangeType.isNeedSign">
+                            否
+                        </label>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="position-relative">
+                <input type="text" ng-model="ydlxController.statusChangeType.major" class="input-move"/>
+            </div>
+
+            <div class="text-right">
+                <span class="warning-status" ng-bind="ydlxController.warningStatus"></span>
+                <button class="btn btn-primary" ng-click="ydlxController.save()">保存
+                </button>
+            </div>
+
+        </div>
+-->
+    </div>
+
+</div>

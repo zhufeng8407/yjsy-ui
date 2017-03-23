@@ -1,0 +1,233 @@
+[
+  {
+    "name": "学籍系统",
+    "icon": "fa fa-calendar-check-o",
+    "link": "/department/xj/xj-home.html#/xsgl/xs-import.html",
+    "subMenu": [
+      {
+        "name": "新生管理",
+        "icon": "fa fa-user-plus",
+        "link": "/department/xj/xj-home.html#/xsgl/xs-import.html",
+        "subMenu": [
+          {
+            "name": "新生批量导入",
+            "icon": ""  ,
+            "link": "/department/xj/xj-home.html#/xsgl/xs-import.html"
+          },
+          {
+            "name": "单个新生导入",
+            "link": "/department/xj/xj-home.html#/xsgl/add-xs.html"
+          },
+          {
+            "name": "新生信息维护",
+            "link": "/department/xj/xj-home.html#/xsgl/xs-info.html"
+          },
+          {
+            "name": "入学测试题库",
+            "link": "/department/xj/xj-home.html#/xsgl/xs-exam.html"
+          },
+          {
+            "name": "新生转库",
+            "link": "/department/xj/xj-home.html#/xsgl/xs-repo.html"
+          }
+        ]
+      },
+      {
+        "name": "报到注册",
+        "icon": "fa fa-file-text-o",
+        "link": "/department/xj/xj-home.html#/xsgl/xs-registion.html",
+        "subMenu": [
+          {
+            "name": "新生注册管理",
+            "link": "/department/xj/xj-home.html#/xsgl/xs-registion.html"
+          },
+          {
+            "name": "新生报到管理",
+            "link": "/department/xj/xj-home.html#/xsgl/xs-register.html"
+          },
+          {
+            "name": "新生缴费管理",
+            "link": "/department/xj/xj-home.html#/xsgl/xs-fee.html"
+          }
+        ]
+      },
+      {
+        "name": "老生注册管理",
+        "link": "/department/xj/xj-home.html#/lsgl/ls-config.html",
+        "subMenu": [
+          {
+            "name": "注册情况查询",
+            "link": "/department/xj/xj-home.html#/lsgl/ls-registion.html"
+          },
+          {
+            "name": "注册设置",
+            "link": "/department/xj/xj-home.html#/lsgl/lszc-config.html"
+          }
+        ]
+      },
+      {
+        "name": "学籍异动管理",
+        "icon": "glyphicon glyphicon-plus",
+        "link": "/department/xj/xj-home.html#/xjyd/ydsq.html",
+        "subMenu": [
+          {
+            "name": "异动类型设置",
+            "icon": "glyphicon glyphicon-plus",
+            "link": "/department/xj/xj-home.html#/xjyd/ydlx.html"
+          },
+          {
+            "name": "异动流程设置",
+            "icon": "glyphicon glyphicon-plus",
+            "link": "/department/xj/xj-home.html#/xjyd/ydlc.html"
+          },
+          {
+            "name": "异动申请",
+            "icon": "glyphicon glyphicon-plus",
+            "link": "/department/xj/xj-home.html#/xjyd/ydsq.html"
+          },
+          {
+            "name": "异动信息审核",
+            "icon": "glyphicon glyphicon-search",
+            "link": "/department/xj/xj-home.html#/xjyd/ydsp.html"
+          }
+        ]
+      },
+      {
+        "name": "学籍信息管理",
+        "link": "/department/xj/xj-home.html#/lsgl/xj-info.html",
+        "subMenu": [
+          {
+            "name": "导师信息导入",
+            "link": "/department/xj/xj-home.html#/xj-ds-import.html"
+          },
+          {
+            "name": "基本信息维护",
+            "link": "/department/xj/xj-home.html#/lsgl/xj-info.html"
+          },
+          {
+            "name": "困难生管理",
+            "link": "/department/xj/xj-home.html#/xsgl/xs-poverty.html"
+          }
+        ]
+      },
+      {
+        "name": "预毕(结)业信息管理",
+        "link": "/department/xj/xj-home.html#/ybjy-info.html",
+        "subMenu": [
+          {
+            "name": "预毕(结)业信息维护",
+            "link": "/department/xj/xj-home.html#/ybjy-info.html"
+          },
+          {
+            "name": "预毕(结)业信息审核",
+            "link": "/department/xj/xj-home.html#/ybjy-audit.html"
+          },
+          {
+            "name": "预毕(结)业信息查询",
+            "link": "/department/xj/xj-home.html#/ybjy-maintain.html"
+          }
+        ]
+      },
+      {
+        "name": "学籍综合事务管理",
+        "link": "/department/xj/xj-home.html#/zhsw-yjsz-bb.html",
+        "subMenu": [
+          {
+            "name": "研究生证补办",
+            "link": "/department/xj/xj-home.html#/zhsw-yjsz-bb.html"
+          },
+          {
+            "name": "学籍卡片打印",
+            "link": "/department/xj/xj-home.html#/zhsw-xjcard-print.html"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "培养系统",
+    "icon": "fa fa-pagelines",
+    "link": "/department/xj/xj-home.html#/xjyd/1ydsq.html",
+    "subMenu": [
+      {
+        "name": "课程培养",
+        "link": "/department/xj/xsgl/xs-repo.html",
+        "subMenu": [
+          {
+            "name": "培养方案",
+            "link": "/department/xj/xsgl/xs-repo.html"
+          },
+          {
+            "name": "开课",
+            "link": "/department/xj/xsgl/xs-repo.html"
+          },
+          {
+            "name": "专业实践",
+            "link": "/department/xj/xsgl/xs-repo.html"
+          }
+        ]
+      },
+      {
+        "name": "毕业管理",
+        "link": "/department/xj/xsgl/xs-repo.html",
+        "subMenu": [
+          {
+            "name": "毕业生",
+            "link": "/department/xj/xsgl/xs-repo.html"
+          },
+          {
+            "name": "终结生",
+            "link": "/department/xj/xsgl/xs-repo.html"
+          },
+          {
+            "name": "预答辩",
+            "link": "/department/xj/xsgl/xs-repo.html"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "系统管理",
+    "icon": "fa fa-cog fa-fw",
+    "link": "/department/xt/xt-home.html#/zhgl/js-manage.html",
+    "subMenu": [
+      {
+        "name": "账号管理",
+        "link": "/department/xt/xt-home.html#/zhgl/js-manage.html",
+        "subMenu": [
+          {
+            "name": "角色管理",
+            "link": "/department/xt/xt-home.html#/zhgl/js-manage.html"
+          },
+          {
+            "name": "账号管理",
+            "link": "/department/xt/xt-home.html#/zhgl/zh-manage.html"
+          }
+        ]
+      },
+      {
+        "name": "元数据管理",
+        "icon": "",
+        "link": "/department/xt/xt-home.html#/metadata.html",
+        "subMenu": [
+          {
+            "name": "元数据查看",
+            "icon": "",
+            "link": "/department/xt/xt-home.html#/metadata.html"
+          },
+          {
+            "name": "异动类型管理",
+            "icon": "",
+            "link": "/department/xj/xsgl/xs-import.html"
+          },
+          {
+            "name": "异动审批流程管理",
+            "icon": "",
+            "link": "/department/xj/xsgl/xs-import.html"
+          }
+        ]
+      }
+    ]
+  }
+]

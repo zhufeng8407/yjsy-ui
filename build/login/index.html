@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+  <!--<![endif]-->
+  <!-- BEGIN HEAD -->
+  <head>
+    <meta charset="utf-8"/>
+    <title>研究生院管理系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../lib/js/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../lib/js/angular-timeline/dist/angular-timeline.css" />
+    <!-- endbower -->
+
+    <!-- BEGIN 首先加载第三方的css
+    <link
+        href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all"
+        rel="stylesheet" type="text/css">
+     -->
+    <link href="../lib/style/font-awesome/css/font-awesome.min.css"
+        rel="stylesheet" type="text/css">
+    <link href="../lib/style/bootstrap-3.3.6-dist/css/bootstrap.min.css"
+        rel="stylesheet"/>
+    <link href="../lib/style/simple-line-icons/simple-line-icons.min.css"
+        rel="stylesheet" type="text/css">
+    <!-- <link href="./assets/global/plugins/uniform/css/uniform.default.css"
+        rel="stylesheet" type="text/css"> -->
+    <!-- END 首先加载第三方的css -->
+
+    <!-- BEGIN  加载页面相关的CSS文件-->
+    <link rel="stylesheet" type="text/css" href="../common/style/widget.css"/>
+    <link rel="stylesheet" type="text/css" href="../common/style/layout.css"/>
+    <link href="../lib/style/bootstrap-material-design/bootstrap-material-design.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <!-- END 加载页面相关的CSS文件 -->
+
+    <!-- BEGIN 个性化的CSS -->
+
+    <!-- END 个性化的CSS -->
+
+  </head>
+  <!-- END HEAD -->
+  <!-- BEGIN BODY -->
+  <body data-ng-app="ecnuHomePage">
+    <div class="nav navbar-default">
+      <div class="navbar-brand">华东师范大学--研究生院管理系统</div>
+    </div>
+
+    <div class="container-fluid page-content" ng-controller="HomePageCtrl as homePageCtrl">
+      <!-- content div -->
+      <div class="row">{{homePageCtrl.uname}}</div>
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="panel">
+            <div class="panel-heading">功能选择</div>
+            <div class="panel-body">
+              <table class="table table-bordered">
+                <tr>
+                  <th>用能</th>
+                  <th>功能</th>
+                </tr>
+                <tr ng-repeat="page in homePageCtrl.pages">
+                  <td>
+                    <button class="btn btn-lg btn-primary" ng-click="homePageCtrl.choosePageType(page.page)" ng-cloak>
+                      {{page.page}}
+                    </button>
+                  </td>
+                  <td><label ng-repeat="role in page.roles">{{role}}<span ng-if="!$last">,</span></label></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer div -->
+    <div class="row">
+      <div ng-include="'../common/view/footer.html'"></div>
+    </div>
+
+
+    <!-- bower:js -->
+    <script src="../lib/js/angular/angular.js"></script>
+    <script src="../lib/js/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="../lib/js/angular-loader/angular-loader.js"></script>
+    <script src="../lib/js/angular-route/angular-route.js"></script>
+    <script src="../lib/js/angular-cookies/angular-cookies.js"></script>
+    <script src="../lib/js/angular-animate/angular-animate.js"></script>
+    <script src="../lib/js/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../lib/js/ngstorage/ngStorage.js"></script>
+    <script src="../lib/js/ng-file-upload/ng-file-upload.js"></script>
+    <script src="../lib/js/jquery/dist/jquery.js"></script>
+    <script src="../lib/js/angular-timeline/dist/angular-timeline.js"></script>
+    <!-- endbower -->
+
+    <!--
+      common modules are injected by gulp-inject
+      <script type="text/javascript" src="../common/common.app.js"></script>
+      <script type="text/javascript" src="../common/service/utils.ser.js"></script>
+      <script type="text/javascript" src="../common/service/menu-dao.ser.js"></script>
+      -->
+    <!-- inject:js -->
+
+    <script src="../common/common.app.js"></script>
+
+    <script src="../common/config.js"></script>
+
+    <script src="../common/directive/animations.dir.js"></script>
+
+    <script src="../common/directive/menu-search-box.dir.js"></script>
+
+    <script src="../common/directive/nav-dropdown-menu.dir.js"></script>
+
+    <script src="../common/directive/promptMessage-panel.dir.js"></script>
+
+    <script src="../common/directive/status-apply.dir.js"></script>
+
+    <script src="../common/directive/status-audit-timeline.dir.js"></script>
+
+    <script src="../common/directive/xs-info-panel.dir.js"></script>
+
+    <script src="../common/service/account-dao.ser.js"></script>
+
+    <script src="../common/service/connection.ser.js"></script>
+
+    <script src="../common/service/diff-dao.ser.js"></script>
+
+    <script src="../common/service/exam-dao.ser.js"></script>
+
+    <script src="../common/service/global.ser.js"></script>
+
+    <script src="../common/service/menu-dao.ser.js"></script>
+
+    <script src="../common/service/message-dao.ser.js"></script>
+
+    <script src="../common/service/message-group-dao.ser.js"></script>
+
+    <script src="../common/service/meta-data-dao.ser.js"></script>
+
+    <script src="../common/service/modals.ser.js"></script>
+
+    <script src="../common/service/page-state.ser.js"></script>
+
+    <script src="../common/service/popular-page.ser.js"></script>
+
+    <script src="../common/service/registration.ser.js"></script>
+
+    <script src="../common/service/repo-dao.ser.js"></script>
+
+    <script src="../common/service/role-dao.ser.js"></script>
+
+    <script src="../common/service/select-dao-ser.js"></script>
+
+    <script src="../common/service/staff-dao.ser.js"></script>
+
+    <script src="../common/service/status-change-dao.ser.js"></script>
+
+    <script src="../common/service/status-change-type-dao.ser.js"></script>
+
+    <script src="../common/service/stu-dao.ser.js"></script>
+
+    <script src="../common/service/utils.ser.js"></script>
+
+    <script src="../common/service/yby-dao.ser.js"></script>
+
+    <!-- endinject -->
+
+
+    <!-- build:js ./ecnu-dp-home.app.min.js -->
+    <script type="text/javascript" src="index.app.js"></script>
+    <script type="text/javascript" src="index.ctrl.js"></script>
+    <!-- endbuild -->
+
+  </body>
+  <!-- END BODY -->
+  <!-- END BODY -->
+</html>

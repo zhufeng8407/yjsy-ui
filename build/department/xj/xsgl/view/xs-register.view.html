@@ -1,0 +1,25 @@
+<form class="form-inline" id="myForm">
+    <div ngf-drop ngf-select ng-model="xsRegisterCtrl.file" class="drop-box"
+         ngf-drag-over-class="'dragover'" accept="text/csv">将CSV或者EXCEL拖入此处
+    </div>
+    <div ngf-no-file-drop>当前浏览器不支持文件拖入上传功能</div>
+
+    <!--增加一个button，上传文件 -->
+    <br>
+    <br>
+    <div>
+        <input type="file" data-ngf-select
+               data-ng-model="xsRegisterCtrl.file" name="file" accept="text/csv"
+               data-ngf-max-size="10MB" data-ngf-model-invalid="errorFile"></td>
+
+        <div ng-show="xsRegisterCtrl.flag == true">
+            <br>
+            <br>
+            <button ng-click="xsRegisterCtrl.ok()"> 确认上传</button>
+            <button>取消上传</button>
+        </div>
+    </div>
+    <!--END 增加一个button，上传文件 -->
+</form>
+
+

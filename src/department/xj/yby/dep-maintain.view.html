@@ -1,0 +1,94 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>按查询条件返回研究生预毕业状态（即哪些研究生处于预毕业审核阶段）</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<search-layout search-config="ybyMaintainCtrl.searchConfig" search-condition="ybyMaintainCtrl.searchCondition">
+    <div class="search-section">
+        <div class="form-group col-md-4">
+            <label class="col-md-3 control-label no-padding">审核状态</label>
+            <div class="col-md-9">
+                <select class="form-control" ng-model="ybyMaintainCtrl.searchCondition.pregraduationStatus">
+                    <option value="所有">所有</option>
+                    <option ng-repeat=" item in ybyMaintainCtrl.pregraduationStatus" value="{{item}}">{{item}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-md-8">
+            <label class="date-range-control control-label no-padding">申请日期</label>
+            <div class="col-sm-4 no-padding-right">
+                <p class="input-group" style="margin-bottom:0px">
+                    <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭" uib-datepicker-popup="{{ybyMaintainCtrl.format}}" ng-init="ybyMaintainCtrl.date1Popup=false" ng-model="ybyMaintainCtrl.searchCondition.date1" is-open="ybyMaintainCtrl.date1Popup" datepicker-options="ybyMaintainCtrl.dateOptions" ng-required="true" alt-input-formats="altInputFormats" />
+                    <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                        ng-click="ybyMaintainCtrl.date1Popup = true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                </p>
+            </div>
+            <div class="col-sm-1 no-padding">
+                <label>至</label>
+            </div>
+            <div class="col-sm-4 no-padding-left">
+                <p class="input-group">
+                    <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭" uib-datepicker-popup="{{ybyMaintainCtrl.format}}" ng-init="ybyMaintainCtrl.date2Popup=false" ng-model="ybyMaintainCtrl.searchCondition.date2" is-open="ybyMaintainCtrl.date2Popup" datepicker-options="ybyMaintainCtrl.dateOptions" ng-required="true" alt-input-formats="altInputFormats" />
+                    <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                        ng-click="ybyMaintainCtrl.date2Popup = true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="hline"></div>
+    <div class="search-bottom">
+        <div class="col-md-3">
+            <button class="btn btn-primary" data-ng-click="ybyMaintainCtrl.conditionalSearch(ybyMaintainCtrl.searchCondition)">
+                查找
+            </button>
+        </div>
+    </div>
+</search-layout>
+<table class="table table-hover table-striped table-bordered">
+    <thead>
+        <tr>
+            <th class="text-center" width="50px">学号</th>
+            <th class="text-center" width="50px">姓名</th>
+            <th class="text-center" width="50px">院系</th>
+            <th class="text-center" width="50px">专业</th>
+            <th class="text-center" width="50px">预毕业审核状态</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr data-ng-repeat="item in ybyMaintainCtrl.items">
+            <td class="text-center" data-ng-bind="item.sno"></td>
+            <td class="text-center" data-ng-bind="item.name"></td>
+            <td class="text-center" data-ng-bind="item.school"></td>
+            <td class="text-center" data-ng-bind="item.department"></td>
+            <td class="text-center" data-ng-bind="item.pregraduationStatus"></td>
+        </tr>
+    </tbody>
+</table>
+<div class="form-inline forPagination" ng-show="ybyMaintainCtrl.page">
+    <div class="col-md-3"></div>
+    <div class="text-center col-md-6">
+        <uib-pagination total-items="ybyMaintainCtrl.totalItems" ng-model="ybyMaintainCtrl.currentPage" items-per-page="ybyMaintainCtrl.numPerPage" max-size="ybyMaintainCtrl.maxSize" class="pagination pagination-location" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="ybyMaintainCtrl.conditionalSearch(ybyMaintainCtrl.searchCondition)" force-ellipses="true"></uib-pagination>
+    </div>
+    <div class="text-right col-md-3">
+        <label class="pagination-label" for="pageNum">每页显示记录数目</label>
+        <select id="pageNum" class="form-control" ng-model="ybyMaintainCtrl.numPerPage" ng-options="num for num in ybyMaintainCtrl.num"></select>
+        <button class="btn btn-default" ng-click="ybyMaintainCtrl.conditionalSearch(ybyMaintainCtrl.searchCondition)">确定
+        </button>
+    </div>
+</div>

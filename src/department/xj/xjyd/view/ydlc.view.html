@@ -1,0 +1,84 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>定义或修改学籍异动类型的审批流程</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="status-change-flow panel panel-default" ng-controller="YdlcController as ydlcController">
+    <div class="panel-body form form-horizontal">
+        <div class="row">
+            <div class="form-group col-md-12">
+                <div class="col-md-2 text-right">
+                    <label class="control-label" for="major">异动大类</label>
+                </div>
+                <div class="col-md-10">
+                    <select class="form-control" id="major" ng-model="ydlcController.major" ng-change="ydlcController.onMajorChosen()">
+                        <option ng-repeat="major in ydlcController.majors" value="{{major[0]}}">{{major[1]}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <div class="col-md-2 text-right">
+                    <label for="minor" class="control-label">异动小类</label>
+                </div>
+                <div class="col-md-10">
+                    <select class="form-control" id="minor" ng-model="ydlcController.minor" ng-change="ydlcController.onMinorChosen()">
+                        <option ng-repeat="minor in ydlcController.minors" value="{{minor[0]}}">{{minor[1]}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <div class="col-md-2 text-right">
+                    <label for="role" class="control-label">审核角色</label>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" id="role" ng-model="ydlcController.role">
+                        <option ng-repeat="role in ydlcController.roles" value="{{role.roleName}}">{{role.roleName }}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary" ng-click="ydlcController.addSequence()">添加</button>
+                </div>
+                <div class="col-md-4">
+                    <label ng-bind="ydlcController.warningStatus" class="control-label warning-status"></label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12 no-margin-bottom">
+                <div class="col-md-2 text-right">
+                    <label>流程</label>
+                </div>
+                <div class="col-md-10">
+                    <ui sv-root sv-part="ydlcController.sequences">
+                        <li class="sequence" ng-repeat="item in ydlcController.sequences" sv-element>
+                            <span>{{$index+1}}.</span>
+                            <span>{{item}}</span>
+                            <i ng-click="ydlcController.deleteSequence($index)">✖</i>
+                        </li>
+                    </ui>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12 no-margin-bottom">
+                <div class="col-md-2 col-md-offset-2 text-left">
+                    <button class="btn btn-primary" ng-click="ydlcController.save()">保存</button>
+                </div>
+                <div class="col-md-7">
+                    <span ng-bind="ydlcController.rightStatus" style="color:green;  margin-left: 15px"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

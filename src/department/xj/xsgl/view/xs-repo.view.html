@@ -1,0 +1,71 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>按查询条件返回新生学籍数据</li>
+                <li>批量执行或单条执行新生正式入籍操作</li>
+                <li>保留入学资格的新生入籍操作将被延期至下一学年</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="panel panel-info">
+    <search-layout search-config="xsRepoCtrl.searchConfig" search-condition="xsRepoCtrl.searchCondition">
+        <div class="search-bottom">
+            <div class="col-md-3">
+                <button class="btn btn-primary" data-ng-click="xsRepoCtrl.searchStudents()">查询
+                </button>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-primary" data-ng-click="xsRepoCtrl.updateStatus(xsRepoCtrl.searchCondition)">
+                    批量转库
+                </button>
+            </div>
+        </div>
+    </search-layout>
+    <div class="form form-inline">
+        <table class="table table-hover table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center" width="50px">学号</th>
+                    <th class="text-center" width="50px">姓名</th>
+                    <th class="text-center" width="50px">院系</th>
+                    <th class="text-center" width="50px">专业</th>
+                    <th class="text-center" width="50px">新生</th>
+                    <th class="text-center" width="50px">转为在校生</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="item in xsRepoCtrl.items">
+                    <td class="text-center" data-ng-bind="item.sno"></td>
+                    <td class="text-center" data-ng-bind="item.name"></td>
+                    <td class="text-center" data-ng-bind="item.school"></td>
+                    <td class="text-center" data-ng-bind="item.department"></td>
+                    <td class="text-center" data-ng-bind="item.new"></td>
+                    <td class="text-center">
+                        <span class="btn btn-sm btn-primary glyphicon glyphicon-pencil" data-ng-click="xsRepoCtrl.updateSingleStatus(item.sno)"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-inline forPagination" ng-show="xsRepoCtrl.page">
+            <div class="col-md-3"></div>
+            <div class="text-center col-md-6">
+                <uib-pagination total-items="xsRepoCtrl.totalItems" ng-model="xsRepoCtrl.currentPage"
+                                items-per-page="xsRepoCtrl.numPerPage" max-size="xsRepoCtrl.maxSize"
+                                class="pagination pagination-location" first-text="首页" previous-text="上一页"
+                                next-text="下一页" last-text="末页"
+                                boundary-links="true" ng-change="xsRepoCtrl.searchStudents(xsRepoCtrl.searchCondition)"
+                                force-ellipses="false"></uib-pagination>
+            </div>
+            <div class="text-right col-md-3">
+                <label class="pagination-label" for="pageNum">每页显示记录数目</label>
+                <select id="pageNum" class="form-control" ng-model="xsRepoCtrl.numPerPage" ng-options="num for num in xsRepoCtrl.num"></select>
+                <button class="btn btn-default" ng-click="xsRepoCtrl.searchStudents()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>

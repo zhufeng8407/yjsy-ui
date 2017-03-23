@@ -1,0 +1,411 @@
+<style>
+.search-form {
+    float: left;
+    margin-bottom: 10px;
+    border-color: #D9D9D9;
+    border-width: 1px;
+    border-style: solid solid solid solid;
+    border-radius: 4px;
+    padding: 0px;
+}
+
+.search-form > table > tbody > tr:nth-child(1) > td {
+    padding-left: 20px;
+    vertical-align: middle;
+}
+
+.search-form > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td.text-right {
+    padding-right: 10px;
+}
+
+.line {
+    vertical-align: middle;
+}
+
+.search-form > table > tbody > tr:nth-child(2) > td > form > div > label.ng-binding {
+    font-weight: 100;
+    padding-left: 10px;
+}
+
+.role-panel {
+    max-height: 417px;
+    overflow-y: auto;
+}
+
+.flipx {
+    -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
+    /*IE*/
+    filter: FlipH;
+}
+
+.table > tbody > tr > td {
+    border-top: none;
+}
+
+.table-bordered > thead > tr > td,
+.table-bordered > thead > tr > th {
+    border-bottom-width: 1px;
+}
+
+.search-form > table > tbody > tr:nth-child(1) > td {
+    vertical-align: top;
+}
+
+.label-minWidth {
+    min-width: 45px;
+}
+
+.jsm-minWidth {
+    min-width: 115px;
+}
+
+.button-minWidth {
+    min-width: 100px;
+}
+
+.content-row > td {
+    vertical-align: middle !important;
+}
+
+.teacherPanel .modal-lg {
+    width: 900px;
+}
+
+.addStudent td {
+    vertical-align: middle !important;
+    text-align: center;
+}
+
+.addStudent th {
+    vertical-align: middle !important;
+    text-align: center;
+}
+</style>
+<div ng-controller="ZhglCtrl as zhglCtrl">
+    <div class="memo">
+        <div class="panel panel-info panel-border-color">
+            <div class="panel-heading">
+                <h3 class="panel-title">说明</h3>
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <li>角色包含权限和功能两部分，其中权限定义可管理哪些院系的研究生，功能定义可操作哪些功能页面</li>
+                    <li>查询或修改某个用户账号的角色</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 search-form">
+        <table class="table" style="width: 100%;margin-bottom: 0px;">
+            <tr>
+                <td colspan="3">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <input type="text" class="form-control" data-ng-model="zhglCtrl.No" placeholder="请输入账号">
+                        </div>
+                        <button class="btn btn-primary" style="margin-left: 20px;" data-ng-click="zhglCtrl.search()">
+                            查找
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-sm-12 search-form" ng-show="zhglCtrl.showTable">
+        <table class="table" style="width: 100%;margin-bottom: 0px;">
+            <tr>
+                <td colspan="3">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label>权限管理</label>
+                        </div>
+                        <button class="btn btn-primary" style="margin-left: 20px;" data-ng-click="zhglCtrl.batchPrivilege()">
+                            批量修改
+                        </button>
+                        <input class="btn btn-primary" type="button" value="下载电子表格模板文件" ng-click="zhglCtrl.downloadDemo()"/>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-sm-12 search-form" ng-show="zhglCtrl.showTable">
+        <table class="table" style="width: 100%;margin-bottom: 0px;">
+            <tr>
+                <td colspan="3" class="line" style="padding-left: 20px;">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label>姓名</label>
+                            <input class="form-control" style="width: 154px;margin-left: 10px;" value="{{zhglCtrl.name}}" ng-disabled="true">
+                        </div>
+                        <div class="form-group" style="padding-left: 20px;">
+                            <label>类别</label>
+                            <input class="form-control" style="width: 154px;margin-left: 10px;" value="{{zhglCtrl.type}}" ng-disabled="true">
+                        </div>
+                        <div class="form-group" style="padding-left: 20px;">
+                            <label>部门</label>
+                            <input class="form-control" style="margin-left: 10px;" value="{{zhglCtrl.unit}}" ng-disabled="true">
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-sm-12 search-form" ng-show="zhglCtrl.showTable" style="border: none">
+        <table class="table" style="width: 100%;margin-bottom: 0px;">
+            <tr>
+                <td width="30%" class="no-padding">
+                    <div class="role-panel">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <td colspan="3" class="text-center"><strong>可分配角色</strong></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-center jsm-minWidth">角色名</th>
+                                    <th class="text-center label-minWidth">级别</th>
+                                    <th class="text-center label-minWidth">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr ng-show="zhglCtrl.otherRoles == null">
+                                    <td colspan="3">请查询</td>
+                                </tr>
+                                <tr class="content-row" data-ng-repeat="role in zhglCtrl.otherRoles">
+                                    <td ng-bind="role.roleName"></td>
+                                    <td ng-bind="role.domainLevel"></td>
+                                    <td>
+                                        <button class="btn btn-primary" ng-click="zhglCtrl.showAddPanel($index)">添加</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td width="5%" class="text-center" style="vertical-align: middle;">
+                    <div style="">
+                        <img ng-src="../..//common/image/arrow/arrow_right_grey.gif" width="20px;" />
+                        <br>
+                        <br>
+                        <img ng-src="../..//common/image/arrow/arrow_right_grey.gif" width="20px;" style=" transform: rotate(180deg)" />
+                    </div>
+                </td>
+                <td width="65%" class="no-padding">
+                    <div class="role-panel">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <td colspan="4" class="text-center"><strong>已分配角色</strong></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-center jsm-minWidth">角色名</th>
+                                    <th class="text-center label-minWidth">级别</th>
+                                    <th class="text-center">权限范围</th>
+                                    <th class="text-center button-minWidth">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr ng-show="zhglCtrl.accountRoles == null">
+                                    <td colspan="4">请查询</td>
+                                </tr>
+                                <tr class="content-row" data-ng-repeat="role in zhglCtrl.accountRoles">
+                                    <td ng-bind="role.roleName"></td>
+                                    <td ng-bind="role.domainLevel"></td>
+                                    <td ng-bind="role.domains"></td>
+                                    <td><span class="btn btn-sm btn-primary glyphicon glyphicon-pencil" ng-disabled="role.domainLevel == '校级' || role.domainLevel == '学生'" data-ng-click="zhglCtrl.modifyPrivilege($index)"></span>
+                                        <span class="btn btn-sm btn-danger glyphicon glyphicon-remove" data-ng-click="zhglCtrl.deleteRole($index)"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/ng-template" id="addRolePanel.html">
+    <div class="modal-header">
+        <h3 class="modal-title">请为用户分配权限</h3>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <form class="form-horizontal col-sm-offset-1 col-sm-10">
+                <div class="col-sm-5 form-group">
+                    <label class="control-label col-sm-3">院系一级</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="addRoleCtrl.unitSchool" ng-change="addRoleCtrl.getDepartment()">
+                            <option value="所有">所有</option>
+                            <option ng-repeat="school in addRoleCtrl.schools | schoolFilter:addRoleCtrl.domains" value="{{school[1]}}">{{school[0]}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-5 form-group">
+                    <label class="control-label col-sm-3">院系二级</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="addRoleCtrl.unitDepartment" ng-disabled="!addRoleCtrl.isLevelTwo">
+                            <option value="所有">所有</option>
+                            <option ng-repeat="department in addRoleCtrl.departments | departmentFilter:addRoleCtrl.domains" value="{{department[1]}}">
+                                {{department[0]}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-1 text-center">
+                    <button class="btn btn-primary" ng-disabled="addRoleCtrl.isAdd" ng-click="addRoleCtrl.addLine()">
+                        增加
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-offset-1 col-sm-10">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center col-sm-10">部门</th>
+                        <th class="text-center col-sm-2">操作</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr ng-show="addRoleCtrl.domains.length==0">
+                        <td colspan="2">请添加权限</td>
+                    </tr>
+                    <tr ng-repeat="domain in addRoleCtrl.domains">
+                        <td>{{domain.schoolName}} -> {{domain.departmentName}}</td>
+                        <td>
+                            <span class="btn btn-sm btn-danger glyphicon glyphicon-remove" data-ng-click="addRoleCtrl.deleteUnit($index)"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer" style="clear: both">
+        <button class="btn btn-primary" type="button" ng-click="addRoleCtrl.saveRole()">确认</button>
+        <button class="btn btn-primary" type="button" ng-click="addRoleCtrl.resetRole()">重置</button>
+        <button class="btn btn-warning" type="button" ng-click="addRoleCtrl.closeModel()">取消</button>
+    </div>
+</script>
+<script type="text/ng-template" id="batchPrivilege.html">
+    <form class="form-inline" name="uploadForm">
+        <div class="modal-header">
+            <h3 class="modal-title">上传文件</h3>
+        </div>
+        <div class="modal-body">
+            <table>
+                <tr height="20px">
+                    <td class="text-right">权限文件</td>
+                    <td>
+                        <input type="file" data-ngf-select data-ng-model="privilegeUploadCtrl.file" name="file" ngf-pattern="'.xlsx'" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" data-ngf-max-size="10MB" required data-ngf-model-invalid="errorFile">
+                    </td>
+                </tr>
+                <tr>
+                    <td><i ng-show="uploadForm.file.$error.maxSize">文件大小不能超过100MB，当前文件大小{{errorFile.size
+                        / 1000000|number:1}}MB</i></td>
+                </tr>
+                <tr height="20px">
+                    <td colspan="2" class="text-center">
+                        <uib-progress data-ng-show="privilegeUploadCtrl.progress">
+                            <uib-bar value="privilegeUploadCtrl.progress" type="{{privilegeUploadCtrl.type}}" data-ng-bind="privilegeUploadCtrl.progress + '%'" />
+                        </uib-progress>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-left">
+                        <span class="err" data-ng-show="privilegeUploadCtrl.isShowMsg" data-ng-bind="privilegeUploadCtrl.Msg"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-show="privilegeUploadCtrl.uploadBtn" ng-disabled="!uploadForm.$valid" type="button" data-ng-click="privilegeUploadCtrl.uploadPrivilege(privilegeUploadCtrl.file)">确认
+            </button>
+            <button class="btn btn-primary" ng-show="privilegeUploadCtrl.exportBtn" ng-disabled="!uploadForm.$valid" type="button" data-ng-click="privilegeUploadCtrl.exportError()">导出失败条目
+            </button>
+            <button class="btn btn-warning" type="button" ng-click="privilegeUploadCtrl.cancel()">取消</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="addStudentForSupervisorPanel.html">
+    <div class="modal-header">
+        <h3 class="modal-title">请选择导师</h3>
+    </div>
+    <div class="modal-body">
+        <div class="col-sm-12 search-form">
+            <table class="table" style="width: 100%;margin-bottom: 0px;">
+                <tr>
+                    <td colspan="3">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="addStudentForSupervisorCtrl.sno" placeholder="请输入账号">
+                            </div>
+                            <button class="btn btn-primary" style="margin-left: 20px;" data-ng-click="addStudentForSupervisorCtrl.searchStaff()">
+                                查找
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-sm-12 search-form">
+            <table class="table" style="width: 100%;margin-bottom: 0px;">
+                <tr>
+                    <td colspan="3" class="line" style="padding-left: 20px;">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label>姓名</label>
+                                <input class="form-control" style="width: 134px;margin-left: 10px;" value="{{addStudentForSupervisorCtrl.name}}" ng-disabled="true">
+                            </div>
+                            <!--<div class="form-group" style="padding-left: 20px;">-->
+                            <!--<label>年级</label>-->
+                            <!--<input class="form-control" style="width: 134px;margin-left: 10px;"-->
+                            <!--value="{{addStudentForSupervisorCtrl.grade}}"-->
+                            <!--ng-disabled="true">-->
+                            <!--</div>-->
+                            <!--<div class="form-group" style="padding-left: 20px;">-->
+                            <!--<label>部门</label>-->
+                            <!--<input class="form-control" style="margin-left: 10px;width: 278px;"-->
+                            <!--value="{{addStudentForSupervisorCtrl.unit}}"-->
+                            <!--ng-disabled="true">-->
+                            <!--</div>-->
+                            <button class="btn btn-primary" style="margin-left: 5px;" ng-click="addStudentForSupervisorCtrl.addStaff()">添加
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-sm-12" style="width: 100%;padding: 0px;margin-bottom: 20px;">
+            <table class="table table-bordered table-striped table-hover addStudent" style="width: 100%;margin-bottom: 0px;">
+                <thead>
+                    <tr>
+                        <th colspan="4"><strong>已选导师</strong></th>
+                    </tr>
+                    <tr>
+                        <th>姓名</th>
+                        <!--<th>年级</th>-->
+                        <!--<th>院系</th>-->
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="staff in addStudentForSupervisorCtrl.staffs">
+                        <td>{{staff.name}}</td>
+                        <!--<td>{{student.grade}}</td>-->
+                        <!--<td>{{student.unit}}</td>-->
+                        <td>
+                            <button class="btn btn-danger glyphicon glyphicon-remove" ng-click="addStudentForSupervisorCtrl.deleteStaff($index)"></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer" style="clear: both">
+        <button class="btn btn-primary" type="button" ng-click="addStudentForSupervisorCtrl.save()">确认</button>
+        <button class="btn btn-primary" type="button" ng-click="addStudentForSupervisorCtrl.reset()">重置</button>
+        <button class="btn btn-warning" type="button" ng-click="addStudentForSupervisorCtrl.cancel()">取消</button>
+    </div>
+</script>

@@ -1,0 +1,50 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>浏览并审核需审批的预毕业申请</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<table class="table table-bordered">
+    <tr>
+        <th>姓名</th>
+        <th>学号</th>
+        <th>年级</th>
+        <th>学院</th>
+        <th>专业</th>
+        <th>修改字段</th>
+        <th>原值</th>
+        <th>修改值</th>
+        <th>审核</th>
+    </tr>
+    <tr ng-repeat="x in ybyAuditCtrl.auditdata">
+        <td ng-bind="x.name"></td>
+        <td ng-bind="x.sno"></td>
+        <td ng-bind="x.grade"></td>
+        <td ng-bind="x.school"></td>
+        <td ng-bind="x.department"></td>
+        <td ng-bind="x.fieldDisplayName"></td>
+        <td ng-bind="x.curDisplayValue"></td>
+        <td ng-bind="x.newDisplayValue"></td>
+        <td>
+            <button ng-click="ybyAuditCtrl.isPassAudit(x.id,x.sno,true)">通过</button>
+            <button ng-click="ybyAuditCtrl.isPassAudit(x.id,x.sno,false)">否决</button>
+        </td>
+    </tr>
+</table>
+<div class="form-inline forPagination">
+    <div class="col-md-4"></div>
+    <div class="text-center col-md-4">
+        <uib-pagination total-items="ybyAuditCtrl.TotalItems" ng-model="ybyAuditCtrl.currentPage" items-per-page="ybyAuditCtrl.numPerPage" max-size="maxSize" class="pagination pagination-location" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="ybyAuditCtrl.getAuditData()" force-ellipses="false"></uib-pagination>
+    </div>
+    <div class="text-right col-md-4">
+        <label class="pagination-label" for="pageNum">每页显示记录数目</label>
+        <select id="pageNum" class="form-control" ng-model="ybyAuditCtrl.numPerPage" ng-options="num for num in ybyAuditCtrl.num"></select>
+        <button class="btn btn-default" ng-click="ybyAuditCtrl.getAuditData()">确定</button>
+    </div>
+</div>

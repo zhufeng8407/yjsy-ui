@@ -1,0 +1,211 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>1. 信息确认</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div ng-controller="XsConfirmCtrl as xsConfirmCtrl">
+    <div class="row">
+        <div ng-show="xsConfirmCtrl.data.pregraduationStatus != '空'" class="col-md-12">
+            <table class="table table-bordered">
+                <tr>
+                    <th>修改项</th>
+                    <th>原数据</th>
+                    <th>勾选修改</th>
+                    <th>新数据</th>
+                    <th>备注</th>
+                    <th>申请</th>
+                    <th>审批状态</th>
+                </tr>
+
+                <tr ng-repeat="student in xsConfirmCtrl.data.students">
+                    <td ng-bind="student.field"></td>
+                    <td ng-show="student.oridata != ''" ng-bind="student.oridata"></td>
+                    <td ng-show="student.oridata == ''"><font color="red">数据不能为空</font></td>
+                    <td><input
+                        ng-disabled="(student.approval == '审批中' || xsConfirmCtrl.data.pregraduationStatus != '可修改')"
+                        class="checkbox" ng-show="student.isModify=true"
+                        type="checkbox" ng-model="student.$checked"
+                        ng-change="xsConfirmCtrl.getData(student.$checked ,student.type,student.frontApi,student.classField,$index)">
+                    </td>
+                    <td>
+                        <label ng-show="!student.$checked " ng-bind="student.newdata"></label>
+                        <input
+                            ng-show="xsConfirmCtrl.flag[$index] == '2' && student.approval != '审批中' && xsConfirmCtrl.showFlag[$index]"
+                            ng-model="student.newdata">
+                        <select
+                            ng-show="xsConfirmCtrl.flag[$index] == '1' && student.approval != '审批中'  && xsConfirmCtrl.showFlag[$index]"
+                            ng-model="student.newdata"
+                            ng-options="item.id as item.name for item in xsConfirmCtrl.metaData[$index]">
+                            <option value="">请选择</option>
+                        </select>
+                        <!--特殊字段Region-->
+                        <div
+                            ng-show="xsConfirmCtrl.flag[$index] == '5' && student.approval != '审批中'  && xsConfirmCtrl.showFlag[$index]">
+                            <span>省</span>
+                            <select ng-model="region.stateCode"
+                                ng-options="item[1] as item[0] for item in xsConfirmCtrl.metaData[$index]"
+                                ng-change="xsConfirmCtrl.findRegionCity(region.stateCode)">
+                                <option value="">请选择</option>
+                            </select>
+                            <br>
+                            <span>市</span>
+                            <select ng-model="region.cityCode"
+                                ng-options="item[1] as item[0] for item in xsConfirmCtrl.RegionSCities"
+                                ng-change="xsConfirmCtrl.findRegionCounty(region.cityCode)">
+                                <option value="">请选择</option>
+                            </select>
+                            <br>
+                            <span>区</span>
+                            <select ng-model="student.newdata"
+                                ng-options="item[0] as item[1] for item in xsConfirmCtrl.RegionSCounties">
+                                <option value="">请选择</option>
+                            </select>
+                        </div>
+
+                        <!--特殊字段Unit,暂时只展示院系，不展示所和中心-->
+                        <div
+                            ng-show="xsConfirmCtrl.flag[$index] == '6'  && student.approval != '审批中' && xsConfirmCtrl.showFlag[$index]">
+                            <span>学院</span>
+                            <select ng-model="schoolCode"
+                                ng-options="item[1] as item[0] for item in xsConfirmCtrl.metaData[$index]"
+                                ng-change="xsConfirmCtrl.findUnitDepartment(schoolCode)">
+                                <option value="">请选择</option>
+                            </select>
+                            <br>
+                            <span>院系</span>
+                            <select ng-model="student.newdata"
+                                ng-options="item[2] as item[0] for item in xsConfirmCtrl.UnitDepartments">
+                                <option value="">请选择</option>
+                            </select>
+                        </div>
+
+                        <!--特殊字段Railway-->
+                        <div
+                            ng-show="xsConfirmCtrl.flag[$index] == '7'  && student.approval != '审批中' && xsConfirmCtrl.showFlag[$index]">
+                            <span>省份</span>
+                            <select ng-model="state"
+                                ng-options="item as item for item in xsConfirmCtrl.metaData[$index]"
+                                ng-change="xsConfirmCtrl.findRailwayStation(state)">
+                                <option value="">请选择</option>
+                            </select>
+                            <br>
+                            <span>车站</span>
+                            <select ng-model="student.newdata"
+                                ng-options="item[0] as item[1] for item in xsConfirmCtrl.RailwayStations">
+                                <option value="">请选择</option>
+                            </select>
+                        </div>
+
+                        <!--特殊字段Discipline-->
+                        <div
+                            ng-show="xsConfirmCtrl.flag[$index] == '8' && student.approval != '审批中'&& xsConfirmCtrl.showFlag[$index]">
+                            <span>门类</span>
+                            <select ng-model="categoryCode"
+                                ng-options="item[1] as item[0] for item in xsConfirmCtrl.metaData[$index]"
+                                ng-change="xsConfirmCtrl.findDisciplineMajor(categoryCode)">
+                                <option value="">请选择</option>
+                            </select>
+                            <br>
+                            <span>一级学科</span>
+                            <select ng-model="majorCode"
+                                ng-options="item[1] as item[0] for item in xsConfirmCtrl.disciplineMajors"
+                                ng-change="xsConfirmCtrl.findDisciplineMinor(majorCode)">
+                                <option value="">请选择</option>
+                            </select>
+                            <br>
+                            <span>二级学科</span>
+                            <select ng-model="student.newdata"
+                                ng-options="item[0] as item[1] for item in xsConfirmCtrl.disciplineMinors">
+                                <option value="">请选择</option>
+                            </select>
+                        </div>
+
+                        <!--特殊字段BachelorDiscipline-->
+                        <div
+                            ng-show="xsConfirmCtrl.flag[$index] == '9' && student.approval != '审批中'&& xsConfirmCtrl.showFlag[$index]">
+                            <span>门类</span>
+                            <select ng-model="categoryCode"
+                                ng-options="item[1] as item[0] for item in xsConfirmCtrl.metaData[$index]"
+                                ng-change="xsConfirmCtrl.findBachelorDisciplineMajor(categoryCode)">
+                                <option value="">请选择</option>
+                            </select>
+                            <br>
+                            <span>一级学科</span>
+                            <select ng-model="majorCode"
+                                ng-options="item[1] as item[0] for item in xsConfirmCtrl.bachelorDisciplineMajors"
+                                ng-change="xsConfirmCtrl.findBachelorDisciplineMinor(majorCode)">
+                                <option value="">请选择</option>
+                            </select>
+                            <br>
+                            <span>二级学科</span>
+                            <select ng-model="student.newdata"
+                                ng-options="item[0] as item[1] for item in xsConfirmCtrl.bachelorDisciplineMinors">
+                                <option value="">请选择</option>
+                            </select>
+                        </div>
+
+                        <div
+                            ng-show="xsConfirmCtrl.flag[$index] == '3' && student.approval != '审批中' && xsConfirmCtrl.showFlag[$index]">
+                            <label class="radio-inline" ng-repeat="item in xsConfirmCtrl.metaData[$index]">
+                                <input type="radio" ng-model="student.newdata" ng-checked="item.name == student.oridata"
+                                    value="{{item.id}}">
+                                {{item.name}}
+                            </label>
+                        </div>
+
+                        <div
+                            ng-show="xsConfirmCtrl.flag[$index] == '4'  && student.approval != '审批中' && xsConfirmCtrl.showFlag[$index]">
+                            <p class="input-group" style="height: 34px;margin-bottom:0px">
+                                <input type="text" class="form-control" current-text="今天" clear-text="清除"
+                                    close-text="关闭"
+                                    uib-datepicker-popup="{{xsConfirmCtrl.format}}"
+                                    ng-init="xsConfirmCtrl.popup=false"
+                                    ng-model="student.newdata"
+                                    is-open="xsConfirmCtrl.popup"
+                                    datepicker-options="xsConfirmCtrl.dateOptions"
+                                    ng-required="true" alt-input-formats="altInputFormats"/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="xsConfirmCtrl.popup=true">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+                    </td>
+
+                    <td ng-bind="student.notes"></td>
+                    <td>
+                        <button class="btn" ng-show="student.modifyType == '需审批'"
+                            ng-disabled="student.approval == '审批中' || xsConfirmCtrl.data.pregraduationStatus != '可修改'"
+                            ng-click="xsConfirmCtrl.apply(student,$index)">申请
+                        </button>
+                        <button class="btn" ng-show="student.modifyType == '可修改'"
+                            ng-disabled="student.approval == '审批中'"
+                            ng-click="xsConfirmCtrl.apply(student,$index)">修改
+                        </button>
+                    </td>
+                    <td ng-show=" student.modifyType == '需审批'" ng-bind="student.approval"></td>
+                    <td ng-show=" student.modifyType == '可修改'">{{""}}</td>
+                </tr>
+
+            </table>
+
+            <button class="btn btn-primary" ng-show="xsConfirmCtrl.data.pregraduationStatus == '可修改'"
+                ng-click="xsConfirmCtrl.confirm(xsConfirmCtrl.data.flag)">确认
+            </button>
+            <div ng-show="xsConfirmCtrl.data.pregraduationStatus == '通过'">
+                如果预毕业信息有误，请发邮件联系管理员，申请退回
+            </div>
+        </div>
+    </div>
+</div>
+
+

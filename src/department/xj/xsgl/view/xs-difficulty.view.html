@@ -1,0 +1,94 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>每学年批量导入研究生助困信息</li>
+                <li>按查询条件返回研究生助困信息</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <search-layout search-config="xsDiffCtrl.searchConfig" search-condition="xsDiffCtrl.searchCondition">
+        <div class="search-bottom">
+            <form class="form-horizontal" id="myForm">
+                <div class="col-sm-12 col-md-4">
+                    <button class="btn btn-primary" data-ng-click="xsDiffCtrl.conditionalSearch()">
+                        查找
+                    </button>
+                </div>
+                <div class="col-sm-12 col-md-8">
+                    <div class="col-sm-12 col-md-7">
+                        <input type="file" data-ngf-select id="hiddenFile" ng-show="false"
+                               data-ng-model="xsDiffCtrl.file" name="file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                               data-ngf-max-size="10MB" data-ngf-model-invalid="errorFile">
+                        <input class="btn btn-primary" type="button" value="下载电子表格模板文件"
+                               ng-click="xsDiffCtrl.downloadDemo()"/>
+                        <button class="btn btn-primary" ng-click="xsDiffCtrl.clickFile()">选择文件</button>
+                        <label>{{xsDiffCtrl.file.name}}</label>
+                    </div>
+                    <div class="col-sm-12 col-md-5" ng-show="xsDiffCtrl.flag == true">
+                        <button class="btn btn-primary" ng-click="xsDiffCtrl.uploadDiff(xsDiffCtrl.file)"> 确认上传</button>
+                        <button class="btn btn-primary" ng-show="xsDiffCtrl.uploadFail == false" type="button"
+                                data-ng-click="xsDiffCtrl.exportError()">导出失败条目
+                        </button>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="col-sm-12 col-md-12">
+                    <uib-progress data-ng-show="xsDiffCtrl.progress">
+                        <uib-bar value="uploadCtrl.progress" type="{{xsDiffCtrl.type}}"
+                                 data-ng-bind="xsDiffCtrl.progress + '%'"/>
+                    </uib-progress>
+                </div>
+            </form>
+        </div>
+    </search-layout>
+    <table class="table table-hover table-striped table-bordered">
+        <thead>
+        <tr>
+            <th class="text-center" width="50px">学号</th>
+            <th class="text-center" width="50px">姓名</th>
+            <th class="text-center" width="50px">院系</th>
+            <th class="text-center" width="50px">专业</th>
+            <th class="text-center" width="50px">学年</th>
+            <th class="text-center" width="50px">是否</th>
+            <th class="text-center" width="50px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="item in xsDiffCtrl.items">
+            <td class="text-center" data-ng-bind="item.sno"></td>
+            <td class="text-center" data-ng-bind="item.name"></td>
+            <td class="text-center" data-ng-bind="item.school"></td>
+            <td class="text-center" data-ng-bind="item.department"></td>
+            <td class="text-center" data-ng-bind="item.year"></td>
+            <td class="text-center" data-ng-bind="item.level"></td>
+            <td class="text-center">
+                <span class="btn btn-sm btn-danger glyphicon glyphicon-remove"
+                      data-ng-click="xsDiffCtrl.deleteItem(item.diffId)"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="form-inline forPagination" ng-show="xsDiffCtrl.page">
+        <div class="col-md-3"></div>
+        <div class="text-center col-md-6">
+            <uib-pagination total-items="xsDiffCtrl.totalItems" ng-model="xsDiffCtrl.currentPage"
+                            items-per-page="xsDiffCtrl.numPerPage" max-size="xsDiffCtrl.maxSize"
+                            class="pagination pagination-location" first-text="首页" previous-text="上一页" next-text="下一页"
+                            last-text="末页" boundary-links="true" ng-change="xsDiffCtrl.conditionalSearch()"
+                            force-ellipses="true"></uib-pagination>
+        </div>
+        <div class="text-right col-md-3">
+            <label class="pagination-label" for="pageNum">每页显示记录数目</label>
+            <select id="pageNum" class="form-control" ng-model="xsDiffCtrl.numPerPage"
+                    ng-options="num for num in xsDiffCtrl.num"></select>
+            <button class="btn btn-default" ng-click="xsDiffCtrl.conditionalSearch()">确定</button>
+        </div>
+    </div>
+</div>

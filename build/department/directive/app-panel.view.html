@@ -1,0 +1,20 @@
+<style>
+
+
+</style>
+<div class="app-panel" uib-accordion >
+    <div class="panel-body" id="xueji_portlet_body" uib-accordion-group
+         class="panel-default" is-open="appPanelCtrl.isOpen">
+        <uib-accordion-heading>
+            <span class="{{appItem.iconClass}}" ng-if="appItem.iconClass"></span>
+            {{appItem.name}}
+            <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': appPanelCtrl.isOpen,
+            'glyphicon-chevron-right': !appPanelCtrl.isOpen}"></i>
+        </uib-accordion-heading>
+			<li ng-repeat="subMenuItem in appItem.subMenu" onMouseOver="this.className='over';" onMouseOut="this.className='out';">
+                <a ng-href="{{subMenuItem.url}}" style="padding-left: 15px">
+                    <span class="{{subMenuItem.iconClass}}" ng-if="subMenuItem.iconClass"></span>
+					{{subMenuItem.name}} </a>
+            </li>
+    </div>
+</div>

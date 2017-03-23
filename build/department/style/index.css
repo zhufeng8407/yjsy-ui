@@ -1,0 +1,34 @@
+/*
+*@author xiafan
+*院系管理首页的样式
+*/
+
+.dp-index-menu {
+
+}
+
+.dp-index-menu .nav > li {
+    padding: 20px 10px 10px 10px;
+}
+
+.dp-index-menu .nav > li > span {
+    font-size: 20px;
+    width: 100px;
+}
+
+.dp-index-menu .navbar-header .navbar-brand {
+    padding: 4px 7px 0px 5px;
+    height: 65px;
+}
+
+.dp-index-menu,
+.dp-index-menu.navbar-default {
+    background-color: #3A5898;
+    color: rgba(255, 255, 255, 0.84);
+}
+
+.dp-index-content {
+  padding: 15px 10px 10px 10px;
+  min-height: 79vh;
+}
+

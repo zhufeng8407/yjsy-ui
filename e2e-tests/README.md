@@ -1,0 +1,1 @@
+This directory contains all end-to-end test cases. File 'protractor.conf.js' contains the configuration of protractor, includes where test files are, what browsers those tests need to be executed on.

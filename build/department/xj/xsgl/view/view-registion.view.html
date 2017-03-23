@@ -1,0 +1,72 @@
+<search-layout search-config="xsRegistrationCtrl.searchConfig"
+    search-condition="xsRegistrationCtrl.searchCondition" ready-hook="xsRegistrationCtrl.loadCharts()">
+  <div class="search-bottom">
+    <div class="col-md-3  registion-button">
+      <button type="submit" class="btn btn-primary" ng-click="xsRegistrationCtrl.search()">查找</button>
+    </div>
+    <div class="col-md-3  registion-button">
+      <button type="button" class="btn btn-primary"
+          ng-click="xsRegistrationCtrl.exportRegistrationList()">导出
+      </button>
+    </div>
+  </div>
+</search-layout>
+
+<table class="table table-striped table-bordered table-hover" style="top:20px">
+    <thead>
+    <tr>
+        <th style="text-align: center; min-width:30px"><input type="checkbox"
+                                                              ng-model="xsRegistrationCtrl.allChecked"
+                                                              ng-change="xsRegistrationCtrl.checkAll()"/></th>
+        <th style="text-align: center">姓名</th>
+        <th style="text-align: center">学号</th>
+        <th style="text-align: center">院系(一级)</th>
+        <th style="text-align: center">院系(二级)</th>
+        <th style="text-align: center">年级</th>
+        <th style="text-align: center">专业</th>
+        <th style="text-align: center">是否报到</th>
+        <th style="text-align: center">是否缴费</th>
+        <th style="text-align: center">是否注册</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="student in xsRegistrationCtrl.students">
+        <td style="text-align: center"><input type="checkbox" ng-model="student.$checked"
+                                              ng-show="xsRegistrationCtrl.registButton[$index]" ng-change=""/></td>
+        <td style="text-align: center" ng-bind="student.name"></td>
+        <td style="text-align: center" ng-bind="student.sno"></td>
+        <td style="text-align: center" ng-bind="student.school"></td>
+        <td style="text-align: center" ng-bind="student.department"></td>
+        <td style="text-align: center" ng-bind="student.grade"></td>
+        <td style="text-align: center" ng-bind="student.minor"></td>
+        <td style="text-align: center" ng-bind="student.checkin"></td>
+        <td style="text-align: center" ng-bind="student.fee"></td>
+        <td style="text-align: center" ng-bind="student.register"></td>
+    </tr>
+    </tbody>
+</table>
+<div class="form-inline forPagination" ng-show="xsRegistrationCtrl.page">
+    <div class="col-md-4"></div>
+    <div class="text-center col-md-4">
+        <uib-pagination total-items="xsRegistrationCtrl.totalItems" ng-model="xsRegistrationCtrl.currentPage"
+                        items-per-page="xsRegistrationCtrl.numPerPage" max-size="xsRegistrationCtrl.maxSize"
+                        class="pagination pagination-location" first-text="首页" previous-text="上一页" next-text="下一页"
+                        last-text="末页"
+                        boundary-links="true" ng-change="xsRegistrationCtrl.registrationPageChange()"
+                        force-ellipses="true"></uib-pagination>
+    </div>
+    <div class="text-right col-md-4">
+        <label class="pagination-label" for="pageNum">每页显示记录数目</label>
+        <select id="pageNum" class="form-control" ng-model="xsRegistrationCtrl.numPerPage"
+                ng-options="num for num in xsRegistrationCtrl.num"></select>
+        <button class="btn btn-default" ng-click="xsRegistrationCtrl.search()">确定</button>
+    </div>
+</div>
+<div class="col-md-12">
+    <ng-echarts class="col-md-4" style="height: 250px;" ec-config="xsRegistrationCtrl.feeBarConfig"
+                ec-option="xsRegistrationCtrl.feeBarOption"></ng-echarts>
+    <ng-echarts class="col-md-4" style="height: 250px" ec-config="xsRegistrationCtrl.checkinBarConfig"
+                ec-option="xsRegistrationCtrl.checkinBarOption"></ng-echarts>
+    <ng-echarts class="col-md-4" style="height: 250px;" ec-config="xsRegistrationCtrl.registrationBarConfig"
+                ec-option="xsRegistrationCtrl.registrationBarOption"></ng-echarts>
+</div>

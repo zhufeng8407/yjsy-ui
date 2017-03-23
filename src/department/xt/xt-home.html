@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+    <!--<![endif]-->
+    <!-- BEGIN HEAD -->
+    <head>
+        <meta charset="utf-8"/>
+        <title>研究生院管理系统</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta content="" name="description"/>
+        <meta content="" name="author"/>
+        <!-- BEGIN GLOBAL MANDATORY STYLES
+        <link
+            href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all"
+            rel="stylesheet" type="text/css">
+         -->
+
+        <link href="../../lib/style/font-awesome/css/font-awesome.min.css"
+            rel="stylesheet" type="text/css">
+        <link
+            href="../../lib/style/simple-line-icons/simple-line-icons.min.css"
+            rel="stylesheet" type="text/css">
+
+        <!-- bower:css -->
+
+        <!-- endbower -->
+
+        <!-- END GLOBAL MANDATORY STYLES -->
+
+        <!-- BEGIN PAGE LEVEL STYLES -->
+        <link rel="stylesheet" type="text/css" href="../../common/style/prompt.css"/>
+        <link rel="stylesheet" type="text/css" href="../../common/style/widget.css"/>
+        <link href="../../common/style/layout.css" rel="stylesheet" type="text/css">
+        <link href="../../common/style/footer.css" rel="stylesheet" type="text/css"/>
+        <!-- END PAGE LEVEL STYLES -->
+
+    </head>
+    <!-- END HEAD -->
+    <!-- BEGIN BODY -->
+    <body ng-app="ecnuAdminHome">
+        <ecnu-dp-layout user="user"></ecnu-dp-layout>
+
+        <!-- bower:js -->
+        <!-- endbower -->
+
+        <!-- inject:js -->
+        <!-- endinject -->
+
+        <!-- build:js ./ecnu-xt-home.app.min.js -->
+        <script src="../index.app.js"></script>
+        <script type="text/javascript" src="../directive/dp-menu.dir.js"></script>
+        <script src="../directive/dp-layout.js"></script>
+        <script src="xt-home.app.js"></script>
+        <script src="zhgl/zhgl.ctrl.js"></script>
+        <script src="zhgl/jsgl.ctrl.js"></script>
+        <script src="metadata.ctrl.js"></script>
+        <script src="notification.ctrl.js"></script>
+        <script src="manageNotification.ctrl.js"></script>
+        <!-- endbuild -->
+    </body>
+    <!-- END BODY -->
+</html>

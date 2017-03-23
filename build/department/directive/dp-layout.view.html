@@ -1,0 +1,70 @@
+<link ng-href="{{dirPath}}dp-layout.css" rel="stylesheet" type="text/css">
+<div class="container-fluid">
+    <drop-down-menu home-page="layoutCtrl.homePage" on-path-changed="layoutCtrl.onPathChanged"></drop-down-menu>
+
+    <!-- main content of the page -->
+    <div class="dp-content row">
+        <!-- leftside navbar in the main content of the page -->
+        <div class="dp-content-navbar navbar-left col-xs-12 col-sm-3 col-md-3">
+            <div class="container-fluid">
+                <div class="navbar-header visible-xs">
+                    <span>侧边导航栏</span>
+                    <button type="button" class="navbar-toggle collapsed"
+                        ng-click="layoutCtrl.leftNavCollapsed=!layoutCtrl.leftNavCollapsed">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" uib-collapse="layoutCtrl.leftNavCollapsed">
+                    <ul uib-accordion class="nav">
+                        <li ng-repeat="subItem in layoutCtrl.curPath[1].subMenu" uib-accordion-group
+                            class="panel-default"
+                            is-open="layoutCtrl.isMenuOpen[$index]"
+                            ng-click="layoutCtrl.open($index)" ng-href="{{subItem.url}}">
+                            <uib-accordion-heading>
+                                <span class="{{subItem.iconClass}}" ng-if="subItem.iconClass"></span>
+                                {{subItem.name}}
+                                <i class="pull-right glyphicon"
+                                    ng-class="{'glyphicon-chevron-down': layoutCtrl.isMenuOpen[$index], 'glyphicon-chevron-right': !layoutCtrl.isMenuOpen[$index]}"></i>
+                            </uib-accordion-heading>
+                            <ul class="nav">
+                                <li ng-repeat="menuItem in subItem.subMenu"
+                                    ng-class="{activeItem: $parent.$index==layoutCtrl.curPath[2].index&&$index==layoutCtrl.curPath[3].index}">
+                                    <a ng-href="{{menuItem.url}}"><span class="{{menuItem.iconClass}}"
+                                        ng-if="menuItem.iconClass"></span>
+                                        {{menuItem.name}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--end of container-fluid in navbar-->
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="dp-content-right col-xs-12 col-sm-9 col-md-9">
+            <ol class="breadcrumb">
+                <li ng-repeat="pathItem in layoutCtrl.curPath">
+                    <a ng-if="pathItem.url" ng-href="{{pathItem.url}}">
+                        {{pathItem.name}}
+                    </a>
+                    <a ng-if="!pathItem.url">
+                        </span>{{pathItem.name}}
+                    </a>
+                </li>
+            </ol>
+            <div class="panel panel-default" ng-view>
+            </div>
+        </div>
+    </div>
+    <div ng-include="layoutCtrl.footerPath"></div>
+    <div class="overlay" ng-show="layoutCtrl.processing">
+    </div>
+</div>
+
+<loading-animation ng-show="layoutCtrl.processing" state="layoutCtrl"
+    style="position:fixed;top:40vh;left:50vw;"></loading-animation>

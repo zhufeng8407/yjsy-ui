@@ -1,0 +1,128 @@
+/*
+*@author xiafan
+*院系管理框架样式设置
+*
+*/
+
+/*
+----------以下为顶部导航栏的样式----------
+*/
+
+/*研究生院顶部导航栏配置*/
+.dp-navbar-top {
+  margin-bottom: 0px;
+  position: relative;
+  min-height: 50px;
+  border: 0;
+}
+
+/*设置顶部导航栏的logo*/
+.dp-navbar-top .navbar-header > .navbar-brand {
+  padding: 0;
+  height: 50px;
+  margin-left: 0;
+}
+
+.dp-navbar-top.navbar {
+  background-color: #3A5898;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+/*设置顶部导航菜单中菜单项的样式*/
+.dp-navbar-top > div > div > .navbar-nav a,
+.dp-navbar-top > div > div > .navbar-nav a:focus {
+  color: #FFFFFF;
+  font-size: 20px;
+  background-color: #3A5898;
+}
+
+/*设置顶部导航菜单中菜单项的样式，未选中下当鼠标划过时变色*/
+.dp-navbar-top > div > div > .navbar-nav a:hover {
+  color: #FFFFFF;
+  background-color: #5383c3;
+}
+
+/*设置顶部导航菜单当前活跃项的样式*/
+.dp-navbar-top > div > div > .navbar-nav > .active > a,
+.dp-navbar-top > div > div > .navbar-nav > .active > a:hover,
+.dp-navbar-top > div > div > .navbar-nav > .active > a:focus {
+  color: #f5f5f5;
+  background-color: #5383c3;
+}
+
+/*
+----------以下为中间主体内容部分的样式----------
+*/
+.dp-content {
+  display: block;
+  background-color: white;
+  overflow: hidden;
+}
+
+/*中间主体内容侧边导航的样式*/
+.dp-content-navbar {
+  background-color: #f4f4f4;
+  padding-top: 15px;
+  display: inline-block;
+}
+
+/*中等屏幕以上的样式*/
+@media (min-width: 768px) {
+  .dp-content {
+    min-height: 79vh;
+  }
+
+  .dp-content-navbar {
+    min-height: 79vh;
+    margin-bottom: -9999px;
+    padding-bottom: 9999px;
+    overflow: hidden;
+  }
+}
+/*侧边导航栏一级菜单样式*/
+.dp-content-navbar .panel-title a {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  font-size: 18px;
+}
+
+/*侧边导航栏二级菜单样式*/
+.dp-content-navbar .panel-body  a {
+  font-family: 微软雅黑;
+  padding-top: 5px;
+  font-size: 16px;
+  padding-bottom: 5px;
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/*侧边导航栏二级菜单活跃菜单项的样式*/
+.dp-content-navbar .panel-body .activeItem {
+  background-color: #dbdbdb;
+}
+
+/*
+----------以下为中间主体内容部分的样式----------
+*/
+.dp-content-right {
+  display: inline-block;
+  padding: 15px 15px 0px 15px;
+}
+
+/*内容部分右侧顶部导航路径的样式*/
+.breadcrumb a {
+  color: inherit;
+}
+
+.panel {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 0px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+
+

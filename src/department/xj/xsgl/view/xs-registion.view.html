@@ -1,0 +1,105 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>每学期重置研究生的学籍注册状态</li>
+                <li>每学期根据研究生的报到、缴费和助困状态，自动更新研究生的学籍注册状态</li>
+                <li>每学期为特殊情况的研究生提供手动学籍注册操作</li>
+                <li>按查询条件返回研究生的报到、缴费和学籍注册的详细与统计信息</li>
+                <li>按查询条件导出研究生的报到、缴费和学籍注册详细信息</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<search-layout search-config="xsRegistrationCtrl.searchConfig" search-condition="xsRegistrationCtrl.searchCondition" ready-hook="xsRegistrationCtrl.loadCharts()">
+    <div class="search-bottom">
+        <div class="col-md-3  registion-button">
+            <button type="submit" class="btn btn-primary" ng-click="xsRegistrationCtrl.search()">查找</button>
+        </div>
+        <div class="col-md-3  registion-button">
+            <button type="button" class="btn btn-primary" ng-click="xsRegistrationCtrl.reset()">注册重置</button>
+        </div>
+        <div class="col-md-3  registion-button">
+            <button type="button" class="btn btn-primary" ng-click="xsRegistrationCtrl.batchRegister()" ng-disabled="!xsRegistrationCtrl.batchButton">批量注册
+            </button>
+        </div>
+        <div class="col-md-3  registion-button">
+            <button type="button" class="btn btn-primary" ng-click="xsRegistrationCtrl.exportRegistrationList()">导出
+            </button>
+        </div>
+    </div>
+</search-layout>
+<table class="table table-striped table-bordered table-hover registion-table-bordered" style="top:20px">
+    <thead>
+        <tr>
+            <th style="text-align: center; min-width:30px">
+                <input type="checkbox" ng-model="xsRegistrationCtrl.allChecked" ng-change="xsRegistrationCtrl.checkAll()" />
+            </th>
+            <th style="text-align: center">姓名</th>
+            <th style="text-align: center">学号</th>
+            <th style="text-align: center">院系(一级)</th>
+            <th style="text-align: center">院系(二级)</th>
+            <th style="text-align: center">年级</th>
+            <th style="text-align: center">学年</th>
+            <th style="text-align: center">学期</th>
+            <th style="text-align: center">专业</th>
+            <th style="text-align: center">是否报到</th>
+            <th style="text-align: center">是否缴费</th>
+            <th style="text-align: center">是否注册</th>
+            <th style="text-align: center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="student in xsRegistrationCtrl.students">
+            <td style="text-align: center">
+                <input type="checkbox" ng-model="student.$checked" ng-show="xsRegistrationCtrl.registButton[$index]" ng-change="xsRegistrationCtrl.checkboxChange()" />
+            </td>
+            <td style="text-align: center" ng-bind="student.name"></td>
+            <td style="text-align: center" ng-bind="student.sno"></td>
+            <td style="text-align: center" ng-bind="student.school"></td>
+            <td style="text-align: center" ng-bind="student.department"></td>
+            <td style="text-align: center" ng-bind="student.grade"></td>
+            <td style="text-align: center" ng-bind="student.year"></td>
+            <td style="text-align: center" ng-bind="student.term"></td>
+            <td style="text-align: center" ng-bind="student.minor"></td>
+            <td style="text-align: center" ng-bind="student.checkin"></td>
+            <td style="text-align: center" ng-bind="student.fee"></td>
+            <td style="text-align: center" ng-bind="student.register"></td>
+            <td style="text-align: center">
+                <input type="button" class="btn btn-primary" value="注册" ng-click="xsRegistrationCtrl.register($index)" style="margin:0px ; padding:0px; vertical-align: top" ng-show="xsRegistrationCtrl.registButton[$index]">
+            </td>
+        </tr>
+    </tbody>
+</table>
+<script type="text/ng-template" id="promptMessage.html">
+    <form class="form-inline">
+        <div class="modal-header" style="text-align:center">
+            <h4 align="center">信息提示</h4>
+        </div>
+        <div class="modal-body">
+            <h4 align="center">{{promptMessageCtrl.proMessage}}</h4>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="promptMessageCtrl.cancel()">确定</button>
+        </div>
+    </form>
+</script>
+<div class="form-inline forPagination" ng-show="xsRegistrationCtrl.page">
+    <div class="col-md-3"></div>
+    <div class="text-center col-md-6">
+        <uib-pagination total-items="xsRegistrationCtrl.totalItems" ng-model="xsRegistrationCtrl.currentPage" items-per-page="xsRegistrationCtrl.numPerPage" max-size="xsRegistrationCtrl.maxSize" class="pagination pagination-location" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsRegistrationCtrl.registrationPageChange()" force-ellipses="true"></uib-pagination>
+    </div>
+    <div class="text-right col-md-3">
+        <label class="pagination-label" for="pageNum">每页显示记录数目</label>
+        <select id="pageNum" class="form-control" ng-model="xsRegistrationCtrl.numPerPage" ng-options="num for num in xsRegistrationCtrl.num"></select>
+        <button class="btn btn-default" ng-click="xsRegistrationCtrl.search()">确定</button>
+    </div>
+</div>
+<div class="col-md-12">
+    <ng-echarts class="col-md-4" style="height: 250px;" ec-config="xsRegistrationCtrl.feeBarConfig" ec-option="xsRegistrationCtrl.feeBarOption"></ng-echarts>
+    <ng-echarts class="col-md-4" style="height: 250px" ec-config="xsRegistrationCtrl.checkinBarConfig" ec-option="xsRegistrationCtrl.checkinBarOption"></ng-echarts>
+    <ng-echarts class="col-md-4" style="height: 250px;" ec-config="xsRegistrationCtrl.registrationBarConfig" ec-option="xsRegistrationCtrl.registrationBarOption"></ng-echarts>
+</div>

@@ -1,0 +1,37 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>批量更新尚未分配导师的硕士研究生的导师信息</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<form class="form-inline" id="myForm">
+    <div ngf-drop ngf-select ng-model="dsImportCtrl.file" class="drop-box" ngf-drag-over-class="'dragover'"
+        accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">点击并选择导师电子表格文件(Excel)
+    </div>
+    <div ngf-no-file-drop>当前浏览器不支持文件拖入上传功能</div>
+    <br>
+    <br>
+    <div>
+        <input type="file" data-ngf-select id="dsFile" ng-show="false" data-ng-model="dsImportCtrl.file" name="file"
+            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" data-ngf-max-size="10MB" data-ngf-model-invalid="errorFile">
+        <button class="btn btn-primary" ng-click="dsImportCtrl.selectFile()">选择文件</button>
+        <input class="btn btn-primary" type="button" value="下载电子表格模板文件" ng-click="dsImportCtrl.downloadDemo()"/>
+        <br>
+        <br>
+        <label>{{dsImportCtrl.file.name}}</label>
+        <br>
+        <br>
+        <button class="btn btn-primary" ng-show="dsImportCtrl.flag == true"
+                ng-click="dsImportCtrl.uploadDs(dsImportCtrl.file)"> 确认上传
+        </button>
+        <button class="btn btn-primary" type="button" ng-show="dsImportCtrl.exportBtn == true"
+                data-ng-click="dsImportCtrl.exportError()">导出失败条目
+        </button>
+    </div>
+</form>

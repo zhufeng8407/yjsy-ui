@@ -1,0 +1,31 @@
+<nav class="row navbar-top navbar navbar-default dp-navbar-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    ng-click="menuCtrl.navCollapsed=!menuCtrl.navCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <img class="navbar-brand" ng-src="{{menuCtrl.logoUrl}}"/>
+        </div>
+        <div class="navbar-collapse collapse navbar-responsive-collapse" uib-collapse="menuCtrl.navCollapsed">
+            <ul class="nav navbar-nav">
+                <li ng-show="menuCtrl.homePage!=undefined">
+                    <a href="{{menuCtrl.homePage}}">
+                        首页
+                    </a>
+                </li>
+                <li ng-repeat="item in menuCtrl.menuObj.menu" ng-class="{active: $index==menuCtrl.curPath[1].index}">
+                    <a href="{{item.url}}">
+                        {{item.name}}
+                    </a>
+                </li>
+            </ul>
+            <nav-dropdown-menu></nav-dropdown-menu>
+        </div>
+    </div>
+    <!--end of container-fluid in navbar-->
+</nav>
+

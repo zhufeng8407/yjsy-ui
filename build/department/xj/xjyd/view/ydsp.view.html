@@ -1,0 +1,235 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>1. 异动审批</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="status-change-audit" ng-controller="YdspCtrl as ydspCtrl">
+    <search-layout search-config="ydspCtrl.searchConfig"
+        search-condition="ydspCtrl.searchCondition">
+        <div class="search-section">
+            <div class="form-group col-md-8">
+                <label class="date-range-control control-label no-padding">申请日期</label>
+                <div class="col-md-4 no-padding-right">
+                    <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="{{ydspCtrl.format}}"
+                            ng-model="ydspCtrl.dateFrom"
+                            is-open="ydspCtrl.popup1.opened" datepicker-options="dateOptions" ng-required="true"
+                            current-text="今天" clear-text="清除" close-text="关闭"
+                            alt-input-formats="altInputFormats"/>
+                        <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="ydspCtrl.open1()"><i
+                    class="glyphicon glyphicon-calendar"></i>
+                </button>
+                        </span>
+                </div>
+                <div class="col-md-1 no-padding" style="text-align: center">至</div>
+                <div class="col-md-4 no-padding-left">
+                    <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="{{ydspCtrl.format}}"
+                            ng-model="ydspCtrl.dateEnd"
+                            is-open="ydspCtrl.popup2.opened" datepicker-options="dateOptions" ng-required="true"
+                            current-text="今天" clear-text="清除" close-text="关闭"
+                            alt-input-formats="altInputFormats"/>
+                        <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="ydspCtrl.open2()"><i
+                    class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hline"></div>
+        <div class="search-bottom">
+            <div class="col-md-3">
+                <button ng-click="ydspCtrl.searchStatusChange()" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-search"></span>
+                    &nbsp;查询
+                </button>
+            </div>
+        </div>
+    </search-layout>
+
+    <div style="display:{{ydspCtrl.tableDisplay}}">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>学号</th>
+                    <th>年级</th>
+                    <th>院系</th>
+                    <th>专业</th>
+                    <th>变动大类</th>
+                    <th>变动小类</th>
+                    <th>申请日期</th>
+                    <th>代申请人</th>
+                    <th>状态</th>
+                    <th>审核角色</th>
+                    <th>审核人</th>
+                    <th>审核</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="auditRecord in ydspCtrl.items">
+                    <td ng-bind="auditRecord.name"></td>
+                    <td ng-bind="auditRecord.sno1"></td>
+                    <td ng-bind="auditRecord.grade"></td>
+                    <td ng-bind="auditRecord.school"></td>
+                    <td ng-bind="auditRecord.department"></td>
+                    <td ng-bind="auditRecord.major1"></td>
+                    <td ng-bind="auditRecord.minor1"></td>
+                    <td ng-bind="auditRecord.requestDate | date:'yyyy-MM-dd'"></td>
+                    <td ng-bind="auditRecord.applicantName"></td>
+                    <td ng-bind="auditRecord.auditStatus"></td>
+                    <td ng-bind="auditRecord.roleName"></td>
+                    <td ng-bind="auditRecord.account"></td>
+                    <td>
+                        <button class="no-border-btn" ng-click="ydspCtrl.audit(auditRecord, ydspCtrl.items, '')"
+                            ng-disabled="auditRecord.status!='3'">审核
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <script type="text/ng-template" id="status.html">
+
+            <div class="modal-header">
+                <h3 class="modal-title" id="status-modal-title">{{statusModalCtrl.status}}</h3>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="statusModalCtrl.ok()">确定</button>
+            </div>
+
+        </script>
+
+        <div class="form-inline forPagination" ng-show="ydspCtrl.page">
+            <div class="col-md-4"></div>
+            <div class="text-center col-md-4">
+                <uib-pagination total-items="ydspCtrl.totalItems" ng-model="ydspCtrl.currentPage"
+                                items-per-page="ydspCtrl.numPerPage" max-size="ydspCtrl.maxSize"
+                                class="pagination pagination-location" first-text="首页" previous-text="上一页"
+                                next-text="下一页" last-text="末页"
+                                boundary-links="true" ng-change="ydspCtrl.getByPage()"
+                                force-ellipses="false"></uib-pagination>
+            </div>
+            <div class="text-right col-md-4">
+                <label class="pagination-label" for="pageNum">每页显示记录数目</label>
+                <select id="pageNum" class="form-control" ng-model="ydspCtrl.numPerPage"
+                        ng-options="num for num in ydspCtrl.num"></select>
+                <button class="btn btn-default" ng-click="ydspCtrl.searchStatusChange()">确定</button>
+            </div>
+        </div>
+
+        <script type="text/ng-template" id="myModalContent.html">
+
+            <div class="modal-header">
+                <h3 class="modal-title">异动审核</h3>
+            </div>
+
+            <div class="modal-body" id="modal-body">
+
+
+                <timeline>
+                    <timeline-event ng-repeat="item in ydspModalCtrl.auditRecords" side="right">
+                        <timeline-badge class="{{item.class}}">
+                            <i class="glyphicon {{item.icon}} icon"></i>
+                        </timeline-badge>
+                        <timeline-panel class="{{item.class}}">
+                            <timeline-heading>
+                                <h4>{{item.auditRoleName+"&nbsp;&nbsp;"+item.requestDate+"&nbsp;&nbsp;"+item.auditStatus}}</h4>
+                            </timeline-heading>
+
+                            <form class="form-horizontal" >
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3">姓名：</label>
+                                    <span class=" col-md-9" >{{item.name}}
+          </span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3">学号：</label>
+                                    <span class=" col-md-9" >{{item.sno}}
+          </span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3">年级：</label>
+                                    <span class=" col-md-9" >{{item.grade}}
+          </span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3">院系：</label>
+                                    <span class=" col-md-9" >{{item.school}}
+          </span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3">专业：</label>
+                                    <span class=" col-md-9" >{{item.department}}
+          </span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3">申请日期：</label>
+                                    <span class=" col-md-9" >{{item.requestDate}}
+          </span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3">代申请人：</label>
+                                    <span class=" col-md-9" >{{item.staff}}
+          </span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3">申请理由：</label>
+                                    <span class=" col-md-9" >{{item.reason}}
+          </span>
+                                </div>
+       				<div class="form-group">
+                                    <label class="col-md-3">审核角色：</label>
+                                    <span class=" col-md-9" >{{item.auditRoleName}}
+          </span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3">状态：</label>
+                                    <span class=" col-md-9" >{{item.auditStatus}}
+          </span>
+                                </div>
+
+                         
+
+                            </form>
+
+                        </timeline-panel>
+                    </timeline-event>
+                </timeline>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" type="button" ng-click="ydspModalCtrl.accept()">通过</button>
+                <button class="btn btn-danger" type="button" ng-click="ydspModalCtrl.reject()">否决</button>
+                <button class="btn btn-warning" type="button" ng-click="ydspModalCtrl.cancel()">取消</button>
+            </div>
+        </script>
+    </div>
+
+</div>
+
+
+
+

@@ -1,0 +1,30 @@
+<timeline>
+  <timeline-event ng-repeat="item in auditRecords" side="right">
+    <timeline-badge class="{{item.class}}">
+      <i class="glyphicon {{item.iconClass}} icon"></i>
+    </timeline-badge>
+    <timeline-panel class="{{item.class}}">
+      <timeline-heading>
+        <h4>{{item.auditDate}}</h4>
+      </timeline-heading>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-md-3">审批人：</label>
+          <span class=" col-md-9">{{item.role+"&nbsp;"+ item.name}}</span>
+          </span>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3">审批状态：</label>
+          <span class=" col-md-9" ng-bind="item.status">
+          </span>
+        </div>
+
+        <div class="form-group" ng-show="item.reason">
+          <label class="col-md-3">审批理由：</label>
+          <span class=" col-md-9" ng-bind="item.reason">
+          </span>
+        </div>
+      </form>
+    </timeline-panel>
+  </timeline-event>
+</timeline>

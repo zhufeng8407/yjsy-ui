@@ -1,0 +1,71 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>按查询条件返回新生学籍数据</li>
+                <li>查看并维护新生学籍数据</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<search-layout search-config="xsInfoCtrl.searchConfig" search-condition="xsInfoCtrl.searchCondition">
+    <div class="search-bottom">
+        <div class="col-md-3">
+            <button type="submit" class=" btn btn-primary" ng-click="xsInfoCtrl.search()">查找</button>
+        </div>
+        <div class="form-inline col-md-5">
+            <input type="file" class="form-control" data-ngf-select data-ng-model="xsInfoCtrl.file" name="file" accept="text/csv" data-ngf-max-size="10MB" data-ngf-model-invalid="errorFile">
+            <button class="btn btn-primary" ng-click="xsInfoCtrl.batchUpdate(xsInfoCtrl.file)">批量修改</button>
+        </div>
+    </div>
+</search-layout>
+<div>
+    <table class="table table-bordered">
+        <tr>
+            <th>姓名</th>
+            <th>学号</th>
+            <th>年级</th>
+            <th>学部</th>
+            <th>院系</th>
+            <th>专业</th>
+            <th>培养类型</th>
+            <th>修改</th>
+        </tr>
+        <tr ng-repeat="x in xsInfoCtrl.students">
+            <td ng-bind="x.name"></td>
+            <td ng-bind="x.sno"></td>
+            <td ng-bind="x.grade"></td>
+            <td ng-bind="x.school"></td>
+            <td ng-bind="x.department"></td>
+            <td ng-bind="x.minor"></td>
+            <td ng-bind="x.degreeType"></td>
+            <td>
+                <button class="btn btn-sm btn-primary glyphicon glyphicon-pencil" data-ng-click="xsInfoCtrl.update(x.sno)">
+                </button>
+            </td>
+        </tr>
+    </table>
+    <div class="form-inline forPagination" ng-show="xsInfoCtrl.page">
+        <div class="col-md-3"></div>
+        <div class="text-center col-md-6">
+            <uib-pagination total-items="xsInfoCtrl.totalItems" ng-model="xsInfoCtrl.currentPage" items-per-page="xsInfoCtrl.numPerPage" max-size="xsInfoCtrl.maxSize" class="pagination pagination-location" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsInfoCtrl.search()" force-ellipses="true"></uib-pagination>
+        </div>
+        <div class="text-right col-md-3">
+            <label class="pagination-label" for="pageNum">每页显示记录数目</label>
+            <select id="pageNum" class="form-control" ng-model="xsInfoCtrl.numPerPage" ng-options="num for num in xsInfoCtrl.num"></select>
+            <button class="btn btn-default" ng-click="xsInfoCtrl.search()">确定</button>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        学生信息编辑
+        <button type="button" class="close" ng-click="modalInstanceCtrl.close()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <xs-info-panel sno="modalInstanceCtrl.sno" add-xs="false"></xs-info-panel>
+    </div>
+</script>

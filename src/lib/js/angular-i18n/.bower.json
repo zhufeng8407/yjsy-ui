@@ -1,0 +1,21 @@
+{
+  "name": "angular-i18n",
+  "license": "MIT",
+  "main": "./angular-locale_zh-cn.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "precommit.sh"
+  ],
+  "homepage": "https://github.com/chsunshine/bower-angular-i18n",
+  "_release": "9e60839665",
+  "_resolution": {
+    "type": "branch",
+    "branch": "zh_cn",
+    "commit": "9e6083966563751cd9cd1356802e9265c290f130"
+  },
+  "_source": "https://github.com/chsunshine/bower-angular-i18n.git",
+  "_target": "zh_cn",
+  "_originalSource": "https://github.com/chsunshine/bower-angular-i18n.git"
+}

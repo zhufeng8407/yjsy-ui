@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link href="../lib/style/font-awesome/css/font-awesome.min.css"
+            rel="stylesheet" type="text/css">
+        <link href="../lib/style/simple-line-icons/simple-line-icons.min.css"
+            rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="../common/style/prompt.css"/>
+
+        <!-- bower:css -->
+
+        <!-- endbower -->
+
+        <!--import our custom style-->
+        <link rel="stylesheet" type="text/css" href="../common/style/widget.css"/>
+        <link href="../common/style/layout.css" rel="stylesheet" type="text/css">
+
+    </head>
+    <body data-ng-app="LoginHome">
+        <form class="form-horizontal" data-ng-controller="LoginCtrl as loginCtrl">
+            <!-- login form-->
+            <div ng-if="!loginCtrl.loginSuccess">
+                <div class="form-group">
+                    <label class="control-label col-sm-2">用户名</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" type="text" name="username" data-ng-model="loginCtrl.username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">密 码</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" type="password" name="password" data-ng-model="loginCtrl.password">
+                    </div>
+                </div>
+                <div class="col-sm-6 text-center">
+                    <button class="btn btn-primary" type="button" ng-click="loginCtrl.submit()">提交</button>
+                </div>
+            </div>
+        </form>
+
+
+        <!-- bower:js -->
+
+        <!-- endbower -->
+
+        <!-- inject:js -->
+
+        <!-- endinject -->
+        <!-- build:js ./login.app.min.js -->
+        <script src="./login.app.js"></script>
+        <!-- endbuild -->
+    </body>
+</html>

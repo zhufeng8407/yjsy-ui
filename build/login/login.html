@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link href="../lib/style/font-awesome/css/font-awesome.min.css"
+            rel="stylesheet" type="text/css">
+        <link href="../lib/style/simple-line-icons/simple-line-icons.min.css"
+            rel="stylesheet" type="text/css">
+
+        <!-- bower:css -->
+        <link rel="stylesheet" href="../lib/js/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../lib/js/angular-timeline/dist/angular-timeline.css" />
+        <!-- endbower -->
+
+        <!--import our custom style-->
+        <link rel="stylesheet" type="text/css" href="../common/style/widget.css"/>
+        <link href="../common/style/layout.css" rel="stylesheet" type="text/css">
+
+    </head>
+    <body data-ng-app="LoginHome">
+        <form class="form-horizontal" data-ng-controller="LoginCtrl as loginCtrl">
+            <!-- login form-->
+            <div ng-if="!loginCtrl.loginSuccess">
+                <div class="form-group">
+                    <label class="control-label col-sm-2">用户名</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" type="text" name="username" data-ng-model="loginCtrl.username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">密 码</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" type="password" name="password" data-ng-model="loginCtrl.password">
+                    </div>
+                </div>
+                <div class="col-sm-6 text-center">
+                    <button class="btn btn-primary" type="button" ng-click="loginCtrl.submit()">提交</button>
+                </div>
+            </div>
+
+            <!-- role switch-->
+            <div class="container-fluid page-content" ng-if="loginCtrl.loginSuccess" ng-cloak>
+                <!-- content div -->
+                <div class="row">{{loginCtrl.user.username}}</div>
+                <div class="row privilege-manage-top">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="panel privilege-manage">
+                            <div class="panel-heading panel-heading-position">请选择权限并进入研究生院管理系统</div>
+                            <div class="panel-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>权限</th>
+                                            <th>角色</th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="page in loginCtrl.pages">
+                                        <td>
+                                            <button class="btn btn-lg btn-primary"
+                                                ng-click="loginCtrl.choosePageType(page.page)" ng-cloak>
+                                                {{page.page}}
+                                            </button>
+                                        </td>
+                                        <td><label ng-repeat="role in page.roles">{{role}}
+                                            <span ng-if="!$last">,</span>
+                                        </label></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+        <!-- bower:js -->
+        <script src="../lib/js/angular/angular.js"></script>
+        <script src="../lib/js/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="../lib/js/angular-loader/angular-loader.js"></script>
+        <script src="../lib/js/angular-route/angular-route.js"></script>
+        <script src="../lib/js/angular-cookies/angular-cookies.js"></script>
+        <script src="../lib/js/angular-animate/angular-animate.js"></script>
+        <script src="../lib/js/angular-sanitize/angular-sanitize.js"></script>
+        <script src="../lib/js/ngstorage/ngStorage.js"></script>
+        <script src="../lib/js/ng-file-upload/ng-file-upload.js"></script>
+        <script src="../lib/js/jquery/dist/jquery.js"></script>
+        <script src="../lib/js/angular-timeline/dist/angular-timeline.js"></script>
+        <!-- endbower -->
+
+        <!-- inject:js -->
+
+        <script src="../common/common.app.js"></script>
+
+        <script src="../common/config.js"></script>
+
+        <script src="../common/directive/animations.dir.js"></script>
+
+        <script src="../common/directive/menu-search-box.dir.js"></script>
+
+        <script src="../common/directive/nav-dropdown-menu.dir.js"></script>
+
+        <script src="../common/directive/promptMessage-panel.dir.js"></script>
+
+        <script src="../common/directive/status-apply.dir.js"></script>
+
+        <script src="../common/directive/status-audit-timeline.dir.js"></script>
+
+        <script src="../common/directive/xs-info-panel.dir.js"></script>
+
+        <script src="../common/service/account-dao.ser.js"></script>
+
+        <script src="../common/service/connection.ser.js"></script>
+
+        <script src="../common/service/diff-dao.ser.js"></script>
+
+        <script src="../common/service/exam-dao.ser.js"></script>
+
+        <script src="../common/service/global.ser.js"></script>
+
+        <script src="../common/service/menu-dao.ser.js"></script>
+
+        <script src="../common/service/message-dao.ser.js"></script>
+
+        <script src="../common/service/message-group-dao.ser.js"></script>
+
+        <script src="../common/service/meta-data-dao.ser.js"></script>
+
+        <script src="../common/service/modals.ser.js"></script>
+
+        <script src="../common/service/page-state.ser.js"></script>
+
+        <script src="../common/service/popular-page.ser.js"></script>
+
+        <script src="../common/service/registration.ser.js"></script>
+
+        <script src="../common/service/repo-dao.ser.js"></script>
+
+        <script src="../common/service/role-dao.ser.js"></script>
+
+        <script src="../common/service/select-dao-ser.js"></script>
+
+        <script src="../common/service/staff-dao.ser.js"></script>
+
+        <script src="../common/service/status-change-dao.ser.js"></script>
+
+        <script src="../common/service/status-change-type-dao.ser.js"></script>
+
+        <script src="../common/service/stu-dao.ser.js"></script>
+
+        <script src="../common/service/utils.ser.js"></script>
+
+        <script src="../common/service/yby-dao.ser.js"></script>
+
+        <!-- endinject -->
+        <!-- build:js ./login.app.min.js -->
+        <script src="./login.app.js"></script>
+        <!-- endbuild -->
+    </body>
+</html>

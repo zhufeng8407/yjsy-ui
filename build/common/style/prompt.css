@@ -1,0 +1,24 @@
+/* 消息提示模态框样式 */
+.app-modal-window .modal-content {
+    border-radius: 0px;
+}
+
+.app-modal-window .modal-dialog {
+    width: 400px;
+    margin: 20% 50%;
+}
+
+.app-modal-window .modal-header {
+    border-bottom: none;
+    padding: 0px;
+    border-bottom: 1px solid silver;
+}
+
+.app-modal-window .modal-body {
+    padding: 15px;
+}
+
+.app-modal-window .modal-footer {
+    text-align: center;
+    border-top: none;
+}

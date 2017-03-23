@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <title>研究生院管理系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="../lib/style/font-awesome/css/font-awesome.min.css"
+          rel="stylesheet" type="text/css">
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../lib/js/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../lib/js/fullcalendar/dist/fullcalendar.css"/>
+    <link rel="stylesheet" href="../lib/js/angular-timeline/dist/angular-timeline.css"/>
+    <!-- endbower -->
+
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="../lib/style/simple-line-icons/simple-line-icons.min.css"
+          rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="./css/profile.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/tasks.css"/>
+    <link href="../common/style/widget.css" rel="stylesheet" type="text/css">
+    <!-- END PAGE LEVEL STYLES -->
+
+    <!-- 以下几个css是用于配置页面的布局样式 -->
+    <!--<link href="./css/layout.css" rel="stylesheet" type="text/css">-->
+    <!--<link href="./css/themes/default.css" rel="stylesheet" type="text/css"-->
+    <!--id="style_color">-->
+    <!--<link href="./css/custom.css" rel="stylesheet" type="text/css">-->
+    <!--<link href="../common/style/timeline-custom.css" rel="stylesheet" type="text/css">-->
+    <link rel="stylesheet" type="text/css" href="../common/style/widget.css"/>
+    <link href="../common/style/layout.css" rel="stylesheet" type="text/css">
+    <link href="../common/style/footer.css" rel="stylesheet" type="text/css">
+    <link href="./css/xs-layout.css" rel="stylesheet" type="text/css">
+    <!-- END THEME STYLES -->
+    <style>
+        .profile-usertitle > table > tbody > tr > td.text-right {
+            width: 50%;
+            padding-right: 10px;
+            font-size: 14px;
+        }
+
+        .profile-usertitle > table > tbody > tr > td.profile-usertitle-job {
+            width: 50%;
+            padding-right: 10px;
+            font-size: 14px;
+        }
+
+        .profile-userpic img {
+            width: 150px;
+        }
+
+        .panel-body > ul > li {
+            list-style-type: none;
+            margin-left: -20px;
+        }
+
+        .table-student-info > tbody > tr {
+            height: 23px;
+        }
+
+        .collapse.navbar-collapse > nav-dropdown-menu > div > li.dropdown > a {
+            height: 50px;
+        }
+    </style>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<!-- DOC: Apply "page-header-menu-fixed" class to set the mega menu fixed  -->
+<!-- DOC: Apply "page-header-top-fixed" class to set the top menu fixed  -->
+<!-- BEGIN BODY -->
+<!-- DOC: Apply "page-header-menu-fixed" class to set the mega menu fixed  -->
+<!-- DOC: Apply "page-header-top-fixed" class to set the top menu fixed  -->
+<body ng-app="teachhome">
+<div class="container-fluid">
+    <div class="row navbar dp-navbar-top navbar-static-top" style="margin-bottom:0" role="navigation"
+         ng-controller="HomeMenuCtrl as homeMenuCtrl">
+        <div class="col-md-12">
+            <div class="navbar-header">
+                <div class="navbar-header">
+                    <a href="index.html"><img class="navbar-brand" src="../common/image/logo/logo1.png"></a>
+                </div>
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class=""><a href="#/">首页</a></li>
+                    <li class="menu-dropdown mega-menu-dropdown" uib-dropdown
+                        ng-repeat="menuItem in homeMenuCtrl.menu">
+                        <a data-hover="dropdown-toggle megamenu-dropdown"
+                           data-close-others="true" data-toggle="dropdown" ng-href="menuItem.url"
+                           class="dropdown-toggle" uib-dropdown-toggle> {{menuItem.name}} <i
+                                class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu" uib-dropdown-menu>
+                            <li ng-repeat="subMenu in menuItem.subMenu">
+                                <a href="{{subMenu.url}}">{{subMenu.name}}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <nav-dropdown-menu></nav-dropdown-menu>
+            </div>
+        </div>
+    </div>
+    <!-- content div -->
+    <div class="row page-content" ng-controller="HomeContentCtrl as homeContentCtrl" style="margin-top: 30px;min-height: 81vh;">
+        <!-- BEGIN PAGE CONTENT INNER -->
+        <div class="col-md-3" style="width: 20%">
+            <!-- PORTLET MAIN -->
+            <div class="panel light profile-sidebar-portlet">
+                <!-- SIDEBAR USERPIC -->
+                <div class="profile-userpic">
+                    <img ng-src="{{homeContentCtrl.staffImage}}" class="img-responsive" alt="">
+                </div>
+                <!-- END SIDEBAR USERPIC -->
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                    <table class="col-sm-offset-2 col-sm-8 table-student-info">
+                        <tr>
+                            <td colspan="2" class="profile-usertitle-name text-center">
+                                {{homeContentCtrl.staff.name}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">工&nbsp;&nbsp;号</td>
+                            <td class="profile-usertitle-job text-left">{{homeContentCtrl.staff.staffsno}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">职&nbsp;&nbsp;称</td>
+                            <td class="profile-usertitle-job text-left">{{homeContentCtrl.staff.profession}}</td>
+                        </tr>
+                        <tr ng-repeat="school in homeContentCtrl.staff.school track by $index">
+                            <td class="text-right"><span ng-show="$index == 0">院&nbsp;&nbsp;系</span></td>
+                            <td class="profile-usertitle-job text-left">{{school}}</td>
+                        </tr>
+                        <tr ng-repeat="department in homeContentCtrl.staff.department">
+                            <td class="text-right"><span  ng-show="$index == 0">系&nbsp;&nbsp;所</span></td>
+                            <td class="profile-usertitle-job text-left">{{department}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">硕士生导师</td>
+                            <td class="profile-usertitle-job text-left">{{homeContentCtrl.staff.superviseMaster}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">博士生导师</td>
+                            <td class="profile-usertitle-job text-left">{{homeContentCtrl.staff.superviseDoctor}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- END OF PROFILE SIDEBAR -->
+        <div class="col-md-7" style="width: 63%">
+            <div class="panel stu-page-content" ng-view></div>
+        </div>
+        <div class="col-md-2">
+            <div class="col-md-8 panel stu-page-content">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="caption">
+                            校内链接
+                        </div>
+                    </div>
+                    <div class="panel-body panel-primary li">
+                        <li><a href="http://www.ecnu.edu.cn/" target="_blank">学校主页</a></li>
+                        <li><a href="http://www.yjsy.ecnu.edu.cn/" target="_blank">研究生院</a></li>
+                        <li><a href="http://www.yjszs.ecnu.edu.cn" target="_blank">研招网</a></li>
+                        <li><a href="http://www.lib.ecnu.edu.cn/" target="_blank">图书馆</a></li>
+                        <li><a href="http://www.dag.ecnu.edu.cn/" target="_blank">档案馆</a></li>
+                        <li><a href="http://www.xsgzb.ecnu.edu.cn/main.htm" target="_blank">学生工部</a></li>
+                        <li><a href="http://service.ecnu.edu.cn/SitePages/Index.aspx" target="_blank">师生综合服务平台</a>
+                        </li>
+                        <li><a href="https://my.chsi.com.cn/archive/index.jsp" target="_blank">国家学信网</a></li>
+                    </div>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="caption">
+                            校外链接
+                        </div>
+                    </div>
+                    <div class="panel-body panel-primary li">
+                        <li><a href="http://yz.chsi.com.cn/" target="_blank">国家研招网</a></li>
+                        <li><a href="https://my.chsi.com.cn/archive/index.jsp" target="_blank">国家学信网</a></li>
+                    </div>
+                </div>
+                <!--<div class="panel panel-primary">-->
+                <!--<div class="panel-heading">-->
+                <!--<div class="caption">-->
+                <!--学校通知-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="panel-body">-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE CONTENT -->
+    <!-- footer div -->
+    <div ng-include="'../common/view/footer.html'"></div>
+</div>
+
+<!-- bower:js -->
+<!-- endbower -->
+
+<!-- inject:js -->
+<!-- endinject -->
+
+<!-- build:js ./ecnu-stu-home.app.min.js -->
+<script src="index.app.js"></script>
+<script src="teachhome.ctrl.js"></script>
+<script src="yd/my-student.ctrl.js"></script>
+<script src="yd/ydsh.ctrl.js"></script>
+<!-- endbuild -->
+
+</body>
+<!-- END BODY -->
+<!-- END BODY -->
+</html>

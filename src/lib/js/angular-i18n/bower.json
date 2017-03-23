@@ -1,0 +1,12 @@
+{
+  "name": "angular-i18n",
+  "version": "1.5.9-build.5035+sha.cf241c4",
+  "license": "MIT",
+   "main": "./angular-locale_zh-cn.js", 
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "precommit.sh"
+  ]
+}

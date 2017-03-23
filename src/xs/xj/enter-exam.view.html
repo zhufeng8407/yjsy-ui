@@ -1,0 +1,48 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>1. 测试</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div ng-controller="QuestionSettingCtrl as questionSettingCtrl">
+    <div class="" data-ng-repeat="item in questionSettingCtrl.items">
+        <br>
+        <br>
+        <div data-ng-bind="($index+1)+'、 '+item.test"></div>
+        <div class="radio">
+            <label class="radio-inline" ng-cloak>
+                <input type="radio" data-ng-model="questionSettingCtrl.answer[$index]" value="A">
+                A {{item.op1}}
+            </label>
+        </div>
+        <div class="radio">
+            <label class="radio-inline" ng-cloak>
+                <input type="radio" data-ng-model="questionSettingCtrl.answer[$index]" value="B">
+                B {{item.op2}}
+            </label>
+        </div>
+        <div class="radio">
+            <label class="radio-inline" ng-cloak>
+                <input type="radio" data-ng-model="questionSettingCtrl.answer[$index]" value="C">
+                C {{item.op3}}
+            </label>
+        </div>
+        <div class="radio">
+            <label class="radio-inline" ng-cloak>
+                <input type="radio" data-ng-model="questionSettingCtrl.answer[$index]" value="D">
+                D {{item.op4}}
+            </label>
+        </div>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary" data-ng-click="questionSettingCtrl.submit()">提交</button>
+</div>
+    <br><br><br><br>
+</div>

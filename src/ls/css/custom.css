@@ -1,0 +1,12 @@
+/* here you can put your own css to customize and override the theme */
+
+/*自定义page页面*/
+.page-container .page-content .container {
+  padding: 10px 10px 10px 10px;
+  margin: 0 !important;
+}
+
+.stu-page-content {
+  padding-top: 15px;
+  min-height: 60vh;
+}

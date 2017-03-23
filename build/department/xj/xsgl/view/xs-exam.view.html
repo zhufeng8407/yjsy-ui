@@ -1,0 +1,204 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>1. 入学测试</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div data-ng-controller="XsExamCtrl as xsExamCtrl" class="container-fluid">
+    <div>
+        <button class="btn btn-primary" data-ng-click="xsExamCtrl.uploadModal()">导入考题</button>
+        <button class="btn btn-primary" data-ng-click="xsExamCtrl.examModal(-1)">添加考题</button>
+        <button class="btn btn-primary" data-ng-click="xsExamCtrl.exportExam()">导出考题</button>
+        <button class="btn btn-primary" data-ng-click="xsExamCtrl.chartModal()">报表统计</button>
+    </div>
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th class="text-center"><input type="checkbox"
+                    data-ng-model="xsExamCtrl.allChecked"
+                    data-ng-change="xsExamCtrl.checkAll()"/></th>
+                <th class="text-center" width="50px">序号</th>
+                <th class="text-center" width="435px">题目</th>
+                <th class="text-center" width="100px">A</th>
+                <th class="text-center" width="100px">B</th>
+                <th class="text-center" width="100px">C</th>
+                <th class="text-center" width="100px">D</th>
+                <th class="text-center" width="50px">答案</th>
+                <th class="text-center">答题数</th>
+                <th class="text-center">正确数</th>
+                <th class="text-center">正确率</th>
+                <th class="text-center">操作</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="item in xsExamCtrl.items">
+                <td class="text-center"><input type="checkbox"
+                    data-ng-model="item.$checked"/></td>
+                <td class="text-center">
+                    <span data-ng-bind="$index+xsExamCtrl.currentPage*15-14"></span>
+                </td>
+                <td class="text-center" data-ng-bind="item.test"></td>
+                <td class="text-center" data-ng-bind="item.op1"></td>
+                <td class="text-center" data-ng-bind="item.op2"></td>
+                <td class="text-center" data-ng-bind="item.op3"></td>
+                <td class="text-center" data-ng-bind="item.op4"></td>
+                <td class="text-center" data-ng-bind="item.answer"></td>
+                <td class="text-center" data-ng-bind="item.total"></td>
+                <td class="text-center" data-ng-bind="item.totalCorrect"></td>
+                <td class="text-center">
+                    <!--data-ng-bind="item.totalCorrect / item.total * 100 | number:2 +'%'"-->
+                    <span data-ng-if="item.total!=0"
+                        ng-cloak>{{item.totalCorrect / item.total * 100 | number:2 }}%</span>
+                    <span data-ng-if="item.total==0" data-ng-bind="0+'%'"></span>
+
+                </td>
+                <td class="text-center">
+                <span class="btn btn-sm btn-primary glyphicon glyphicon-pencil"
+                    data-ng-click="xsExamCtrl.examModal($index)"></span>
+                    <span class="btn btn-sm btn-danger glyphicon glyphicon-remove"
+                        data-ng-click="xsExamCtrl.deleteItem(item.id)"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="text-right">
+        <button class="btn btn-primary" style="float: left" data-ng-click="xsExamCtrl.deleteItems()">删除</button>
+        <uib-pagination total-items="xsExamCtrl.totalItems" ng-model="xsExamCtrl.currentPage"
+            items-per-page="xsExamCtrl.numPerPage" max-size="xsExamCtrl.maxSize"
+            class="pagination" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页"
+            boundary-links="true" ng-change="xsExamCtrl.pageChanged()" force-ellipses="true"></uib-pagination>
+    </div>
+
+    <script type="text/ng-template" id="examHandler.html">
+        <div class="modal-header">
+            <h3 class="modal-title">考题编辑</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">考题</label>
+                    <div class="col-sm-10">
+                    <textarea class="form-control" rows="2" placeholder="请输入考题"
+                        data-ng-model="examCtrl.theItem.test"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">选项 A</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="请输入选项A"
+                            data-ng-model="examCtrl.theItem.op1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">选项 B</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="请输入选项B"
+                            data-ng-model="examCtrl.theItem.op2">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">选项 C</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="请输入选项C"
+                            data-ng-model="examCtrl.theItem.op3">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">选项 D</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="请输入选项D"
+                            data-ng-model="examCtrl.theItem.op4">
+                    </div>
+                </div>
+                <div class="form-group form-inline">
+                    <label class="col-sm-2 control-label">答案</label>
+                    <div class="col-sm-10">
+                        <label class="radio-inline">
+                            <input type="radio" name="optionsRadios" data-ng-model="examCtrl.theItem.answer" value="A">
+                            A
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="optionsRadios" data-ng-model="examCtrl.theItem.answer" value="B">
+                            B
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="optionsRadios" data-ng-model="examCtrl.theItem.answer" value="C">
+                            C
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="optionsRadios" data-ng-model="examCtrl.theItem.answer" value="D">
+                            D
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="examCtrl.ok()">确认</button>
+            <button class="btn btn-warning" type="button" ng-click="examCtrl.cancel()">取消</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="uploadFile.html">
+        <form class="form-inline" name="uploadForm">
+            <div class="modal-header">
+                <h3 class="modal-title">上传考题</h3>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr height="20px">
+                        <td class="text-right">考题文件</td>
+                        <td><input type="file" data-ngf-select
+                            data-ng-model="examsUploadCtrl.file" name="file" ngf-pattern="'.xlsx'" accept=".xlsx"
+                            data-ngf-max-size="1MB" required data-ngf-model-invalid="errorFile"></td>
+                    </tr>
+                    <tr>
+                        <td><i ng-show="uploadForm.file.$error.maxSize">文件大小不能超过100MB，当前文件大小{{errorFile.size
+                            / 1000000|number:1}}MB</i></td>
+                    </tr>
+                    <tr height="20px">
+                        <td colspan="2" class="text-center">
+                            <uib-progress data-ng-show="examsUploadCtrl.progress">
+                                <uib-bar value="examsUploadCtrl.progress" type="{{examsUploadCtrl.type}}"
+                                    data-ng-bind="examsUploadCtrl.progress + '%'"/>
+                            </uib-progress>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">
+                            <span class="err" data-ng-show="examsUploadCtrl.isShowMsg"
+                                data-ng-bind="examsUploadCtrl.Msg"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-show="examsUploadCtrl.uploadBtn" ng-disabled="!uploadForm.$valid" type="button"
+                    data-ng-click="examsUploadCtrl.uploadExam(examsUploadCtrl.file)">确认
+                </button>
+                <button class="btn btn-primary" ng-show="examsUploadCtrl.exportBtn" ng-disabled="!uploadForm.$valid" type="button"
+                    data-ng-click="examsUploadCtrl.exportError()">导出失败条目
+                </button>
+                <button class="btn btn-warning" type="button" ng-click="examsUploadCtrl.cancel()">取消</button>
+            </div>
+        </form>
+    </script>
+
+    <script type="text/ng-template" id="examCharts.html">
+        <div class="modal-body col-md-12">
+            <ng-echarts class="col-md-12 echarts" ec-config="examsChartsCtrl.lineConfig"
+                ec-option="examsChartsCtrl.lineOption"></ng-echarts>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="examsChartsCtrl.cancel()">关闭</button>
+        </div>
+    </script>
+</div>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+  <!--<![endif]-->
+  <!-- BEGIN HEAD -->
+  <head>
+    <meta charset="utf-8"/>
+    <title>研究生院管理系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../../lib/js/angular-tree-control/css/tree-control.css" />
+    <link rel="stylesheet" href="../../lib/js/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../lib/js/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="../../lib/js/angular-timeline/dist/angular-timeline.css" />
+    <!-- endbower -->
+
+    <link href="../../lib/style/font-awesome/css/font-awesome.min.css"
+        rel="stylesheet" type="text/css">
+    <link
+        href="../../lib/style/simple-line-icons/simple-line-icons.min.css"
+        rel="stylesheet" type="text/css">
+    <!--<link rel="stylesheet" href="../../lib/style/bootstrap-material-design/bootstrap-material-design.css"-->
+    <!--type="text/css">-->
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="../../common/style/widget.css"/>
+    <link rel="stylesheet" type="text/css" href="../../common/style/prompt.css"/>
+    <link href="../../common/style/layout.css" rel="stylesheet" type="text/css">
+    <link href="../../common/style/footer.css" rel="stylesheet" type="text/css">
+    <link href="../../common/style/timeline-custom.css" rel="stylesheet" type="text/css">
+    <link href="../directive/dp-layout.css" rel="stylesheet" type="text/css">
+    <link href="xjyd/view/xjyd.css" rel="stylesheet" text="text/css">
+    <link href="css/angular-timeline-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/angular-timeline-animations.css" rel="stylesheet" type="text/css">
+    <link href="css/xj.css" rel="stylesheet" type="text/css">
+    <!-- END PAGE LEVEL STYLES -->
+
+  </head>
+  <!-- END HEAD -->
+  <!-- BEGIN BODY -->
+  <body ng-app="ecnuXueJi">
+
+    <ecnu-dp-layout user="user"></ecnu-dp-layout>
+
+    <!-- bower:js -->
+    <script src="../../lib/js/angular/angular.js"></script>
+    <script src="../../lib/js/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="../../lib/js/angular-loader/angular-loader.js"></script>
+    <script src="../../lib/js/angular-route/angular-route.js"></script>
+    <script src="../../lib/js/angular-cookies/angular-cookies.js"></script>
+    <script src="../../lib/js/angular-animate/angular-animate.js"></script>
+    <script src="../../lib/js/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../../lib/js/angular-i18n/angular-locale_zh-cn.js"></script>
+    <script src="../../lib/js/angular-sortable-view/src/angular-sortable-view.js"></script>
+    <script src="../../lib/js/angular-tree-control/angular-tree-control.js"></script>
+    <script src="../../lib/js/echarts/dist/echarts.min.js"></script>
+    <script src="../../lib/js/echarts/dist/extension/bmap.min.js"></script>
+    <script src="../../lib/js/echarts/dist/extension/dataTool.min.js"></script>
+    <script src="../../lib/js/ng-echarts/dist/ng-echarts.js"></script>
+    <script src="../../lib/js/ngstorage/ngStorage.js"></script>
+    <script src="../../lib/js/jquery/dist/jquery.js"></script>
+    <script src="../../lib/js/bootbox/bootbox.js"></script>
+    <script src="../../lib/js/ngBootbox/dist/ngBootbox.js"></script>
+    <script src="../../lib/js/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="../../lib/js/ng-file-upload/ng-file-upload.js"></script>
+    <script src="../../lib/js/blob-polyfill/Blob.js"></script>
+    <script src="../../lib/js/file-saver.js/FileSaver.js"></script>
+    <script src="../../lib/js/angular-file-saver/dist/angular-file-saver.bundle.js"></script>
+    <script src="../../lib/js/lodash/lodash.js"></script>
+    <script src="../../lib/js/file-saver/FileSaver.js"></script>
+    <script src="../../lib/js/angular-timeline/dist/angular-timeline.js"></script>
+    <script src="../../lib/js/moment/moment.js"></script>
+    <!-- endbower -->
+
+    <!-- common module will be injected automatically-->
+    <!-- inject:js -->
+
+    <script src="../../common/common.app.js"></script>
+
+    <script src="../../common/config.js"></script>
+
+    <script src="../../common/directive/animations.dir.js"></script>
+
+    <script src="../../common/directive/menu-search-box.dir.js"></script>
+
+    <script src="../../common/directive/nav-dropdown-menu.dir.js"></script>
+
+    <script src="../../common/directive/promptMessage-panel.dir.js"></script>
+
+    <script src="../../common/directive/status-apply.dir.js"></script>
+
+    <script src="../../common/directive/status-audit-timeline.dir.js"></script>
+
+    <script src="../../common/directive/xs-info-panel.dir.js"></script>
+
+    <script src="../../common/service/account-dao.ser.js"></script>
+
+    <script src="../../common/service/connection.ser.js"></script>
+
+    <script src="../../common/service/diff-dao.ser.js"></script>
+
+    <script src="../../common/service/exam-dao.ser.js"></script>
+
+    <script src="../../common/service/global.ser.js"></script>
+
+    <script src="../../common/service/menu-dao.ser.js"></script>
+
+    <script src="../../common/service/message-dao.ser.js"></script>
+
+    <script src="../../common/service/message-group-dao.ser.js"></script>
+
+    <script src="../../common/service/meta-data-dao.ser.js"></script>
+
+    <script src="../../common/service/modals.ser.js"></script>
+
+    <script src="../../common/service/page-state.ser.js"></script>
+
+    <script src="../../common/service/popular-page.ser.js"></script>
+
+    <script src="../../common/service/registration.ser.js"></script>
+
+    <script src="../../common/service/repo-dao.ser.js"></script>
+
+    <script src="../../common/service/role-dao.ser.js"></script>
+
+    <script src="../../common/service/select-dao-ser.js"></script>
+
+    <script src="../../common/service/staff-dao.ser.js"></script>
+
+    <script src="../../common/service/status-change-dao.ser.js"></script>
+
+    <script src="../../common/service/status-change-type-dao.ser.js"></script>
+
+    <script src="../../common/service/stu-dao.ser.js"></script>
+
+    <script src="../../common/service/utils.ser.js"></script>
+
+    <script src="../../common/service/yby-dao.ser.js"></script>
+
+    <!-- endinject -->
+
+    <!-- build:js ./ecnu-xj-home.app.min.js -->
+    <script src="../index.app.js"></script>
+    <script type="text/javascript" src="../directive/dp-menu.dir.js"></script>
+    <script src="../directive/dp-layout.js"></script>
+    <script src="../directive/search-form.dir.js"></script>
+    <script src="../filter/auth-filters.filter.js"></script>
+    <script src="xj-home.app.js"></script>
+    <script src="xsgl/controller/xj-import.ctrl.js"></script>
+    <script src="xsgl/controller/xs-info.ctrl.js"></script>
+    <script src="xsgl/controller/xs-exam.ctrl.js"></script>
+    <script src="xsgl/controller/xs-registion.ctrl.js"></script>
+    <script src="xsgl/controller/xs-difficulty.ctrl.js"></script>
+    <script src="xsgl/controller/xs-repo.ctrl.js"></script>
+    <script src="xsgl/controller/xs-checkin.ctrl.js"></script>
+    <script src="xsgl/controller/xs-fee.ctrl.js"></script>
+    <script src="xsgl/controller/xj-ds-import.ctrl.js"></script>
+    <script src="xjyd/service/account-privilege-dao.ser.js"></script>
+    <script src="xjyd/service/audit-workflow-dao.ser.js"></script>
+    <script src="xjyd/controller/ydlx.ctrl.js"></script>
+    <script src="xjyd/controller/ydlc.ctrl.js"></script>
+    <script src="xjyd/controller/ydsq.ctrl.js"></script>
+    <script src="xjyd/controller/ydsp.ctrl.js"></script>
+    <script src="xjyd/controller/angular-scroll-animate.js"></script>
+    <script src="zhsw/yjsz-bb.ctrl.js"></script>
+    <script src="yby/controller/yby-audit.ctrl.js"></script>
+    <script src="yby/controller/yby-info.ctrl.js"></script>
+    <script src="yby/controller/yby-maintain.ctrl.js"></script>
+    <script src="../../common/directive/promptMessage-panel.dir.js"></script>
+
+    <!-- endbuild -->
+
+  </body>
+  <!-- END BODY -->
+</html>

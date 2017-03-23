@@ -1,0 +1,168 @@
+<style>
+.border {
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 10px 0px 10px 0px;
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.border > div > button {
+    min-width: 30px;
+}
+
+.border > table > tbody > tr > td {
+    padding-left: 15px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    vertical-align: middle;
+}
+
+.tree-light {
+    margin-top: 5px;
+    margin-left: -37px;
+}
+</style>
+<div ng-controller="RoleCtrl as roleCtrl">
+    <div class="memo">
+        <div class="panel panel-info panel-border-color">
+            <div class="panel-heading">
+                <h3 class="panel-title">说明</h3>
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <li>角色包含权限和功能两部分，其中权限定义可管理哪些院系的研究生，功能定义可操作哪些功能页面</li>
+                    <li>添加新角色或修改已有的角色</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button class="btn btn-primary" style="margin-bottom: 8px;" ng-click="roleCtrl.showEditPanel()">添加角色
+        </button>
+        <button class="btn btn-primary" style="margin-bottom: 8px;margin-left: 10px;" ng-click="roleCtrl.showUploadPanel()">批量修改 角色-页面
+        </button>
+        <button class="btn btn-link" style="margin-bottom: 8px;margin-left: 10px;" ng-click="roleCtrl.downloadDemo()">下载电子表格模板
+        </button>
+    </div>
+    <div class="col-md-6 row" style="float: left;">
+        <table class="table table-bordered table-hover table-striped text-center col-sm-12">
+            <thead>
+                <th class="text-center">角色名称</th>
+                <th class="text-center">权限等级</th>
+                <th class="text-center">操作</th>
+            </thead>
+            <tr data-ng-repeat="role in roleCtrl.roles">
+                <td data-ng-bind="role.roleName"></td>
+                <td data-ng-bind="role.domainLevel"></td>
+                <td class="center">
+                    <span class="btn btn-sm btn-primary glyphicon glyphicon-pencil" data-ng-click="roleCtrl.modifyRole(role.roleID)"></span>
+                    <span class="btn btn-sm btn-danger glyphicon glyphicon-remove" data-ng-click="roleCtrl.deleteRole(role.roleID)"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6 border" ng-show="roleCtrl.isShowEdit">
+        <table class="edit-table" width="80%">
+            <tr>
+                <td><strong>角色名称</strong></td>
+                <td colspan="2">
+                    <input class="form-control" placeholder="请输入角色名称" type="text" ng-model="roleCtrl.jsm" />
+                </td>
+            </tr>
+            <tr>
+                <td><strong>权限等级</strong></td>
+                <td colspan="2">
+                    <label class="radio-inline">
+                        <input type="radio" name="PrivilegeType" value="校级" data-ng-model="roleCtrl.domainLevel"> 校级
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="PrivilegeType" value="一级" data-ng-model="roleCtrl.domainLevel"> 一级
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="PrivilegeType" value="二级" data-ng-model="roleCtrl.domainLevel"> 二级
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="PrivilegeType" value="导师" data-ng-model="roleCtrl.domainLevel"> 导师
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="PrivilegeType" value="学生" data-ng-model="roleCtrl.domainLevel"> 学生
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;"><strong>角色功能</strong></td>
+                <td colspan="2">
+                    <treecontrol class="tree-light col-sm-offset-2 col-sm-9" tree-model="roleCtrl.pageTree" options="roleCtrl.treeOptions" on-selection="roleCtrl.showSelected(node)">
+                        {{node.annotation.length==0?node.name:node.name+"("+node.annotation+")"}}&nbsp;&nbsp;
+                        <input type="checkbox" data-ng-model="node.$checked" data-ng-change="roleCtrl.checkboxChange(node.$checked,node)">
+                    </treecontrol>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn btn-primary" data-ng-show="roleCtrl.isadd" data-ng-click="roleCtrl.addRole()">添加
+                    </button>
+                    <button class="btn btn-primary" data-ng-show="!roleCtrl.isadd" data-ng-click="roleCtrl.doModify()">修改
+                    </button>
+                </td>
+                <td>
+                    <button class="btn" data-ng-click="roleCtrl.cancel()">取消
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-warning" data-ng-show="roleCtrl.isadd" data-ng-click="roleCtrl.reset()">重置
+                    </button>
+                    <button class="btn btn-warning" data-ng-show="!roleCtrl.isadd" data-ng-click="roleCtrl.reset()">重置
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/ng-template" id="uploadFile.html">
+    <form class="form-inline" name="uploadForm">
+        <div class="modal-header">
+            <h3 class="modal-title">上传批量修改文件</h3>
+        </div>
+        <div class="modal-body">
+            <table>
+                <tr height="20px">
+                    <td class="text-right">批量修改文件</td>
+                    <td>
+                        <input type="file" data-ngf-select data-ng-model="uploadCtrl.file" name="file" ngf-pattern="'.xlsx'"
+                            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                            data-ngf-max-size="1MB" required data-ngf-model-invalid="errorFile">
+                    </td>
+                </tr>
+                <tr>
+                    <td><i ng-show="uploadForm.file.$error.maxSize">文件大小不能超过100MB，当前文件大小{{errorFile.size
+                        / 1000000|number:1}}MB</i></td>
+                </tr>
+                <tr height="20px">
+                    <td colspan="2" class="text-center">
+                        <uib-progress data-ng-show="uploadCtrl.progress">
+                            <uib-bar value="uploadCtrl.progress" type="{{uploadCtrl.type}}" data-ng-bind="uploadCtrl.progress + '%'" />
+                        </uib-progress>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <span class="err" data-ng-show="uploadCtrl.isShowMsg" data-ng-bind="uploadCtrl.Msg"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-disabled="!uploadForm.$valid" type="button" data-ng-click="uploadCtrl.upload()">确认
+            </button>
+            <button class="btn btn-primary" ng-show="uploadCtrl.showExport" type="button" data-ng-click="uploadCtrl.exportError()">导出失败条目
+            </button>
+            <button class="btn btn-warning" type="button" ng-click="uploadCtrl.cancel()">取消</button>
+        </div>
+    </form>
+</script>

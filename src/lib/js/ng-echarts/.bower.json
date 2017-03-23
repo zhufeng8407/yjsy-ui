@@ -1,0 +1,30 @@
+{
+  "name": "ng-echarts-bower",
+  "homepage": "https://github.com/lopn/ng-echarts",
+  "description": "ng-echarts add bower",
+  "main": "dist/ng-echarts.js",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "angularjs",
+    "echarts",
+    "angular",
+    "chart"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.5.5",
+    "echarts": "https://github.com/xiafan68/echarts.git#3.2.3_bower"
+  },
+  "devDependencies": {},
+  "_release": "9f70a05564",
+  "_resolution": {
+    "type": "branch",
+    "branch": "echarts3-ng1.5",
+    "commit": "9f70a055640b6761316a38ab405191dc3e73cd84"
+  },
+  "_source": "https://github.com/xiafan68/ng-echarts.git",
+  "_target": "echarts3-ng1.5",
+  "_originalSource": "https://github.com/xiafan68/ng-echarts.git"
+}

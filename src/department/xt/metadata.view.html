@@ -1,0 +1,400 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>浏览学籍系统所使用的各种元数据</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div>
+    <uib-tabset active="activeForm">
+        <uib-tab index="0" heading="火车到站">
+            <table class="table table-striped table-bordered table-hover" style="top:20px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">省份</th>
+                        <th style="text-align: center">火车站名</th>
+                        <th style="text-align: center">火车站名首字母</th>
+                        <th style="text-align: center">拼音</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="railway in xsMetadataCtrl.railwaysByPage">
+                        <td style="text-align: center" ng-bind="railway.id"></td>
+                        <td style="text-align: center" ng-bind="railway.state"></td>
+                        <td style="text-align: center" ng-bind="railway.name"></td>
+                        <td style="text-align: center" ng-bind="railway.code"></td>
+                        <td style="text-align: center" ng-bind="railway.spelling"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <uib-pagination total-items="xsMetadataCtrl.railwayTotalItems" ng-model="xsMetadataCtrl.currentPage[0]" items-per-page="xsMetadataCtrl.numPerPage" max-size="xsMetadataCtrl.maxSize" class="pagination-sm" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsMetadataCtrl.railwayPageChange()" force-ellipses="true"></uib-pagination>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="研究生专业">
+            <table class="table table-striped table-bordered table-hover" style="top:20px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">门类代码</th>
+                        <th style="text-align: center">门类名称</th>
+                        <th style="text-align: center">一级学科代码</th>
+                        <th style="text-align: center">一级学科名称</th>
+                        <th style="text-align: center">专业代码</th>
+                        <th style="text-align: center">专业名称</th>
+                        <th style="text-align: center">原专业代码</th>
+                        <th style="text-align: center">学位类型</th>
+                        <th style="text-align: center">层次</th>
+                        <th style="text-align: center">专业设置区域</th>
+                        <th style="text-align: center">性质</th>
+                        <th style="text-align: center">启用年份</th>
+                        <th style="text-align: center">失效年份</th>
+                        <th style="text-align: center">专业代码来源</th>
+                        <th style="text-align: center">专业代码去向</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="discipline in xsMetadataCtrl.disciplinesByPage">
+                        <td style="text-align: center" ng-bind="discipline.id"></td>
+                        <td style="text-align: center" ng-bind="discipline.categoryCode"></td>
+                        <td style="text-align: center" ng-bind="discipline.category"></td>
+                        <td style="text-align: center" ng-bind="discipline.majorCode"></td>
+                        <td style="text-align: center" ng-bind="discipline.major"></td>
+                        <td style="text-align: center" ng-bind="discipline.minorCode"></td>
+                        <td style="text-align: center" ng-bind="discipline.minor"></td>
+                        <td style="text-align: center" ng-bind="discipline.originCode"></td>
+                        <td style="text-align: center" ng-bind="discipline.degreeType"></td>
+                        <td style="text-align: center" ng-bind="discipline.degreeLevel"></td>
+                        <td style="text-align: center" ng-bind="discipline.area"></td>
+                        <td style="text-align: center" ng-bind="discipline.nature"></td>
+                        <td style="text-align: center" ng-bind="discipline.since"></td>
+                        <td style="text-align: center" ng-bind="discipline.until"></td>
+                        <td style="text-align: center" ng-bind="discipline.source"></td>
+                        <td style="text-align: center" ng-bind="discipline.target"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <uib-pagination total-items="xsMetadataCtrl.disciplineTotalItems" ng-model="xsMetadataCtrl.currentPage[1]" items-per-page="xsMetadataCtrl.numPerPage" max-size="xsMetadataCtrl.maxSize" class="pagination-sm" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsMetadataCtrl.disciplinePageChange()" force-ellipses="true"></uib-pagination>
+            </div>
+        </uib-tab>
+        <uib-tab index="2" heading="录取类别">
+            <table class="table table-striped table-bordered table-hover" style="top:20px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">录取类别</th>
+                        <th style="text-align: center">编码</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="enrollment in xsMetadataCtrl.enrollmentsByPage">
+                        <td style="text-align: center" ng-bind="enrollment.id"></td>
+                        <td style="text-align: center" ng-bind="enrollment.name"></td>
+                        <td style="text-align: center" ng-bind="enrollment.code"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <uib-pagination total-items="xsMetadataCtrl.enrollmentTotalItems" ng-model="xsMetadataCtrl.currentPage[2]" items-per-page="xsMetadataCtrl.numPerPage" max-size="xsMetadataCtrl.maxSize" class="pagination-sm" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsMetadataCtrl.enrollmentPageChange()" force-ellipses="true"></uib-pagination>
+            </div>
+        </uib-tab>
+        <uib-tab index="3" heading="民族">
+            <table class="table table-striped table-bordered table-hover" style="top:20px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">民族</th>
+                        <th style="text-align: center">民族编码</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="ethnic in xsMetadataCtrl.ethnicsByPage">
+                        <td style="text-align: center" ng-bind="ethnic.id"></td>
+                        <td style="text-align: center" ng-bind="ethnic.name"></td>
+                        <td style="text-align: center" ng-bind="ethnic.code"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <uib-pagination total-items="xsMetadataCtrl.ethnicTotalItems" ng-model="xsMetadataCtrl.currentPage[3]" items-per-page="xsMetadataCtrl.numPerPage" max-size="xsMetadataCtrl.maxSize" class="pagination-sm" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsMetadataCtrl.ethnicPageChange()" force-ellipses="true"></uib-pagination>
+            </div>
+        </uib-tab>
+        <uib-tab index="4" heading="考试方式">
+            <table class="table table-striped table-bordered table-hover" style="top:20px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">代码</th>
+                        <th style="text-align: center">名称</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="examination in xsMetadataCtrl.examinationsByPage">
+                        <td style="text-align: center" ng-bind="examination.id"></td>
+                        <td style="text-align: center" ng-bind="examination.code"></td>
+                        <td style="text-align: center" ng-bind="examination.name"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <uib-pagination total-items="xsMetadataCtrl.examinationTotalItems" ng-model="xsMetadataCtrl.currentPage[4]" items-per-page="xsMetadataCtrl.numPerPage" max-size="xsMetadataCtrl.maxSize" class="pagination-sm" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsMetadataCtrl.examinationPageChange()" force-ellipses="true"></uib-pagination>
+            </div>
+        </uib-tab>
+        <uib-tab index="5" heading="本科专业">
+            <table class="table table-striped table-bordered table-hover" style="top:20px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">门类代码</th>
+                        <th style="text-align: center">门类名称</th>
+                        <th style="text-align: center">学科代码</th>
+                        <th style="text-align: center">学科名称</th>
+                        <th style="text-align: center">专业代码</th>
+                        <th style="text-align: center">专业名称</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="bachelorDiscipline in xsMetadataCtrl.bachelorDisciplinesByPage">
+                        <td style="text-align: center" ng-bind="bachelorDiscipline.id"></td>
+                        <td style="text-align: center" ng-bind="bachelorDiscipline.categoryCode"></td>
+                        <td style="text-align: center" ng-bind="bachelorDiscipline.category"></td>
+                        <td style="text-align: center" ng-bind="bachelorDiscipline.majorCode"></td>
+                        <td style="text-align: center" ng-bind="bachelorDiscipline.major"></td>
+                        <td style="text-align: center" ng-bind="bachelorDiscipline.minorCode"></td>
+                        <td style="text-align: center" ng-bind="bachelorDiscipline.minor"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <uib-pagination total-items="xsMetadataCtrl.bachelorDisciplineTotalItems" ng-model="xsMetadataCtrl.currentPage[5]" items-per-page="xsMetadataCtrl.numPerPage" max-size="xsMetadataCtrl.maxSize" class="pagination-sm" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsMetadataCtrl.bachelorDisciplinePageChange()" force-ellipses="true"></uib-pagination>
+            </div>
+        </uib-tab>
+        <uib-tab index="6" heading="毕业类型">
+            <table class="table table-striped table-bordered table-hover" style="top:20px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">代码</th>
+                        <th style="text-align: center">名称</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="graduation in xsMetadataCtrl.graduationsByPage">
+                        <td style="text-align: center" ng-bind="graduation.id"></td>
+                        <td style="text-align: center" ng-bind="graduation.code"></td>
+                        <td style="text-align: center" ng-bind="graduation.name"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <uib-pagination total-items="xsMetadataCtrl.graduationTotalItems" ng-model="xsMetadataCtrl.currentPage[6]" items-per-page="xsMetadataCtrl.numPerPage" max-size="xsMetadataCtrl.maxSize" class="pagination-sm" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsMetadataCtrl.graduationPageChange()" force-ellipses="true"></uib-pagination>
+            </div>
+        </uib-tab>
+        <uib-tab index="7" heading="国籍">
+            <table class="table table-striped table-bordered table-hover" style="top:20px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">国籍</th>
+                        <th style="text-align: center">国籍编码</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="nation in xsMetadataCtrl.nationsByPage">
+                        <td style="text-align: center" ng-bind="nation.id"></td>
+                        <td style="text-align: center" ng-bind="nation.name"></td>
+                        <td style="text-align: center" ng-bind="nation.code"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <uib-pagination total-items="xsMetadataCtrl.nationTotalItems" ng-model="xsMetadataCtrl.currentPage[7]" items-per-page="xsMetadataCtrl.numPerPage" max-size="xsMetadataCtrl.maxSize" class="pagination-sm" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsMetadataCtrl.nationPageChange()" force-ellipses="true"></uib-pagination>
+            </div>
+        </uib-tab>
+        <uib-tab index="8" heading="省市地区">
+            <table class="table table-striped table-bordered table-hover" style="top:20px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">国家</th>
+                        <th style="text-align: center">省份</th>
+                        <th style="text-align: center">省份代码</th>
+                        <th style="text-align: center">市</th>
+                        <th style="text-align: center">市代码</th>
+                        <th style="text-align: center">县</th>
+                        <th style="text-align: center">县代码</th>
+                        <th style="text-align: center">邮编</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="region in xsMetadataCtrl.regionsByPage">
+                        <td style="text-align: center" ng-bind="region.id"></td>
+                        <td style="text-align: center" ng-bind="region.country"></td>
+                        <td style="text-align: center" ng-bind="region.state"></td>
+                        <td style="text-align: center" ng-bind="region.stateCode"></td>
+                        <td style="text-align: center" ng-bind="region.city"></td>
+                        <td style="text-align: center" ng-bind="region.cityCode"></td>
+                        <td style="text-align: center" ng-bind="region.county"></td>
+                        <td style="text-align: center" ng-bind="region.countyCode"></td>
+                        <td style="text-align: center" ng-bind="region.zipcode"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <uib-pagination total-items="xsMetadataCtrl.regionTotalItems" ng-model="xsMetadataCtrl.currentPage[8]" items-per-page="xsMetadataCtrl.numPerPage" max-size="xsMetadataCtrl.maxSize" class="pagination-sm" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsMetadataCtrl.regionPageChange()" force-ellipses="true"></uib-pagination>
+            </div>
+        </uib-tab>
+        <uib-tab index="9" heading="政治面貌">
+            <table class="table table-striped table-bordered table-hover" style="top:20px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">政治面貌</th>
+                        <th style="text-align: center">代码</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="religion in xsMetadataCtrl.religionsByPage">
+                        <td style="text-align: center" ng-bind="religion.id"></td>
+                        <td style="text-align: center" ng-bind="religion.name"></td>
+                        <td style="text-align: center" ng-bind="religion.code"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <uib-pagination total-items="xsMetadataCtrl.religionTotalItems" ng-model="xsMetadataCtrl.currentPage[9]" items-per-page="xsMetadataCtrl.numPerPage" max-size="xsMetadataCtrl.maxSize" class="pagination-sm" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsMetadataCtrl.religionPageChange()" force-ellipses="true"></uib-pagination>
+            </div>
+        </uib-tab>
+        <uib-tab index="10" heading="专项计划">
+            <table class="table table-striped table-bordered table-hover" style="top:20px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">专项计划</th>
+                        <th style="text-align: center">代码</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="specialPlan in xsMetadataCtrl.specialPlansByPage">
+                        <td style="text-align: center" ng-bind="specialPlan.id"></td>
+                        <td style="text-align: center" ng-bind="specialPlan.name"></td>
+                        <td style="text-align: center" ng-bind="specialPlan.code"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <uib-pagination total-items="xsMetadataCtrl.specialPlanTotalItems" ng-model="xsMetadataCtrl.currentPage[10]" items-per-page="xsMetadataCtrl.numPerPage" max-size="xsMetadataCtrl.maxSize" class="pagination-sm" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsMetadataCtrl.specialPlanPageChange()" force-ellipses="true"></uib-pagination>
+            </div>
+        </uib-tab>
+        <uib-tab index="11" heading="院系">
+            <table class="table table-striped table-bordered table-hover" style="top:20px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">校级单位名称</th>
+                        <th style="text-align: center">校级单位代码</th>
+                        <th style="text-align: center">部院名称</th>
+                        <th style="text-align: center">部院代码</th>
+                        <th style="text-align: center">部院类型</th>
+                        <th style="text-align: center">院系名称</th>
+                        <th style="text-align: center">院系代码</th>
+                        <th style="text-align: center">院系类型</th>
+                        <th style="text-align: center">所名称</th>
+                        <th style="text-align: center">所代码</th>
+                        <th style="text-align: center">中心名称</th>
+                        <th style="text-align: center">中心代码</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="unit in xsMetadataCtrl.unitsByPage">
+                        <td style="text-align: center" ng-bind="unit.id"></td>
+                        <td style="text-align: center" ng-bind="unit.division"></td>
+                        <td style="text-align: center" ng-bind="unit.divisionCode"></td>
+                        <td style="text-align: center" ng-bind="unit.school"></td>
+                        <td style="text-align: center" ng-bind="unit.schoolCode"></td>
+                        <td style="text-align: center" ng-bind="unit.schoolType"></td>
+                        <td style="text-align: center" ng-bind="unit.department"></td>
+                        <td style="text-align: center" ng-bind="unit.departmentCode"></td>
+                        <td style="text-align: center" ng-bind="unit.departmentType"></td>
+                        <td style="text-align: center" ng-bind="unit.station"></td>
+                        <td style="text-align: center" ng-bind="unit.stationCode"></td>
+                        <td style="text-align: center" ng-bind="unit.center"></td>
+                        <td style="text-align: center" ng-bind="unit.centerCode"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <uib-pagination total-items="xsMetadataCtrl.unitTotalItems" ng-model="xsMetadataCtrl.currentPage[11]" items-per-page="xsMetadataCtrl.numPerPage" max-size="xsMetadataCtrl.maxSize" class="pagination-sm" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsMetadataCtrl.unitPageChange()" force-ellipses="true"></uib-pagination>
+            </div>
+        </uib-tab>
+        <uib-tab index="12" heading="高等院校">
+            <table class="table table-striped table-bordered table-hover" style="top:20px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">院校代码</th>
+                        <th style="text-align: center">院校名称</th>
+                        <th style="text-align: center">省市代码</th>
+                        <th style="text-align: center">省市名称</th>
+                        <th style="text-align: center">办学类型代码</th>
+                        <th style="text-align: center">办学类型1</th>
+                        <th style="text-align: center">办学类型2</th>
+                        <th style="text-align: center">办学类型3</th>
+                        <th style="text-align: center">性质类别代码</th>
+                        <th style="text-align: center">性质类别名称</th>
+                        <th style="text-align: center">是否211</th>
+                        <th style="text-align: center">是否985</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="university in xsMetadataCtrl.universitysByPage">
+                        <td style="text-align: center" ng-bind="university.id"></td>
+                        <td style="text-align: center" ng-bind="university.code"></td>
+                        <td style="text-align: center" ng-bind="university.name"></td>
+                        <td style="text-align: center" ng-bind="university.stateCode"></td>
+                        <td style="text-align: center" ng-bind="university.state"></td>
+                        <td style="text-align: center" ng-bind="university.operationCode"></td>
+                        <td style="text-align: center" ng-bind="university.operation1"></td>
+                        <td style="text-align: center" ng-bind="university.operation2"></td>
+                        <td style="text-align: center" ng-bind="university.operation3"></td>
+                        <td style="text-align: center" ng-bind="university.natureCode"></td>
+                        <td style="text-align: center" ng-bind="university.nature"></td>
+                        <td style="text-align: center" ng-bind="university.is211"></td>
+                        <td style="text-align: center" ng-bind="university.is985"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <uib-pagination total-items="xsMetadataCtrl.universityTotalItems" ng-model="xsMetadataCtrl.currentPage[12]" items-per-page="xsMetadataCtrl.numPerPage" max-size="xsMetadataCtrl.maxSize" class="pagination-sm" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsMetadataCtrl.universityPageChange()" force-ellipses="true"></uib-pagination>
+            </div>
+        </uib-tab>
+        <uib-tab index="13" heading="学习形式">
+            <table class="table table-striped table-bordered table-hover" style="top:20px">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">代码</th>
+                        <th style="text-align: center">名称</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="educationMode in xsMetadataCtrl.educationModesByPage">
+                        <td style="text-align: center" ng-bind="educationMode.id"></td>
+                        <td style="text-align: center" ng-bind="educationMode.code"></td>
+                        <td style="text-align: center" ng-bind="educationMode.name"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <uib-pagination total-items="xsMetadataCtrl.educationModeTotalItems" ng-model="xsMetadataCtrl.currentPage[13]" items-per-page="xsMetadataCtrl.numPerPage" max-size="xsMetadataCtrl.maxSize" class="pagination-sm" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页" boundary-links="true" ng-change="xsMetadataCtrl.educationModePageChange()" force-ellipses="true"></uib-pagination>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>

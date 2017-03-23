@@ -1,0 +1,37 @@
+{
+  "name": "angular-tree-control",
+  "author": "Yoav Abrahami",
+  "contributors": [
+    "Benjamin Orozco <benoror@gmail.com>"
+  ],
+  "main": [
+    "./angular-tree-control.js",
+    "./css/tree-control.css"
+  ],
+  "ignore": [
+    "Gruntfile.js",
+    "package.json",
+    "test",
+    "karma.conf.js"
+  ],
+  "dependencies": {
+    "angular": "^1.4.4"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.4.4",
+    "jquery": "~2.2.2",
+    "bootstrap": "~3.1.1",
+    "angular-bootstrap": "~0.11.0",
+    "google-code-prettify": "1.0.1"
+  },
+  "homepage": "https://github.com/dalangzhonghangxing/angular-tree-control",
+  "_release": "7bf80014fa",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "7bf80014fadaf831270205abbdb09c841ffc53c8"
+  },
+  "_source": "https://github.com/dalangzhonghangxing/angular-tree-control.git",
+  "_target": "master",
+  "_originalSource": "https://github.com/dalangzhonghangxing/angular-tree-control.git"
+}

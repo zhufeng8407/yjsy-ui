@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+  <!--<![endif]-->
+  <!-- BEGIN HEAD -->
+  <head>
+    <meta charset="utf-8"/>
+    <title>研究生院管理系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../lib/js/angular-timeline/dist/angular-timeline.css" />
+    <link rel="stylesheet" href="../lib/js/angular-tree-control/css/tree-control.css" />
+    <link rel="stylesheet" href="../lib/js/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- endbower -->
+
+    <!-- BEGIN 首先加载第三方的css
+    <link
+        href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all"
+        rel="stylesheet" type="text/css">
+     -->
+    <link href="../lib/style/font-awesome/css/font-awesome.min.css"
+        rel="stylesheet" type="text/css">
+    <link href="../lib/style/simple-line-icons/simple-line-icons.min.css"
+        rel="stylesheet" type="text/css">
+    <!-- <link href="./assets/global/plugins/uniform/css/uniform.default.css"
+        rel="stylesheet" type="text/css"> -->
+    <!-- END 首先加载第三方的css -->
+
+    <!-- BEGIN  加载页面相关的CSS文件-->
+    <link rel="stylesheet" type="text/css" href="../common/style/widget.css"/>
+    <link href="../common/style/layout.css" rel="stylesheet" type="text/css">
+    <link href="./style/index.css" rel="stylesheet" type="text/css">
+    <link href="../common/style/footer.css" rel="stylesheet" type="text/css">
+    <link href="directive/dp-layout.css" rel="stylesheet" type="text/css">
+    <!-- END 加载页面相关的CSS文件 -->
+
+    <!-- BEGIN 个性化的CSS -->
+
+    <!-- END 个性化的CSS -->
+  </head>
+  <!-- END HEAD -->
+  <!-- BEGIN BODY -->
+  <body data-ng-app="ecnuDpHome">
+    <div class="container-fluid" ng-controller="DpHomeCtrl as dpHomeCtrl">
+
+      <!-- BEGIN HEADER -->
+      <drop-down-menu></drop-down-menu>
+      <!-- END HEADER -->
+
+      <!-- content div -->
+      <div class="row">
+        <div class="col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8 dp-index-content">
+          <div class="row" ng-repeat="rowIndex in dpHomeCtrl.rowIndice">
+            <div class="col-md-6 col-sm-10">
+              <app-panel app-item="dpHomeCtrl.menuObj.menu[rowIndex]"></app-panel>
+            </div>
+            <div class="col-md-6 col-sm-10" ng-if="rowIndex+1 < dpHomeCtrl.menuObj.menu.length">
+              <app-panel app-item="dpHomeCtrl.menuObj.menu[rowIndex+1]"></app-panel>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- footer div -->
+      <div ng-include="'../common/view/footer.html'"></div>
+    </div>
+
+    <!-- bower:js -->
+    <script src="../lib/js/angular/angular.js"></script>
+    <script src="../lib/js/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="../lib/js/angular-loader/angular-loader.js"></script>
+    <script src="../lib/js/angular-route/angular-route.js"></script>
+    <script src="../lib/js/angular-cookies/angular-cookies.js"></script>
+    <script src="../lib/js/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../lib/js/angular-timeline/dist/angular-timeline.js"></script>
+    <script src="../lib/js/blob-polyfill/Blob.js"></script>
+    <script src="../lib/js/file-saver.js/FileSaver.js"></script>
+    <script src="../lib/js/angular-file-saver/dist/angular-file-saver.bundle.js"></script>
+    <script src="../lib/js/angular-i18n/angular-locale_zh-cn.js"></script>
+    <script src="../lib/js/angular-tree-control/angular-tree-control.js"></script>
+    <script src="../lib/js/angular-animate/angular-animate.js"></script>
+    <script src="../lib/js/ng-file-upload/ng-file-upload.js"></script>
+    <script src="../lib/js/ngstorage/ngStorage.js"></script>
+    <script src="../lib/js/echarts/dist/echarts.min.js"></script>
+    <script src="../lib/js/echarts/dist/extension/bmap.min.js"></script>
+    <script src="../lib/js/echarts/dist/extension/dataTool.min.js"></script>
+    <script src="../lib/js/ng-echarts/dist/ng-echarts.js"></script>
+    <script src="../lib/js/lodash/lodash.js"></script>
+    <script src="../lib/js/jquery/dist/jquery.js"></script>
+    <!-- endbower -->
+
+    <!--
+      common modules are injected by gulp-inject
+      <script type="text/javascript" src="../common/common.app.js"></script>
+      <script type="text/javascript" src="../common/service/utils.ser.js"></script>
+      <script type="text/javascript" src="../common/service/menu-dao.ser.js"></script>
+      -->
+    <!-- inject:js -->
+
+    <script src="../common/common.app.js"></script>
+
+    <script src="../common/config.js"></script>
+
+    <script src="../common/directive/animations.dir.js"></script>
+
+    <script src="../common/directive/menu-search-box.dir.js"></script>
+
+    <script src="../common/directive/nav-dropdown-menu.dir.js"></script>
+
+    <script src="../common/directive/promptMessage-panel.dir.js"></script>
+
+    <script src="../common/directive/status-apply.dir.js"></script>
+
+    <script src="../common/directive/status-audit-timeline.dir.js"></script>
+
+    <script src="../common/directive/xs-info-panel.dir.js"></script>
+
+    <script src="../common/service/account-dao.ser.js"></script>
+
+    <script src="../common/service/connection.ser.js"></script>
+
+    <script src="../common/service/diff-dao.ser.js"></script>
+
+    <script src="../common/service/exam-dao.ser.js"></script>
+
+    <script src="../common/service/global.ser.js"></script>
+
+    <script src="../common/service/menu-dao.ser.js"></script>
+
+    <script src="../common/service/message-dao.ser.js"></script>
+
+    <script src="../common/service/message-group-dao.ser.js"></script>
+
+    <script src="../common/service/meta-data-dao.ser.js"></script>
+
+    <script src="../common/service/modals.ser.js"></script>
+
+    <script src="../common/service/page-state.ser.js"></script>
+
+    <script src="../common/service/popular-page.ser.js"></script>
+
+    <script src="../common/service/registration.ser.js"></script>
+
+    <script src="../common/service/repo-dao.ser.js"></script>
+
+    <script src="../common/service/role-dao.ser.js"></script>
+
+    <script src="../common/service/select-dao-ser.js"></script>
+
+    <script src="../common/service/staff-dao.ser.js"></script>
+
+    <script src="../common/service/status-change-dao.ser.js"></script>
+
+    <script src="../common/service/status-change-type-dao.ser.js"></script>
+
+    <script src="../common/service/stu-dao.ser.js"></script>
+
+    <script src="../common/service/utils.ser.js"></script>
+
+    <script src="../common/service/yby-dao.ser.js"></script>
+
+    <!-- endinject -->
+
+
+    <!-- build:js ./ecnu-dp-home.app.min.js -->
+    <script type="text/javascript" src="index.app.js"></script>
+    <script type="text/javascript" src="directive/dp-menu.dir.js"></script>
+    <script type="text/javascript" src="./directive/app-panel.dir.js"></script>
+    <script type="text/javascript" src="filter/auth-filters.filter.js"></script>
+    <script type="text/javascript" src="index.ctrl.js"></script>
+    <!-- endbuild -->
+
+  </body>
+  <!-- END BODY -->
+  <!-- END BODY -->
+</html>

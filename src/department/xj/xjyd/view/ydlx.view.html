@@ -1,0 +1,46 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>浏览学籍异动类型</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="status-change-type panel panel-default" ng-controller="YdlxController as ydlxController">
+    <div ng-init="ydlxController.typecombine()">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>异动大类</th>
+                    <th>异动类型</th>
+                    <th>限制</th>
+                    <th>审核流程</th>
+                    <th>学生是否可见</th>
+                    <th>是否需要上传文件</th>
+                    <th>异动后相关信息修改</th>
+                    <th>学籍状态</th>
+                    <th>是否离校</th>
+                    <th>是否归入终结生</th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="item in ydlxController.res">
+                <tr ng-repeat="subItem in item.statusChangeTypes">
+                    <td rowspan="{{item.count}}" ng-show="$first">{{item.name}}</td>
+                    <td>{{subItem.minor}}</td>
+                    <td>{{subItem.restrict}}</td>
+                    <td>{{item.auditWorkflow[$index]}}</td>
+                    <td>{{subItem.visible}}</td>
+                    <td>{{subItem.attachment}}</td>
+                    <td>{{subItem.modification}}</td>
+                    <td>{{subItem.status}}</td>
+                    <td>{{subItem.quit}}</td>
+                    <td>{{subItem.terminated}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

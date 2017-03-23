@@ -1,0 +1,72 @@
+{
+  "name": "yjsy-web-ui",
+  "private": true,
+  "version": "0.0.1",
+  "description": "The web ui for postgraduate management project",
+  "bugs": {
+    "url": "http://58.198.176.57/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://58.198.176.57",
+    "license": "MIT"
+  },
+  "files": [
+    "WebContent"
+  ],
+  "devDependencies": {
+    "bower": "^1.7.7",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^0.2.3",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.8",
+    "karma-junit-reporter": "^0.4.2",
+    "karma-safari-launcher": "^1.0.0",
+    "live-server": "^1.0.0",
+    "protractor": "^3.2.2",
+    "gulp": "3.9.1",
+    "gulp-filter": "4.0.0",
+    "gulp-inject": "^4.1.0",
+    "event-stream": "3.3.4 ",
+    "gulp-angular-filesort": "1.1.1",
+    "gulp-debug": "2.1.2",
+    "gulp-clean": "0.3.2",
+    "gulp-main-bower-files": "1.5.3",
+    "gulp-useref": "3.1.0",
+    "stream-series": "0.1.1",
+    "gulp-eol": "0.1.2",
+    "wiredep": "4.0.0",
+    "gulp-if": "2.0.1",
+    "gulp-uglify": "2.0.0",
+    "map-stream": "0.0.6",
+    "gulp-concat": "2.6.0",
+    "gulp-install": "xiafan68/gulp-install#v0.6.1",
+    "gulp-file": "0.3.0",
+    "vinyl": "2.0.0",
+    "graceful-fs": "4.1.9",
+    "lazystream": "1.0.0",
+    "path": "0.12.7"
+  },
+  "scripts": {
+    "clean": "gulp clean",
+    "deploy": "gulp deploy",
+    "watch-deploy": "gulp watch-deploy",
+    "dev": "gulp dev",
+    "watch-dev": "gulp watch-dev",
+    "prestart-dev": "npm run-script dev",
+    "start-dev": "live-server --host localhost --port=63342 --no-browser --mount=/webui:./build",
+    "prestart": "npm run-script deploy",
+    "start": "live-server --host localhost --port=8081 --no-browser --mount=/webui:./dist",
+    "postinstall": "npm run-script bower-install",
+    "bower-install": "gulp bower-install",
+    "pretest": "npm install",
+    "test": "karma start karma.conf.js",
+    "preupdate-webdriver": "npm install",
+    "update-webdriver": "webdriver-manager update",
+    "preprotractor": "npm run update-webdriver",
+    "protractor": "protractor e2e-tests/protractor.conf.js"
+  },
+  "dependencies": {
+  }
+}

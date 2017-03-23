@@ -1,0 +1,40 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>每学年批量导入新生学籍数据</li>
+                <li>报告不合规的学籍数据</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<form class="form-inline" id="myForm">
+    <div class="drop-box" ng-model="xsImportCtrl.file" ngf-drop ngf-select ngf-drag-over-class="'dragover'"
+        accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">点击并选择学籍电子表格文件(Excel)
+    </div>
+    <div ngf-no-file-drop>当前浏览器不支持文件拖入上传功能</div>
+    <br/>
+    <br/>
+    <div>
+        <input type="file" data-ngf-select id="hiddenFile" ng-show="false"
+               data-ng-model="xsImportCtrl.file" name="file"
+            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" data-ngf-max-size="10MB"
+               data-ngf-model-invalid="errorFile">
+        <button class="btn btn-primary" ng-click="xsImportCtrl.clickFile()">选择文件</button>
+        <input class="btn btn-primary" type="button" value="下载电子表格模板文件" ng-click="xsImportCtrl.downloadDemo()"/>
+        <br>
+        <br>
+        <label>{{xsImportCtrl.file.name}}</label>
+        <div ng-show="xsImportCtrl.flag == true">
+            <br>
+            <br>
+            <button class="btn btn-primary" ng-click="xsImportCtrl.ok()">确认上传</button>
+            <button class="btn btn-primary" type="button" ng-show="xsImportCtrl.uploadFail == false"
+                    data-ng-click="xsImportCtrl.exportError()">导出失败条目
+            </button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,214 @@
+<div class="search-form" ng-if="searchCtrl.showPersonalInfo">
+    <div class="search-section">
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.name">
+            <label class="col-sm-3 control-label no-padding" for="inputName">姓名</label>
+            <div class="col-sm-9">
+                <input type="text"
+                       class="form-control" id="inputName" placeholder="请输入.."
+                       ng-init="searchCtrl.searchCondition.name=''"
+                       ng-model="searchCtrl.searchCondition.name">
+            </div>
+        </div>
+
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.sno">
+            <label class="col-sm-3 control-label no-padding" for="inputNum">学号</label>
+            <div class="col-sm-9">
+                <input type="text"
+                       class="form-control" id="inputNum" placeholder="请输入.."
+                       ng-init="searchCtrl.searchCondition.sno=''"
+                       ng-model="searchCtrl.searchCondition.sno">
+            </div>
+        </div>
+    </div>
+    <div class="hline" ng-if="searchCtrl.showPersonalInfo"></div>
+    <!-- 时间信息 -->
+    <div class="search-section" ng-if="searchCtrl.showTimeInfo">
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.regYear">
+            <label class="col-sm-3 control-label no-padding" for="regYear">学年</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="regYear"
+                    ng-model="searchCtrl.searchCondition.regYear">
+                    <option ng-repeat="regYear in searchCtrl.regYears" value="{{regYear}}">{{regYear}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.term">
+            <label class="col-sm-3 control-label no-padding" for="term">学期</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="term"
+                    ng-model="searchCtrl.searchCondition.term">
+                    <option ng-repeat=" term in searchCtrl.terms" value="{{term}}">{{term}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="hline" ng-if="searchCtrl.showTimeInfo"></div>
+    <!-- 专业信息-->
+    <div class="search-section"
+         ng-if="searchCtrl.showDisciplineInfo">
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.discipline">
+            <label class="col-sm-3 control-label no-padding" for="disciplines">门类</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="disciplines"
+                        ng-model="searchCtrl.searchCondition.discipline"
+                        ng-change="searchCtrl.getDisciplineMajor(searchCtrl.searchCondition.discipline)">
+                    <option ng-repeat=" discipline in searchCtrl.disciplines" value="{{discipline[1]}}">
+                        {{discipline[0]+"("+discipline[1]+")"}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.major">
+            <label class="col-sm-3 control-label no-padding" for="majors">一级学科</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="majors"
+                    ng-model="searchCtrl.searchCondition.majorCode"
+                    ng-change="searchCtrl.getMinorsOfMajor(searchCtrl.searchCondition.majorCode)">
+                    <option ng-repeat=" major in searchCtrl.majors" value="{{major[1]}}">{{major[0]+"("+major[1]+")"}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.minor">
+            <label class="col-sm-3 control-label no-padding" for="minor">二级学科</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="minor"
+                    ng-model="searchCtrl.searchCondition.minorCode">
+                    <option ng-repeat="minor in searchCtrl.minors" value="{{minor[1]}}">{{minor[0]+"("+minor[1]+")"}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.educationType">
+            <label class="col-sm-3 control-label no-padding" for="educationType">培养类型</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="educationType"
+                    ng-model="searchCtrl.searchCondition.educationType">
+                    <option ng-repeat=" educationType in searchCtrl.educationTypes" value="{{educationType.code}}">
+                        {{educationType.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="hline" ng-if="searchCtrl.showDisciplineInfo"></div>
+    <!-- 院系信息-->
+    <div class="search-section"
+        ng-if="searchCtrl.showOrgInfo">
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.school">
+            <label class="col-sm-3 control-label no-padding" for="school">院系(一级)</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="school"
+                    ng-model="searchCtrl.searchCondition.schoolCode"
+                    ng-change="searchCtrl.getDepartment(searchCtrl.searchCondition.schoolCode)"
+                    ng-options="school[1] as school[0] for school in searchCtrl.schools">
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.department">
+            <label class="col-sm-3 control-label no-padding" for="department">院系(二级)</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="department"
+                    ng-model="searchCtrl.searchCondition.departmentCode"
+                    ng-options="department[1] as department[0] for department in searchCtrl.departments">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.grade">
+            <label class="col-sm-3 control-label no-padding" for="grade">年级</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="grade"
+                    ng-model="searchCtrl.searchCondition.grade">
+                    <option ng-repeat=" grade in searchCtrl.grades" value="{{grade}}">{{grade}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="hline"
+        ng-if="searchCtrl.showOrgInfo"></div>
+    <!-- 注册报道信息-->
+    <div class="search-section"
+        ng-if="searchCtrl.showRegistrationInfo">
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.isFee">
+            <label class="col-sm-3 control-label no-padding" for="isFee">是否缴费</label>
+            <div class="col-sm-9" id="isFee" ng-init="searchCtrl.searchCondition.isFee='所有'">
+                <label class="radio-inline">
+                    <input type="radio" name="isFee" value="所有" ng-model="searchCtrl.searchCondition.isFee">所有
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isFee" ng-model="searchCtrl.searchCondition.isFee" value="1">是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isFee" ng-model="searchCtrl.searchCondition.isFee" value="0">否
+                </label>
+            </div>
+        </div>
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.isCheckin">
+            <label class="col-sm-3 control-label no-padding" for="isCheckin">是否报到</label>
+            <div class="col-sm-9" id="isCheckin" ng-init="searchCtrl.searchCondition.isCheckin='所有'">
+                <label class="radio-inline">
+                    <input type="radio" name="isCheckin" value="所有"
+                        ng-model="searchCtrl.searchCondition.isCheckin">所有
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isCheckin" ng-model="searchCtrl.searchCondition.isCheckin" value="1">是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isCheckin" ng-model="searchCtrl.searchCondition.isCheckin" value="0">否
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.isPoor">
+            <label class="col-sm-3 control-label no-padding" for="isPoor">困难认定</label>
+            <div class="col-md-9" ng-init="searchCtrl.searchCondition.isDifficulty='所有'">
+                <label class="radio-inline">
+                    <input type="radio" name="isPoor" ng-model="searchCtrl.searchCondition.isDifficulty" value="所有">所有
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isPoor" ng-model="searchCtrl.searchCondition.isDifficulty" value="1">是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isPoor" ng-model="searchCtrl.searchCondition.isDifficulty" value="0">否
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.isNew">
+            <label class="col-sm-3 control-label no-padding" for="isNew">是否新生</label>
+            <div class="col-md-9">
+                <label class="radio-inline">
+                    <input type="radio" name="isNew" ng-model="searchCtrl.searchCondition.isNew" value="所有">所有
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isNew" ng-model="searchCtrl.searchCondition.isNew" value="1">是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isNew" ng-model="searchCtrl.searchCondition.isNew" value="0">否
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group col-md-4" ng-if="searchCtrl.searchConfig.isDelay">
+            <label class="col-sm-3 control-label no-padding" for="isDelay">推迟入学</label>
+            <div class="col-sm-9" id="isDelay" ng-init="searchCtrl.searchCondition.isDelay='所有'">
+                <label class="radio-inline">
+                    <input type="radio" name="isDelay" value="所有"
+                        ng-model="searchCtrl.searchCondition.isDelay">所有
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isDelay" ng-model="searchCtrl.searchCondition.isDelay" value="1">是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isDelay" ng-model="searchCtrl.searchCondition.isDelay" value="0">否
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="hline"
+        ng-if="searchCtrl.showRegistrationInfo"></div>
+    <div ng-transclude></div>
+</div>

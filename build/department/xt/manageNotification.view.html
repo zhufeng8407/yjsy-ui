@@ -1,0 +1,148 @@
+<style>
+    .form-control-static {
+        color: #000;
+    }
+</style>
+<div class="container-fluid">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+            <th class="text-center">序号</th>
+            <th class="text-center">主题</th>
+            <th class="text-center">开始时间</th>
+            <th class="text-center">结束时间</th>
+            <th class="text-center">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="message in manageNotificationCtrl.messages">
+            <td class="text-center" data-ng-bind="$index+1"></td>
+            <td class="text-center" data-ng-bind="message.title">
+                <!--<span style="cursor:pointer" data-ng-bind="message.title"-->
+                <!--ng-click="manageNotificationCtrl.showMessagePanel(message)"></span>-->
+            </td>
+            <td class="text-center" data-ng-bind="message.startsAt.pattern('yyyy-MM-dd HH:mm')"></td>
+            <td class="text-center" data-ng-bind="message.endsAt.pattern('yyyy-MM-dd HH:mm')"></td>
+            <td class="text-center">
+                <button class="btn btn-primary btn-sm glyphicon glyphicon-pencil"
+                        ng-click="manageNotificationCtrl.showMessagePanel(message)"></button>
+                <button class="btn btn-danger btn-sm glyphicon glyphicon-remove"
+                        ng-click="manageNotificationCtrl.deleteMessage(message.id)"></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="text-right">
+        <uib-pagination total-items="manageNotificationCtrl.totalItems" ng-model="manageNotificationCtrl.currentPage"
+                        items-per-page="manageNotificationCtrl.numPerPage" max-size="manageNotificationCtrl.maxSize"
+                        class="pagination" first-text="首页" previous-text="上一页" next-text="下一页" last-text="末页"
+                        boundary-links="true" ng-change="manageNotificationCtrl.pageChanged()"
+                        force-ellipses="true"></uib-pagination>
+    </div>
+</div>
+<script type="text/ng-template" id="showEvent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">编辑通知</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">主题</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" ng-model="showEventCtrl.event.title">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">时间</label>
+                <div class="col-sm-10">
+                    <span class="col-sm-5 row">
+                        <p class="input-group" style="max-width: 250px">
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    readonly
+                                    uib-datepicker-popup="yyyy/MM/dd"
+                                    ng-model="showEventCtrl.event.startsAt"
+                                    is-open="showEventCtrl.start_isopen"
+                                    close-text="关闭"
+                                    current-text="今天"
+                                    clear-text="清空"/>
+                            <span class="input-group-btn">
+                            <button
+                                    type="button"
+                                    class="btn btn-default"
+                                    ng-click="showEventCtrl.start_isopen = !showEventCtrl.start_isopen">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                          </button>
+                        </span>
+                        </p>
+                        <div
+                                uib-timepicker
+                                ng-model="showEventCtrl.event.startsAt"
+                                hour-step="1"
+                                minute-step="15"
+                                show-meridian="false">
+                        </div>
+                    </span>
+                    <span class="col-sm-2 text-center">至</span>
+                    <span class="col-sm-5" style="float: right">
+                        <p class="input-group" style="max-width: 250px">
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    readonly
+                                    uib-datepicker-popup="yyyy/MM/dd"
+                                    ng-model="showEventCtrl.event.endsAt"
+                                    is-open="showEventCtrl.end_isopen"
+                                    close-text="关闭"
+                                    current-text="今天"
+                                    clear-text="清空"/>
+                            <span class="input-group-btn">
+                            <button
+                                    type="button"
+                                    class="btn btn-default"
+                                    ng-click="showEventCtrl.end_isopen = !showEventCtrl.end_isopen">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                          </button>
+                        </span>
+                        </p>
+                        <div
+                                uib-timepicker
+                                ng-model="showEventCtrl.event.endsAt"
+                                hour-step="1"
+                                minute-step="15"
+                                show-meridian="false">
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><strong>快速链接</strong></label>
+                <div class="col-sm-10">
+                    <input class="form-control" ng-model="showEventCtrl.event.link">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><strong>内容</strong></label>
+                <div class="col-sm-10">
+                    <trix-editor angular-trix ng-model-options="{ updateOn: 'blur' }" spellcheck="false"
+                                 class="trix-content"
+                                 trix-initialize="showEventCtrl.trixInitialize(e, editor)" ng-if='true'
+                                 ng-model="showEventCtrl.event.content"
+                                 trix-change="trixChange(e, editor)"
+                                 trix-selection-change="trixSelectionChange(e, editor)"
+                                 trix-focus="trixFocus(e, editor)" trix-blur="trixBlur(e, editor)"
+                                 placeholder="请输入通知内容"></trix-editor>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary"
+                data-ng-click="showEventCtrl.save()">保存
+        </button>
+        <button class="btn btn-primary"
+                data-ng-click="showEventCtrl.close()">关闭
+        </button>
+    </div>
+</script>

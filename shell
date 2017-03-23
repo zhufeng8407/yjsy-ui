@@ -1,0 +1,77 @@
+#!/bin/bash
+# Author: ShiBing
+# Date: 2017/2/24
+# Program:
+# 	  remote excute script to start new docker containers
+
+shell=""
+image=""
+label=""
+port=""
+num="3"
+hostlist=$(cat hosts)
+if [ "$?" == 1 ]; then
+	echo "no hosts file"
+	exit 1
+fi
+
+
+while [ ".$1" != . ]
+do
+	case "$1" in
+		--image )
+			image="$2"
+			shift;shift;
+			continue
+		;;
+		--label )
+			label="$2"
+			shift;shift;
+			continue
+		;;
+		--shell )
+			shell="$2"
+			shift;shift;
+			continue
+		;;
+		--port )
+			port="$2"
+			shift;shift;
+			continue
+		;;
+		--num )
+			num="$2"
+			shift;shift;
+			continue
+		;;
+		* )
+			break
+		;;
+	esac
+done
+
+if [ ".$shell" == . ]; then
+	echo "\"--shell\" need to be set"
+	exit 0
+fi
+
+if [ ".$num" == . ]; then
+	echo "\"--num\" need to be set"
+	exit 0
+fi
+
+if [ ".$image" == . ]; then
+	echo "\"--image\" need to be set"
+	exit 0
+fi
+
+if [ ".$label" == . ]; then
+	echo "\"--label\" need to be set"
+	exit 0
+fi
+
+
+for i in $hostlist
+do
+	ssh $i "${shell} --image ${image} --label ${label} --num ${num} --port ${port}"
+done

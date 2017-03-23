@@ -1,0 +1,224 @@
+<div>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label>姓名：</label>
+            </div>
+            <div class="col-md-10">
+                <span ng-bind="statusApplyCtrl.applyConfig.student.name"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label>学号：</label>
+            </div>
+            <div class="col-md-10">
+                <span ng-bind="statusApplyCtrl.applyConfig.student.sno"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label for="major" class="control-label">大类：</label>
+            </div>
+            <div class="col-md-5">
+                <select class="form-control" id="major" ng-model="statusApplyCtrl.searchCondition.major"
+                        ng-change="statusApplyCtrl.onMajorTypeChange()">
+                    <option ng-repeat="maj in statusApplyCtrl.majors" value="{{maj[0]}}">{{maj[1]}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label for="minor" class="control-label">小类：</label>
+            </div>
+            <div class="col-md-5">
+                <select class="form-control" id="minor" ng-model="statusApplyCtrl.searchCondition.minor"
+                        ng-change="statusApplyCtrl.onMinorTypeChange()">
+                    <option ng-repeat="min in statusApplyCtrl.minors" value="{{min[0]}}">{{min[1]}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-show="statusApplyCtrl.showTerm">
+            <div class="col-md-2 text-right">
+                <label for="delay" class="control-label">学期数：</label>
+            </div>
+            <div class="col-md-5">
+                <select class="form-control" id="delay" ng-model="statusApplyCtrl.searchCondition.term">
+                    <option value="1">一学期</option>
+                    <option value="2">二学期</option>
+                </select>
+            </div>
+        </div>
+
+	<div class="form-group" ng-show="statusApplyCtrl.showEarlyGraduationTerm">
+            <div class="col-md-2 text-right">
+                <label for="early" class="control-label">学期数：</label>
+            </div>
+            <div class="col-md-5">
+                <select class="form-control" id="early" ng-model="statusApplyCtrl.searchCondition.earlyGraduationTerm">
+                    <option value="1">一学期</option>
+                    <option value="2">二学期</option>
+		    <option value="3">三学期</option>
+                    <option value="4">四学期</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-show="statusApplyCtrl.showSupervisor">
+            <div class="col-md-2 text-right">
+                <label class="control-label">导师：</label>
+            </div>
+            <div class="col-md-5">
+                <input class="form-control" id="ds" type="text" ng-model="statusApplyCtrl.show_supervisor"
+                       ng-click="statusApplyCtrl.supervisorInput()"/>
+                <select class="form-control" id="dss" size="5"
+                        style="display:none;z-index: 3;position: absolute"
+                        ng-click="statusApplyCtrl.supervisorSelect()"
+                        ng-model="statusApplyCtrl.searchCondition.supervisor">
+                    <!--<option value=" ">请选择</option>-->
+                    <option ng-repeat="supervisor in statusApplyCtrl.staffs | filter:statusApplyCtrl.show_supervisor"
+                            value="{{supervisor.id}}" id="dsm" ng-click="statusApplyCtrl.supervisorClicked(supervisor.name)">{{supervisor.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-show="statusApplyCtrl.showDiscipline">
+            <div class="col-md-2 text-right">
+                <label class="control-label">专业：</label>
+            </div>
+            <div class="col-md-5">
+                <div class="input-group">
+                    <span class="input-group-addon">门类</span>
+                    <select class="form-control" ng-model="disciplineCategoryCode"
+                            ng-options="discipline[1] as discipline[0] for discipline in statusApplyCtrl.disciplines"
+                            ng-change="statusApplyCtrl.findDisciplineMajor(disciplineCategoryCode,statusApplyCtrl.discipline)">
+                        <option value=''>请选择</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">一级学科</span>
+                    <select class="form-control" ng-model="disciplineMajorCode"
+                            ng-options="major[1] as major[0] for major in statusApplyCtrl.discipline.majors"
+                            ng-change="statusApplyCtrl.findDisciplineMinor(disciplineMajorCode,statusApplyCtrl.discipline)">
+                        <option value=''>请选择</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">二级学科</span>
+                    <select class="form-control" ng-model="statusApplyCtrl.searchCondition.discipline"
+                            ng-options="minor[2] as minor[1] for minor in statusApplyCtrl.discipline.minors" name="discipline" required>
+                        <option value=''>请选择</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-show="statusApplyCtrl.showUnit">
+            <div>
+                <label class="col-md-2 control-label">院系：</label>
+            </div>
+            <div class="col-md-5">
+                <div class="input-group">
+                    <span class="input-group-addon">部院</span>
+                    <select class="form-control" ng-model="schoolCode"
+                            ng-options="school[1] as school[0] for school in statusApplyCtrl.schools"
+                            ng-change="statusApplyCtrl.findUnitDepartment(schoolCode)">
+                        <option value=''>请选择</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">院系</span>
+                    <select class="form-control" ng-model="statusApplyCtrl.searchCondition.unit"
+                            ng-options="department[2] as department[1] for department in statusApplyCtrl.departments" name="unit" required>
+                        <option value=''>请选择</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-show="statusApplyCtrl.showTransmitdate">
+            <div>
+                <label class="col-md-2 control-label">日期：</label>
+            </div>
+            <div class="col-md-5">
+                <p class="input-group" style="margin-bottom:0px">
+                    <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                           uib-datepicker-popup="{{statusApplyCtrl.format}}"
+                           ng-init="statusApplyCtrl.searchCondition.transmitdate = statusApplyCtrl.transmitdate;statusApplyCtrl.transmitdatePopup=false"
+                           ng-model="statusApplyCtrl.searchCondition.transmitdate"
+                           is-open="statusApplyCtrl.transmitdatePopup"
+                           datepicker-options="statusApplyCtrl.dateOptions"
+                           ng-required="true" alt-input-formats="altInputFormats"/>
+                    <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="statusApplyCtrl.transmitdatePopup = true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                </p>
+            </div>
+        </div>
+
+	<div class="form-group" ng-show="statusApplyCtrl.showLeaveDate">
+            <div>
+                <label class="col-md-2 control-label">开始日期：</label>
+            </div>
+            <div class="col-md-5">
+                <p class="input-group" style="margin-bottom:0px">
+                    <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                           uib-datepicker-popup="{{statusApplyCtrl.format}}"
+                           ng-init="statusApplyCtrl.searchCondition.leaveDateFrom = statusApplyCtrl.leaveDateFrom;statusApplyCtrl.leaveDateFromPopup=false"
+                           ng-model="statusApplyCtrl.searchCondition.leaveDateFrom"
+                           is-open="statusApplyCtrl.leaveDateFromPopup"
+                           datepicker-options="statusApplyCtrl.dateOptions"
+                           ng-required="true" alt-input-formats="altInputFormats"/>
+                    <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="statusApplyCtrl.leaveDateFromPopup = true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                    </span>
+                </p>
+            </div>
+        </div>
+	<div class="form-group" ng-show="statusApplyCtrl.showLeaveDate">
+            <div>
+                <label class="col-md-2 control-label">结束日期：</label>
+            </div>
+            <div class="col-md-5">
+                <p class="input-group" style="margin-bottom:0px">
+                    <input type="text" class="form-control" current-text="今天" clear-text="清除" close-text="关闭"
+                           uib-datepicker-popup="{{statusApplyCtrl.format}}"
+                           ng-init="statusApplyCtrl.searchCondition.leaveDateTo = statusApplyCtrl.leaveDateTo;statusApplyCtrl.leaveDateToPopup=false"
+                           ng-model="statusApplyCtrl.searchCondition.leaveDateTo"
+                           is-open="statusApplyCtrl.leaveDateToPopup"
+                           datepicker-options="statusApplyCtrl.dateOptions"
+                           ng-required="true" alt-input-formats="altInputFormats"/>
+                    <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="statusApplyCtrl.leaveDateToPopup = true">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label>限制：</label>
+            </div>
+            <div class="col-md-10">
+                <span ng-bind="statusApplyCtrl.type.constrain"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label for="reason" class="control-label">申请理由：</label>
+            </div>
+            <div class="col-md-10">
+                <textarea id="reason" class="form-control" cols="67" rows="5"
+                          ng-model="statusApplyCtrl.searchCondition.reason"></textarea>
+            </div>
+        </div>
+        <div style="text-align:right;padding-bottom:15px">
+            <span class="warning-status" ng-bind="statusApplyCtrl.warningStatus"></span>
+            <button class="btn btn-primary" type="button" ng-click="statusApplyCtrl.ok()">申请</button>
+            <button class="btn btn-warning" type="button" ng-click="statusApplyCtrl.cancel()">退出</button>
+        </div>
+    </form>
+</div>

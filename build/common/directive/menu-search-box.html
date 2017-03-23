@@ -1,0 +1,18 @@
+<div class="form-inline btn-group" uib-dropdown is-open="menuSearchBoxCtrl.searching">
+    <input class="form-control" type="text" placeholder="功能搜索" ng-click="menuSearchBoxCtrl.onFocus($event)"
+        ng-model-options="{debounce: 80 }"
+        ng-model="menuSearchBoxCtrl.name"
+        ng-change="menuSearchBoxCtrl.search()"/>
+    <ul class="dropdown-menu search-menu-list" ng-show="menuSearchBoxCtrl.searching&&menuSearchBoxCtrl.focusing">
+        <li class="search-menu-list-item" ng-repeat="data in menuSearchBoxCtrl.freqMenu">
+            <a href="{{data.url}}">{{data.name}}</a>
+        </li>
+    </ul>
+    <ul class="dropdown-menu search-menu-list" ng-show="menuSearchBoxCtrl.searching&&!menuSearchBoxCtrl.focusing">
+        <li ng-show="menuSearchBoxCtrl.readingData">加载中</li>
+        <li ng-show="menuSearchBoxCtrl.names.length==0"><a>无结果</a></li>
+        <li class="search-menu-list-item" ng-repeat="data in menuSearchBoxCtrl.names">
+            <a href="{{data.url}}">{{data.name}}</a>
+        </li>
+    </ul>
+</div>

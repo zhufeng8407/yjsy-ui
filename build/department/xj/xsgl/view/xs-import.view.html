@@ -1,0 +1,46 @@
+<div class="memo">
+  <div class="panel panel-info panel-border-color">
+    <div class="panel-heading">
+      <h3 class="panel-title">说明</h3>
+    </div>
+    <div class="panel-body">
+      <ul>
+        <li>1. 学籍管理员每学年从研究生院招办获取招生数据，经过数据整理后，批量导入到学籍系统中</li>
+        <li>2. 不符合学籍数据规范的新生数据将会以报告的方式返回给学籍管理员，以便进行适当的数据整理</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<form class="form-inline" id="myForm">
+  <div ngf-drop ngf-select ng-model="xsImportCtrl.file" class="drop-box"
+      ngf-drag-over-class="'dragover'" accept=".csv">将CSV文件拖入此处
+  </div>
+  <div ngf-no-file-drop>当前浏览器不支持文件拖入上传功能</div>
+
+  <!--增加一个button，上传文件 -->
+  <br>
+  <br>
+  <div>
+    <div>
+      <input type="file" data-ngf-select id="hiddenFile" ng-show="false"
+             data-ng-model="xsImportCtrl.file" name="file"
+             accept=".csv"
+             data-ngf-max-size="10MB" data-ngf-model-invalid="errorFile">
+      <button class="btn btn-primary" ng-click="xsImportCtrl.clickFile()">选择文件</button>
+      <label>{{xsImportCtrl.file.name}}</label>
+    </div>
+
+    <div ng-show="xsImportCtrl.flag == true">
+      <br>
+      <br>
+      <button class="btn btn-primary" ng-click="xsImportCtrl.ok()"> 确认上传</button>
+      <button class="btn btn-primary" ng-show="xsImportCtrl.uploadFail == false" type="button"
+              data-ng-click="xsImportCtrl.exportError()">导出失败条目
+      </button>
+    </div>
+  </div>
+  <!--END 增加一个button，上传文件 -->
+</form>
+
+

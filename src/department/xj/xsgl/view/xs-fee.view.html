@@ -1,0 +1,133 @@
+<div class="memo">
+    <div class="panel panel-info panel-border-color">
+        <div class="panel-heading">
+            <h3 class="panel-title">说明</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>每学年批量导入研究生学费缴纳数据</li>
+                <li>报告不合规的学费缴费数据</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<search-layout search-config="xsFeeCtrl.searchConfig"
+                search-condition="xsFeeCtrl.searchCondition">
+    <div class="search-bottom">
+        <div class="col-md-3  fee-button">
+            <button type="submit" class="btn btn-primary" ng-click="xsFeeCtrl.search()">缴费明细</button>
+        </div>
+        <div class="col-md-3  fee-button">
+            <input type="file" data-ngf-select id="hiddenFile" ng-show="false"
+                   data-ng-model="xsFeeCtrl.file" name="file"
+                   accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                   data-ngf-max-size="10MB" data-ngf-model-invalid="errorFile">
+            <button class="btn btn-primary" ng-click="xsFeeCtrl.clickFile()">导入缴费清单</button>
+            <label>{{xsFeeCtrl.file.name}}</label>
+            <div ng-show="xsFeeCtrl.flag == true">
+                <br>
+                <uib-progress data-ng-show="xsFeeCtrl.progress">
+                    <uib-bar value="uploadCtrl.progress" type="{{xsFeeCtrl.type}}"
+                             data-ng-bind="xsFeeCtrl.progress + '%'"/>
+                </uib-progress>
+                <br>
+                <br>
+                <button class="btn btn-primary" ng-click="xsFeeCtrl.uploadFee(xsFeeCtrl.file)"> 确认上传</button>
+                <button class="btn btn-primary" ng-show="xsFeeCtrl.exportBtn" ng-disabled="!xsCheckinCtrl.expError"
+                        type="button"
+                        data-ng-click="xsFeeCtrl.exportError()">导出失败条目
+                </button>
+            </div>
+        </div>
+        <div class="col-md-3"><input class="btn btn-primary" type="button" value="下载电子表格模板文件" ng-click="xsFeeCtrl.downloadDemo()"/></div>
+    </div>
+</search-layout>
+
+<table class="table table-striped table-bordered table-hover fee-table-bordered" style="top:20px">
+    <thead>
+    <tr>
+        <th style="text-align: center">姓名</th>
+        <th style="text-align: center">学号</th>
+        <th style="text-align: center">院系(一级)</th>
+        <th style="text-align: center">院系(二级)</th>
+        <th style="text-align: center">年级</th>
+        <th style="text-align: center">学年</th>
+        <th style="text-align: center">专业</th>
+        <th style="text-align: center">实缴额</th>
+        <th style="text-align: center">应缴额</th>
+        <th style="text-align: center">欠费额</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="student in xsFeeCtrl.students">
+        <td style="text-align: center" ng-bind="student.name"></td>
+        <td style="text-align: center" ng-bind="student.sno"></td>
+        <td style="text-align: center" ng-bind="student.school"></td>
+        <td style="text-align: center" ng-bind="student.department"></td>
+        <td style="text-align: center" ng-bind="student.grade"></td>
+        <td style="text-align: center" ng-bind="student.year"></td>
+        <td style="text-align: center" ng-bind="student.minor"></td>
+        <td style="text-align: center" ng-bind="student.feePaid"></td>
+        <td style="text-align: center" ng-bind="student.feeShouldPaid"></td>
+        <td style="text-align: center" ng-bind="student.feeOwn"></td>
+
+    </tr>
+    </tbody>
+</table>
+
+<div class="form-inline forPagination" ng-show="xsFeeCtrl.page">
+    <div class="col-md-4"></div>
+    <div class="text-center col-md-4">
+        <uib-pagination total-items="xsFeeCtrl.totalItems" ng-model="xsFeeCtrl.currentPage"
+                        items-per-page="xsFeeCtrl.numPerPage" max-size="xsFeeCtrl.maxSize"
+                        class="pagination pagination-location" first-text="首页" previous-text="上一页" next-text="下一页"
+                        last-text="末页"
+                        boundary-links="true" ng-change="xsFeeCtrl.feePageChange()"
+                        force-ellipses="true"></uib-pagination>
+    </div>
+    <div class="text-right col-md-4">
+        <label class="pagination-label" for="pageNum">每页显示记录数目</label>
+        <select id="pageNum" class="form-control" ng-model="xsFeeCtrl.numPerPage"
+                ng-options="num for num in xsFeeCtrl.num"></select>
+        <button class="btn btn-default" ng-click="xsFeeCtrl.search()">确定</button>
+    </div>
+</div>
+<!--<form class="form-inline" id="myForm">-->
+    <!--<div ngf-drop ngf-select ng-model="xsFeeCtrl.file" class="drop-box"-->
+         <!--ngf-drag-over-class="'dragover'"-->
+         <!--accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">-->
+        <!--点击并选择所需上传的EXCEL文件-->
+    <!--</div>-->
+    <!--<div ngf-no-file-drop>当前浏览器不支持文件拖入上传功能</div>-->
+
+    <!--&lt;!&ndash;增加一个button，上传文件 &ndash;&gt;-->
+    <!--<br>-->
+    <!--<br>-->
+    <!--<div>-->
+        <!--<input type="file" data-ngf-select id="hiddenFile" ng-show="false"-->
+               <!--data-ng-model="xsFeeCtrl.file" name="file"-->
+               <!--accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"-->
+               <!--data-ngf-max-size="10MB" data-ngf-model-invalid="errorFile">-->
+        <!--<button class="btn btn-primary" ng-click="xsFeeCtrl.clickFile()">选择文件</button>-->
+        <!--<label>{{xsFeeCtrl.file.name}}</label>-->
+        <!--<div ng-show="xsFeeCtrl.flag == true">-->
+            <!--<br>-->
+            <!--<uib-progress data-ng-show="xsFeeCtrl.progress">-->
+                <!--<uib-bar value="uploadCtrl.progress" type="{{xsFeeCtrl.type}}"-->
+                         <!--data-ng-bind="xsFeeCtrl.progress + '%'"/>-->
+            <!--</uib-progress>-->
+            <!--<br>-->
+            <!--<br>-->
+            <!--<button class="btn btn-primary" ng-click="xsFeeCtrl.uploadFee(xsFeeCtrl.file)"> 确认上传</button>-->
+            <!--<button class="btn btn-primary" ng-show="xsFeeCtrl.exportBtn" ng-disabled="!xsCheckinCtrl.expError"-->
+                    <!--type="button"-->
+                    <!--data-ng-click="xsFeeCtrl.exportError()">导出失败条目-->
+            <!--</button>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div>-->
+        <!--<a ng-href="{{xsFeeCtrl.downloadPath}}">下载模板文件</a>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;END 增加一个button，上传文件 &ndash;&gt;-->
+<!--</form>-->

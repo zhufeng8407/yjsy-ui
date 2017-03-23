@@ -1,0 +1,21 @@
+/*不需要时间线居中*/
+.timeline:before {
+  left: 0;
+}
+
+timeline-badge {
+  left: 0;
+}
+
+.timeline-inverted timeline-panel {
+  margin-left: 50px;
+  float: left;
+}
+
+@media only screen and (min-width: 768px) {
+  timeline-panel {
+    width: calc(50% - 45px);
+    width: -moz-calc(50% - 45px);
+    width: -webkit-calc(100% - 45px);
+  }
+}
